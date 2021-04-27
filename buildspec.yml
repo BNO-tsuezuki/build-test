@@ -9,6 +9,8 @@ phases:
       - apt update
       - apt install -y python-pip
       - pip install awscli
+      - curl -sL https://deb.nodesource.com/setup_8.x | bash -
+      - apt install -y nodejs
   pre_build:
     commands:
       - echo $CODEBUILD_SOURCE_VERSION
