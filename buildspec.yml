@@ -2,28 +2,36 @@ version: 0.2
 
 env:
   variables:
-    dst: "./tmp"
-    obj: "./objects"
+    dst: $CODEBUILD_SRC_DIR/tmp
+    obj: $CODEBUILD_SRC_DIR/objects
 phases:
-  pre_build:
+  install:
     commands:
       - apt update
       - apt install -y python-pip
       - pip install awscli
-      - mkdir $dst
-      - mkdir $obj
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst
-      - aws s3 cp s3://$bucket_name/ToolServer.json $dst
-      - aws s3 cp s3://$bucket_name/systeminfo.json $dst
+  pre_build:
+    commands:
+      - mkdir -p $obj
+      - mkdir -p $dst/evoapi
+      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/ToolServer.json $dst/evoapi/
+      - aws s3 cp s3://$bucket_name/systeminfo.json $dst/evoapi/
+      - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evoapi/
+      - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evoapi/
+      - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evoapi.appspec.yml $dst/evoapi/appspec.yml
+      - cp $CODEBUILD_SRC_DIR/environment/codedeploy/service/evoapi.service $dst/evoapi/
+      - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evoapi/
+      - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json  $dst/evoapi/
   build:
     commands:
-      - cd ./outgame/evoapi
+      - cd $CODEBUILD_SRC_DIR/outgame/evoapi
       - dotnet publish -c Debug -o $dst/evoapi/evoapi
-      - tar cvzf $obj/evoapi.tar.gz -C $dst/evoapi .
+      - tar czvf $obj/evoapi.tar.gz -C $dst/evoapi .
 artifacts:
   files:
-    - $obj
+    - $obj/evoapi.tar.gz
