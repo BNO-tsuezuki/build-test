@@ -1,0 +1,60 @@
+- name: <Redis> download
+  get_url:
+    url: http://download.redis.io/releases/{{redis_package}}.tar.gz
+    dest: "{{ansible_home}}/{{redis_package}}.tar.gz" # べき等性のためファイル名で指定(Dirを指定すると常にダウンロードされる)
+
+- name: <Redis> unarchive
+  unarchive:
+    src: "{{ansible_home}}/{{redis_package}}.tar.gz"
+    dest: "{{ansible_home}}/"
+    creates: "{{ansible_home}}/{{redis_package}}"
+    remote_src: yes
+
+- name: <Redis> make & install
+  become: yes
+  command: make install
+  args:
+    chdir: "{{ansible_home}}/{{redis_package}}"
+    creates: /usr/local/bin/redis-server
+
+# - name: <Redis> /etc/redis　ディレクトリ作成
+#   become: yes
+#   file:
+#     path: /etc/redis
+#     state: directory
+#     mode: 755
+
+# - name: <Redis> 設定(redis.conf)を(/etc/redis/に)設置
+#   become: yes
+#   copy:
+#     remote_src: yes
+#     src: "{{ansible_home}}/{{redis_package}}/redis.conf"
+#     dest: /etc/redis/
+
+- name: <Redis> 設定(redis.conf)の編集
+  replace:
+    path: "{{ansible_home}}/{{redis_package}}/redis.conf"
+    regexp: "{{item.regexp}}"
+    replace: "{{item.line}}"
+  with_items:
+    # - regexp: "^daemonize[ |\t]+.*"
+    #   line: "daemonize yes"
+    - regexp: "^#.*requirepass[ |\t]+.*"
+      line: "requirepass {{redis_pass}}"
+    - regexp: "^bind[ |\t]+.*"
+      line: "bind {{ redis_bind_host }}"
+    - regexp: "^loglevel[ |\t]+.*"
+      line: "loglevel {{redis_log_level}}"
+
+- name: <Redis> install script
+  become: yes
+  become_method: sudo
+  command:  ./install_server.sh \
+            REDIS_PORT={{redis_port}} \
+            REDIS_CONFIG_FILE=/etc/redis/{{redis_port}}.conf \
+            REDIS_LOG_FILE=/var/log/redis_{{redis_port}}.log \
+            REDIS_DATA_DIR=/var/lib/redis/{{redis_port}} \
+            REDIS_EXECUTABLE='command -v redis-server'
+  args:
+    chdir: "{{ansible_home}}/{{redis_package}}/utils"
+    creates: /etc/init.d/redis_{{redis_port}}

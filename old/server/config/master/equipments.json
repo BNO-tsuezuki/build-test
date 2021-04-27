@@ -1,0 +1,468 @@
+{
+	"equipments": [
+		{
+			"Name": "WP0010",
+			"displayName": "頭部バルカン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guncannon/Weapons/HeadVulcan/HeadVulcan.HeadVulcan_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0011",
+			"displayName": "ビーム・ライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guncannon/Weapons/BeamRifle/BeamRifle.BeamRifle_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0012HE",
+			"displayName": "[榴弾 ]キャノン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guncannon/Weapons/240mmCannon_HE/240mmCannon_HE.240mmCannon_HE_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0012BZ",
+			"displayName": "[直射 ]キャノン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guncannon/Weapons/240mmCannon_Bazooka/240mmCannon_Bazooka.240mmCannon_Bazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0015",
+			"displayName": "頭部バルカン砲【内蔵】",
+			"equipmentClassAsset": "None",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0016",
+			"displayName": "ビーム・サーベル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/BeamSaber/BeamSaber.BeamSaber_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0017",
+			"displayName": "ビーム・スプレーガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/BeamSprayGun/BeamSprayGun.BeamSprayGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0018",
+			"displayName": "ハイパー・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/HyperBazooka/HyperBazooka.HyperBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0482",
+			"displayName": "大型ヒート・ホーク",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/DozleZaku/Weapons/HeatHawk/HeatHawk.HeatHawk_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0019",
+			"displayName": "ビーム・ライフル",
+			"equipmentClassAsset": "None",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0020",
+			"displayName": "90mmマシンガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/90mmMachineGun/90mmMachineGun.90mmMachineGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0021",
+			"displayName": "ハンド・グレネード",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/HandGrenade/HandGrenade.HandGrenade_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0022",
+			"displayName": "シールド",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GM/Weapons/Guard/Guard.Guard_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0023",
+			"displayName": "ヒート・ホーク",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/HeatHawk/HeatHawk.HeatHawk_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0024",
+			"displayName": "クラッカー",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/Cracker/Cracker.Cracker_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0025",
+			"displayName": "ザク・マシンガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/ZakuMachineGun/ZakuMachineGun.ZakuMachineGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0026",
+			"displayName": "ザク・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/ZakuBazooka/ZakuBazooka.ZakuBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0027",
+			"displayName": "マゼラ・トップ砲",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/MagellaTopCanon/MagellaTopCanon.MagellaTopCanon_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0028",
+			"displayName": "対艦ライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/AntishipRifle/AntishipRifle.AntishipRifle_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0029",
+			"displayName": "フット・ミサイル・ポッド",
+			"equipmentClassAsset": "None",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0099",
+			"displayName": "頭部バルカン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam/Weapons/HeadVulcan/HeadVulcan.HeadVulcan_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0100",
+			"displayName": "ビーム・マグナム",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam/Weapons/BeamMagnum/BeamMagnum.BeamMagnum_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0101",
+			"displayName": "ハイパー・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam/Weapons/HyperBazooka/HyperBazooka.HyperBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0102",
+			"displayName": "ビーム・ガトリングガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam/Weapons/BeamGatlingGun/BeamGatlingGun.BeamGatlingGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0105",
+			"displayName": "頭部バルカン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam_Destroy/Weapons/HeadVulcan/HeadVulcan.HeadVulcan_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0106",
+			"displayName": "ビーム・マグナム",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam_Destroy/Weapons/BeamMagnum/BeamMagnum.BeamMagnum_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0107",
+			"displayName": "ハイパー・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam_Destroy/Weapons/HyperBazooka/HyperBazooka.HyperBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0108",
+			"displayName": "ビーム・ガトリングガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam_Destroy/Weapons/BeamGatlingGun/BeamGatlingGun.BeamGatlingGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0173",
+			"displayName": "ビームライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/TurnAGundam/Weapons/BeamRifle/BeamRifle.BeamRifle_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0175",
+			"displayName": "ガンダムハンマー",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/TurnAGundam/Weapons/GundamHammer/GundamHammer.GundamHammer_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0176",
+			"displayName": "核ミサイル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/TurnAGundam/Weapons/NuclearMissile/NuclearMissile.NuclearMissile_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0177",
+			"displayName": "ビームドライブユニット",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/TurnAGundam/Weapons/BeamDriveUnit/BeamDriveUnit.BeamDriveUnit_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0178",
+			"displayName": "小型ミサイル",
+			"equipmentClassAsset": "None",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": false,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0337",
+			"displayName": "ショットガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/ZakuII/Weapons/ShotGun/ShotGun.ShotGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0149",
+			"displayName": "ビームサイズ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDeathscythe/Weapons/BeamScythe/BeamScythe.BeamScythe_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0148",
+			"displayName": "マシンキャノン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDeathscythe/Weapons/MachineCannon/MachineCannon.MachineCannon_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0147",
+			"displayName": "頭部バルカン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDeathscythe/Weapons/HeadVulcan/HeadVulcan.HeadVulcan_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0150",
+			"displayName": "バスターシールド",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDeathscythe/Weapons/BusterShield/BusterShield.BusterShield_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0005",
+			"displayName": "ビーム・ライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Gundam/Weapons/BeamRifle/BeamRifle.BeamRifle_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0006",
+			"displayName": "ハイパー・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Gundam/Weapons/HyperBazooka/HyperBazooka.HyperBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0241",
+			"displayName": "GNスナイパーライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDynames/Weapons/GNSniperRifle/GNSniperRifle.GNSniperRifle_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0242",
+			"displayName": "GNビームピストル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDynames/Weapons/GNBeamPistol/GNBeamPistol.GNBeamPistol_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0051",
+			"displayName": "ビーム・ライフル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Alex/Weapons/BeamRifle/BeamRifle.BeamRifle_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0479",
+			"displayName": "ハイパー・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Alex/Weapons/HyperBazooka/HyperBazooka.HyperBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0014",
+			"displayName": "40mm4連装ポップ・ミサイル【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guntank/Weapons/PopMissileLauncher/PopMissileLauncher.PopMissileLauncher_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0013BZ",
+			"displayName": "[直射]120mm低反動キャノン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guntank/Weapons/120mmCannon_Bazooka/120mmCannon_Bazooka.120mmCannon_Bazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0013MT",
+			"displayName": "[迫撃]120mm低反動キャノン砲【内蔵】",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/Guntank/Weapons/120mmCannon_Mortar/120mmCannon_Mortar.120mmCannon_Mortar_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0037",
+			"displayName": "ザク・マシンガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/CharZaku/Weapons/ZakuMachineGun/ZakuMachineGun.ZakuMachineGun_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0038",
+			"displayName": "ザク・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/CharZaku/Weapons/ZakuBazooka/ZakuBazooka.ZakuBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0039",
+			"displayName": "マゼラ・トップ砲",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/CharZaku/Weapons/MagellaTopCanon/MagellaTopCanon.MagellaTopCanon_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0480",
+			"displayName": "ザク・マシンガン",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/DozleZaku/Weapons/ZakuMachineGun/ZakuMachineGun.ZakuMachineGun_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0481",
+			"displayName": "ザク・バズーカ",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/DozleZaku/Weapons/ZakuBazooka/ZakuBazooka.ZakuBazooka_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0035",
+			"displayName": "ヒート・ホーク",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/CharZaku/Weapons/HeatHawk/HeatHawk2.HeatHawk2_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0036",
+			"displayName": "クラッカー",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/CharZaku/Weapons/Cracker/Cracker.Cracker_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0103",
+			"displayName": "ビーム・サーベル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/UnicornGundam/Weapons/BeamSaber/BeamSaber.BeamSaber_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0174",
+			"displayName": "ビームサーベル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/TurnAGundam/Weapons/BeamSaber/BeamSaber.BeamSaber_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP0244",
+			"displayName": "GNビームサーベル",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/GundamDynames/Weapons/GNBeamSaber/GNBeamSaber.GNBeamSaber_C",
+			"weaponSlotOrder": "Secondary",
+			"bIsAvailble": true,
+			"description": "備考"
+		},
+		{
+			"Name": "WP9001",
+			"displayName": "照射ビーム",
+			"equipmentClassAsset": "/Game/Blueprints/MobileSuits/APSALUSIII_2/Weapons/MegaParticleCannon_Main/MegaParticleCannon_Main_2.MegaParticleCannon_Main_2_C",
+			"weaponSlotOrder": "Primary",
+			"bIsAvailble": true,
+			"description": "アプサラスIIIテスト"
+		}
+	]
+}

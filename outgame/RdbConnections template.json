@@ -1,0 +1,27 @@
+{
+  "RdbConnections": {
+
+    //"AuthDB": "server=write-instance-authenticationserver.c79omrzdisvy.ap-northeast-1.rds.amazonaws.com; database=evoauthdb; user=evouser; password=evopassword; SslMode=none;",
+
+    "Personal": [
+      "server=XXXXXXXX; database=evopersonal001; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal002; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal003; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal004; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal005; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal006; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal007; user=evouser; password=evopassword; SslMode=none;",
+      "server=XXXXXXXX; database=evopersonal008; user=evouser; password=evopassword; SslMode=none;"
+    ],
+
+    "Common1": "server=XXXXXXXX; database=evocommon1; user=evouser; password=evopassword; SslMode=none;",
+    "Common2": "server=XXXXXXXX; database=evocommon2; user=evouser; password=evopassword; SslMode=none;",
+    "Common3": "server=XXXXXXXX; database=evocommon3; user=evouser; password=evopassword; SslMode=none;",
+
+
+    "GMTool": "server=XXXXXXXX; database=evogmtool; user=evouser; password=evopassword; SslMode=none;",
+    
+    "GameLog": "server=XXXXXXXX; database=evogamelog; user=evouser; password=evopassword; SslMode=none;"
+
+  }
+}

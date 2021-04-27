@@ -1,0 +1,15 @@
+
+[Unit]
+Description=evosequencing server
+
+[Service]
+ExecStart=/usr/bin/dotnet /home/ec2-user/packages/evosequencing/evosequencing.dll
+Restart=always
+RestartSec=10
+User=ec2-user
+Environment=ASPNETCORE_ENVIRONMENT=DevEnv
+WorkingDirectory=/home/ec2-user/packages/evosequencing
+SyslogIdentifier=evosequencing
+
+[Install]
+WantedBy=multi-user.target

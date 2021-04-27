@@ -1,0 +1,66 @@
+- hosts: all
+  tasks:
+    - name: 対象マシン導通確認
+      ping:
+
+- hosts: localhost
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/Development.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupDotNet.yml
+    - import_tasks: ../tasks/setupNodejs.yml
+    - import_tasks: ../tasks/setupPip.yml
+    - import_tasks: ../tasks/setupAwsCli.yml
+    - import_tasks: ../tasks/setupRmate.yml
+    - name: create .keys dir 
+      file:
+        path: "{{ansible_home}}/.keys"
+        state: directory
+        mode: 0755
+
+- hosts: api
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/Development.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupDotNet.yml
+    - import_tasks: ../tasks/setupRmate.yml
+
+    
+- hosts: rdb
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/Development.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupMariaDB.yml
+    - import_tasks: ../tasks/setupRmate.yml
+
+
+- hosts: kvs
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/Development.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupRedis.yml
+    - import_tasks: ../tasks/setupRmate.yml
+
+
+- hosts: tool
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/Development.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupDotNet.yml
+    - import_tasks: ../tasks/setupRedis.yml
+    - import_tasks: ../tasks/setupRmate.yml

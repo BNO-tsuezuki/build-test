@@ -1,0 +1,283 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Base Title</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+  </head>
+  <body class="h-100">
+      <div id="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- Main Sidebar -->
+                  <main-manu></main-manu>
+                  <!-- End Main Sidebar -->
+                  <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                      <!-- Main Navbar -->
+                      <info-form></info-form>
+                      <!-- / .main-navbar -->
+                      <div class="main-content-container container-fluid px-4">
+                          <!-- Page Header -->
+                          <div class="page-header row no-gutters py-4">
+                              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                  <span class="text-uppercase page-subtitle">Game</span>
+                                  <h3 class="page-title">Challenge</h3>
+                              </div>
+                          </div>
+                          <!-- End Page Header -->
+                          <div class="row">
+                              <div class="col-lg-9 col-md-12">
+                                  <!--<div class="card-header p-0 pb-3 text-center">
+                                </div>-->
+                                  <div class="card-body p-0 pb-3 text-center">
+
+                                      <div>
+                                          <tabs>
+                                              <tab id="tab1" name="Daily challenge">
+                                                  <table style="border:solid">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/1.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td>Easy</td>
+                                                              <td rowspan="2" style="width:50px;">
+                                                                  <img src="images/challenge/4.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td><input type="text" v-model="text" style="width:100px;" /></td>
+                                                              <td align="left">/99999</td>
+                                                              <td width="100px;">
+                                                                  <img src="images/challenge/3.png" />
+                                                                  100
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+
+                                                  <table style="border:solid; margin-top:10px;">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/1.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td>Easy</td>
+                                                              <td rowspan="2" style="width:50px;">
+                                                                  <img src="images/challenge/4.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td><input type="text" v-model="text" style="width:100px;" /></td>
+                                                              <td align="left">/99999</td>
+                                                              <td width="100px;">
+                                                                  <img src="images/challenge/3.png" />
+                                                                  100
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+
+                                                  <table style="border:solid; margin-top:10px;">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/2.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td rowspan="2" style="width:150px;">
+                                                                  <img src="images/challenge/5.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td></td>
+                                                              <td></td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+
+                                                  <div Align="right"><button type="button" class="mb-2 btn btn-sm btn-primary mr-1">Save</button></div>
+                                                  
+
+                                              </tab>
+                                              <tab id="tab2" name="Weekly Challenge">
+                                                  <table style="border:solid">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/1.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td>Easy</td>
+                                                              <td rowspan="2" style="width:50px;">
+                                                                  <img src="images/challenge/4.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td><input type="text" v-model="text" style="width:100px;" /></td>
+                                                              <td align="left">/99999</td>
+                                                              <td width="100px;">
+                                                                  <img src="images/challenge/3.png" />
+                                                                  100
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+
+                                                  <table style="border:solid; margin-top:10px;">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/2.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td>Easy</td>
+                                                              <td rowspan="2" style="width:50px;">
+                                                                  <img src="images/challenge/4.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td><input type="text" v-model="text" style="width:100px;" /></td>
+                                                              <td align="left">/99999</td>
+                                                              <td width="100px;">
+                                                                  <img src="images/challenge/3.png" />
+                                                                  100
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+
+                                                  <table style="border:solid; margin-top:10px;">
+                                                      <tbody>
+                                                          <tr>
+                                                              <td rowspan="2"><img src="images/challenge/2.png" /></td>
+                                                              <td rowspan="2" align="left" style="margin-top:auto;margin-bottom:auto;width:300px;">
+                                                                  hogehogehogehogehogehoge
+                                                              </td>
+                                                              <td colspan="2">
+                                                                  <loading-progress :progress="progress"
+                                                                                    :indeterminate="indeterminate"
+                                                                                    :counter-clockwise="counterClockwise"
+                                                                                    :hide-background="hideBackground"
+                                                                                    size="120"
+                                                                                    height="30"
+                                                                                    rotate
+                                                                                    shape="line"
+                                                                                    fillDuration="2"
+                                                                                    rotationDuration="1"></loading-progress>
+                                                              </td>
+                                                              <td>Easy</td>
+                                                              <td rowspan="2" style="width:50px;">
+                                                                  <img src="images/challenge/4.png" />
+                                                              </td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td><input type="text" v-model="text" style="width:100px;" /></td>
+                                                              <td align="left">/99999</td>
+                                                              <td width="100px;">
+                                                                  <img src="images/challenge/3.png" />
+                                                                  100
+                                                              </td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </tab>
+                                              <tab id="tab3" name="Beginner Challenge">
+                                                  Third tab content
+                                              </tab>
+                                              <tab id="tab4" name="Event challenge">
+                                                  Third tab content
+                                              </tab>
+                                          </tabs>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-12">
+                                  <!-- Post Overview -->
+                                  <!-- / Post Overview -->
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+          </div>
+          <!-- modal -->
+
+      </div>
+      <!-- liblary -->
+      <script src="scripts/app/lib/footer-write.js"></script>
+      <!-- pageJS -->
+      <script src="https://cdn.jsdelivr.net/npm/vue-tabs-component@1.5.0/dist/index.min.js"></script>
+      <link href="styles/tab.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-progress-path@0.0.2/dist/vue-progress-path.css">
+      <script src="https://cdn.jsdelivr.net/npm/vue-progress-path@0.0.2/dist/vue-progress-path.umd.min.js"></script>
+      <link href="styles/progress.css" rel="stylesheet" />
+      <script src="scripts/app/page/Challenge.js"></script>
+  </body>
+</html>

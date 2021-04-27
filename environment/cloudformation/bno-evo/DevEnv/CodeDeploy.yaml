@@ -1,0 +1,227 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for CodeDeploy"
+
+Parameters:
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+Resources:
+  
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Principal:
+              Service:
+                - codedeploy.amazonaws.com
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole'
+      RoleName: !Sub jpop-CodeDeployRole-${EnvName}
+
+  Application:
+    Type: AWS::CodeDeploy::Application
+    Properties: 
+      ApplicationName: !Sub "jpop-${EnvName}"
+      ComputePlatform: Server # ECS | Lambda | Server
+  
+  
+  # evoapi
+  DeploymentGroupApi:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      # AlarmConfiguration: 
+      #   AlarmConfiguration
+      ApplicationName: !Ref Application
+      # AutoRollbackConfiguration: 
+      #   AutoRollbackConfiguration
+      AutoScalingGroups: 
+        - {"Fn::ImportValue" : !Sub "jpop-evoapi-AutoScalingGroup-${EnvName}"}
+      # Deployment: 
+      #   Deployment
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      DeploymentGroupName: 'evoapi'
+      DeploymentStyle: 
+        DeploymentType: IN_PLACE # BLUE_GREEN | IN_PLACE
+        DeploymentOption:  WITHOUT_TRAFFIC_CONTROL # WITHOUT_TRAFFIC_CONTROL | WITH_TRAFFIC_CONTROL
+      # Ec2TagFilters: 
+      #   - EC2TagFilter
+      # Ec2TagSet: 
+      #   EC2TagSet
+      # LoadBalancerInfo: 
+      #   LoadBalancerInfo
+      # OnPremisesInstanceTagFilters: 
+      #   - TagFilter
+      # OnPremisesTagSet: 
+      #   OnPremisesTagSet
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - Role
+        - Arn
+      # TriggerConfigurations: 
+      #   - TriggerConfig
+
+
+  # evomatching
+  DeploymentGroupMatching:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      # AlarmConfiguration: 
+      #   AlarmConfiguration
+      ApplicationName: !Ref Application
+      # AutoRollbackConfiguration: 
+      #   AutoRollbackConfiguration
+      # AutoScalingGroups: 
+      #   - String
+      # Deployment: 
+      #   Deployment
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      DeploymentGroupName: 'evomatching'
+      DeploymentStyle: 
+        DeploymentType: IN_PLACE # BLUE_GREEN | IN_PLACE
+        DeploymentOption:  WITHOUT_TRAFFIC_CONTROL # WITHOUT_TRAFFIC_CONTROL | WITH_TRAFFIC_CONTROL
+      Ec2TagFilters: 
+      - 
+        Key: Name
+        Value: !Sub "jpop-evomatching-${EnvName}"
+        Type: "KEY_AND_VALUE"
+      # Ec2TagSet: 
+      #   EC2TagSet
+      # LoadBalancerInfo: 
+      #   LoadBalancerInfo
+      # OnPremisesInstanceTagFilters: 
+      #   - TagFilter
+      # OnPremisesTagSet: 
+      #   OnPremisesTagSet
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - Role
+        - Arn
+      # TriggerConfigurations: 
+      #   - TriggerConfig
+
+  # evosequencing
+  DeploymentGroupSequencing:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      # AlarmConfiguration: 
+      #   AlarmConfiguration
+      ApplicationName: !Ref Application
+      # AutoRollbackConfiguration: 
+      #   AutoRollbackConfiguration
+      # AutoScalingGroups: 
+      #   - String
+      # Deployment: 
+      #   Deployment
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      DeploymentGroupName: 'evosequencing'
+      DeploymentStyle: 
+        DeploymentType: IN_PLACE # BLUE_GREEN | IN_PLACE
+        DeploymentOption:  WITHOUT_TRAFFIC_CONTROL # WITHOUT_TRAFFIC_CONTROL | WITH_TRAFFIC_CONTROL
+      Ec2TagFilters: 
+      - 
+        Key: Name
+        Value: !Sub "jpop-evosequencing-${EnvName}"
+        Type: "KEY_AND_VALUE"
+      # Ec2TagSet: 
+      #   EC2TagSet
+      # LoadBalancerInfo: 
+      #   LoadBalancerInfo
+      # OnPremisesInstanceTagFilters: 
+      #   - TagFilter
+      # OnPremisesTagSet: 
+      #   OnPremisesTagSet
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - Role
+        - Arn
+      # TriggerConfigurations: 
+      #   - TriggerConfig
+
+
+  # evotool
+  DeploymentGroupTool:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      # AlarmConfiguration: 
+      #   AlarmConfiguration
+      ApplicationName: !Ref Application
+      # AutoRollbackConfiguration: 
+      #   AutoRollbackConfiguration
+      # AutoScalingGroups: 
+      #   - String
+      # Deployment: 
+      #   Deployment
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      DeploymentGroupName: 'evotool'
+      DeploymentStyle: 
+        DeploymentType: IN_PLACE # BLUE_GREEN | IN_PLACE
+        DeploymentOption:  WITHOUT_TRAFFIC_CONTROL # WITHOUT_TRAFFIC_CONTROL | WITH_TRAFFIC_CONTROL
+      Ec2TagFilters: 
+      - 
+        Key: Name
+        Value: !Sub "jpop-evotool-${EnvName}"
+        Type: "KEY_AND_VALUE"
+      # Ec2TagSet: 
+      #   EC2TagSet
+      # LoadBalancerInfo: 
+      #   LoadBalancerInfo
+      # OnPremisesInstanceTagFilters: 
+      #   - TagFilter
+      # OnPremisesTagSet: 
+      #   OnPremisesTagSet
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - Role
+        - Arn
+      # TriggerConfigurations: 
+      #   - TriggerConfig
+
+
+  # evogmtool
+  DeploymentGroupGmTool:
+    Type: AWS::CodeDeploy::DeploymentGroup
+    Properties:
+      # AlarmConfiguration: 
+      #   AlarmConfiguration
+      ApplicationName: !Ref Application
+      # AutoRollbackConfiguration: 
+      #   AutoRollbackConfiguration
+      # AutoScalingGroups: 
+      #   - String
+      # Deployment: 
+      #   Deployment
+      DeploymentConfigName: CodeDeployDefault.AllAtOnce
+      DeploymentGroupName: 'evogmtool'
+      DeploymentStyle: 
+        DeploymentType: IN_PLACE # BLUE_GREEN | IN_PLACE
+        DeploymentOption:  WITHOUT_TRAFFIC_CONTROL # WITHOUT_TRAFFIC_CONTROL | WITH_TRAFFIC_CONTROL
+      Ec2TagFilters: 
+      - 
+        Key: Name
+        Value: !Sub "jpop-evogmtool-${EnvName}"
+        Type: "KEY_AND_VALUE"
+      # Ec2TagSet: 
+      #   EC2TagSet
+      # LoadBalancerInfo: 
+      #   LoadBalancerInfo
+      # OnPremisesInstanceTagFilters: 
+      #   - TagFilter
+      # OnPremisesTagSet: 
+      #   OnPremisesTagSet
+      ServiceRoleArn:
+        Fn::GetAtt:
+        - Role
+        - Arn
+      # TriggerConfigurations: 
+      #   - TriggerConfig

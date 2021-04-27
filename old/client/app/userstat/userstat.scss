@@ -1,0 +1,104 @@
+table.simple
+{
+  width             : 100%;
+  table-layout      : auto;
+  border            : 1px #2e95ed solid;
+  border-collapse   : collapse;
+}
+
+table.simple th
+{
+  border            : 1px #2e95ed solid;
+  padding           : 6px 8px;
+  text-align        : center;
+  color             : #10212f;
+  background-color  : #ffffff;
+}
+
+table.simple td
+{
+  border            : 1px #2e95ed solid;
+  padding           : 2px 4px;
+  text-align        : center;
+}
+table.simple td.c0
+{
+  background-color  : #e6ecf6;
+}
+table.simple td.c1
+{
+  background-color  : #ffffff;
+}
+table.simple td.c2
+{
+  background-color  : #ffeaea;
+}
+table.simple td.c3
+{
+  background-color  : #eaffea;
+}
+
+.main_area
+{
+  width             : 100%;
+}
+
+.margin_area
+{
+  margin-left       : 32px;
+  margin-right      : 32px;
+  margin-top        : 12px;
+  margin-bottom     : 480px;
+}
+
+.content_area
+{
+  width             : 100%;
+}
+
+.box
+{
+  color             : #10212f;
+  background-color  : rgba(255,255,255,0.7);
+  box-shadow        : -1px -1px 2px #2e95ed,
+                       1px -1px 2px #2e95ed,
+                      -1px  1px 2px #2e95ed,
+                       1px  1px 2px #2e95ed;
+  border-radius     : 4px;
+  position          : fixed;
+}
+
+.light_box
+{
+  padding           : 2px 4px;
+  margin            : 2px 4px;
+  color             : #0196ff;
+  background-color  : #e6ecf6;
+  box-shadow        : -1px -1px 2px #2e95ed,
+                       1px -1px 2px #2e95ed,
+                      -1px  1px 2px #2e95ed,
+                       1px  1px 2px #2e95ed;
+  border-radius     : 4px;
+  display           : inline-block;
+  text-shadow       : 0px 0px 1px #2e95ed;
+}
+
+.dark_dialog
+{
+  position          : absolute;
+  top               : 24px;
+  bottom            : 24px;
+  left              : 24px;
+  right             : 24px;
+  padding           : 8px 8px;
+  background-color  : rgba(0,0,0,0.8);
+  border-radius     : 8px;
+  overflow          : auto;
+}
+
+ul.one li ul
+{
+  margin            : 0 0 0 1em;
+  padding           : 0 0;
+}
+

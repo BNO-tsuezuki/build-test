@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Auth Log</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Auth Log</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Date and time range:</label>
+
+                                        <div class="input-group">
+                                            <date-range-picker v-if="locale" :time-picker="true" v-model="dateRange" :locale-data="locale" style="width:100%;" @update="rageUpdate">
+                                            </date-range-picker>
+                                        </div>
+                                        <!-- /.input group -->
+
+                                        <label>Account:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter account" v-model="selectedAccount">
+                                        </div>
+
+
+                                        <label>IPAddres:</label>
+                                        <div class="input-group">
+                                            <div class="input-group">
+                                                <input id="ipInput" type="text" class="form-control" placeholder="Enter IPAddres" data-inputmask="'alias': 'ip'" data-mask v-model="ipAddress">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="button" class="btn btn-primary" v-on:click="getLogs">Search</button>
+                                    </div>
+
+                                </div>
+
+
+
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>account</th>
+                                            <th>ipAddress</th>
+                                            <th>createdAt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="log in List.authLogList">
+                                            <td>{{log.id}}</td>
+                                            <td>{{log.account}}</td>
+                                            <td>{{log.ipAddress}}</td>
+                                            <td>{{getDateTime(log.createdAt)}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+
+    <script src="/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="/scripts/app/lib/vue2-daterange-picker.umd.js"></script>
+    <link href="/styles/dateRangePicker.css" rel="stylesheet" />
+
+    <script src="/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="/scripts/app/page/log/AuthLog.js"></script>
+
+
+</body>
+</html>

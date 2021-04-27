@@ -1,0 +1,16 @@
+title Login(Player)
+
+participant Player
+participant api
+
+note over Player:Login
+Player->+api:/Auth/Login
+api->-Player:
+
+note over Player,api:レスポンス\ninitialLevel==0の場合\n(はじめてのログイン)
+Player->+api:/PlayerInformation/SetFirstOnetime
+api->-Player:
+
+note over Player:Logout
+Player->+api:/Auth/Logout
+api->-Player:

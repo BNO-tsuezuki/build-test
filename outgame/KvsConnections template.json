@@ -1,0 +1,13 @@
+{
+  "KvsConnections": {
+    "Common": [
+      "XXXXXXXX, abortConnect=false, defaultDatabase=0,"
+    ],
+    "Personal": [
+      "XXXXXXXX, abortConnect=false, defaultDatabase=0,"
+    ],
+    "Tool": [
+      "XXXXXXXX, abortConnect=false, defaultDatabase=0,"
+    ]
+  }
+}

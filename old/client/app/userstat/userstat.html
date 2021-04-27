@@ -1,0 +1,198 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="box" id="popup" style="visibility:hidden; width:512px;">
+  <div d3-userstat-test stat="stat"></div>
+</div>
+
+<div class="main_area">
+  <div class="margin_area">
+    <div class="content_area">
+
+      <div class="light_box" ng-click='onClickInfo()'>Info</div>
+      <div id="info" style="display:none;">
+        <ul class="one">
+          <li>
+            プレイヤースキルを客観的に評価し易くする為、一覧では [撃破] [ダメージ] [G] [FOB] を試合平均値で表示するようにしました。
+            <ul>
+              <li>累計値はポップアップに収容しました。</li>
+            </ul>
+          </li>
+          <li>[名前] [参戦時間] [勝利数] [ファイナルブロウRate] [キルRate] [ダメージRate] [FOB維持時間] でのソート機能を実装しました。</li>
+        </ul>
+      </div>
+      <br><br>
+
+      <table class="simple" ng-mousemove="onMouseMove()">
+        <thead>
+          <tr>
+            <th width="200px">ID</th>
+            <th ng-click='onClickTitle("name")'>名前<div id="t_name" style="float:right;"></div></th>
+            <th colspan="3" width="12%" ng-click='onClickTitle("time")'>参戦<div id="t_time" style="float:right;"></div></th>
+            <th colspan="2" width="8%" ng-click='onClickTitle("win")'>勝敗<div id="t_win" style="float:right;"></div></th>
+            <th colspan="2" width="12%" ng-click='onClickTitle("fb")'>ファイナルブロウ (Rate)<div id="t_fb" style="float:right;"></div></th>
+            <th colspan="2" width="12%" ng-click='onClickTitle("el")'>キル (Rate)<div id="t_el" style="float:right;"></div></th>
+            <th colspan="3" width="18%" ng-click='onClickTitle("dr")'>ダメージ (Rate)<div id="t_dr" style="float:right;"></div></th>
+            <!--<th>修復</th>-->
+            <!--<th>捕捉</th>-->
+            <th width="48px">G</th>
+            <th colspan="3" width="18%" ng-click='onClickTitle("maintain_seconds")'>FOB<div id="t_maintain_seconds" style="float:right;"></div></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ↓ユーザー↓-->
+          <tr ng-repeat-start="(i, stat) in userstats" ng-if="stat.name.length>0" ng-mouseenter="onMouseOver(stat)" ng-mouseleave="onMouseOut()" ng-click="onClick(stat)">
+            <td class="c{{i%2}}" id="col_usr_{{stat._id}}">{{stat._id}}</td>
+            <td class="c{{i%2}}">{{stat.name}}</td>
+            <td class="c{{i%2}}" colspan="1" style="text-align:right; padding-right:8px;">{{jc = stat.win+stat.lose}}回</td>
+            <td class="c{{i%2}}" colspan="2" style="text-align:right; padding-right:8px;">{{getTimeString(stat.time)}}</td>
+            </td>
+            <td class="c{{i%2}}" colspan="2">
+              <table width="100%" style="table-layout:fixed;">
+                <tr>
+                  <td style="border:none; padding:0 0;">{{stat.win}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">:</td>
+                  <td style="border:none; padding:0 0;">{{stat.lose}}</td>
+                </tr>
+              </table>
+            </td>
+            <td class="c{{i%2}}" colspan="2">
+              <table width="100%" style="table-layout:fixed;">
+                <tr>
+                  <td style="border:none; padding:0 0;">{{(stat.finalblows/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">:</td>
+                  <td style="border:none; padding:0 0;">{{(stat.death/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px"></td>
+                  <td style="border:none; padding:0 0;">({{(stat.finalblows/stat.death).toFixed(1)}})</td>
+                </tr>
+              </table>
+            </td>
+            <td class="c{{i%2}}" colspan="2">
+              <table width="100%" style="table-layout:fixed;">
+                <tr>
+                  <td style="border:none; padding:0 0;">{{(stat.eliminations/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">:</td>
+                  <td style="border:none; padding:0 0;">{{(stat.death/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px"></td>
+                  <td style="border:none; padding:0 0;">({{(stat.eliminations/stat.death).toFixed(1)}})</td>
+                </tr>
+              </table>
+            </td>
+            <td class="c{{i%2}}" colspan="3">
+              <table width="100%" style="table-layout:fixed;">
+                <tr>
+                  <td style="border:none; padding:0 0;">{{(stat.damage_given/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">:</td>
+                  <td style="border:none; padding:0 0;">{{(stat.damage_taken/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px"></td>
+                  <td style="border:none; padding:0 0;">({{(stat.damage_given/stat.damage_taken).toFixed(1)}})</td>
+                </tr>
+              </table>
+            </td>
+            <!--<td class="c{{i%2}}">{{stat.recovery}}</td>-->
+            <!--<td class="c{{i%2}}">{{stat.spotted}}</td>-->
+            <td class="c{{i%2}}">{{(getSum(stat.mobilesuit_stat, "skill_use")/jc).toFixed(0)}}</td>
+            <td class="c{{i%2}}" colspan="3">
+              <table width="100%" style="table-layout:fixed;">
+                <tr>
+                  <td style="border:none; padding:0 0;">{{(stat.conquered_times/jc).toFixed(0)}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">/</td>
+                  <td style="border:none; padding:0 0;">{{getTimeString((stat.conquered_seconds/jc).toFixed(0))}}</td>
+                  <td style="border:none; padding:0 0;" width="4px">/</td>
+                  <td style="border:none; padding:0 0;">{{getTimeString((stat.maintain_seconds/jc).toFixed(0))}}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- ↑ユーザー↑ -->
+
+          <!-- ↓機体↓-->
+          <tr style="display:none;" name="row_{{stat._id}}">
+            <th>機体名</th>
+            <th title="出撃した回数" width="4%">回数</th>
+            <th title="戦場に出ていた累計時間" width="4%">時間</th>
+            <th title="1回の出撃で生きながらえた最長時間" width="4%">最長</th>
+            <th title="勝利回数" width="4%">勝</th>
+            <th title="敗北回数" width="4%">敗</th>
+            <th title="ファイナルブロウ数" width="6%">ファイブロ</th>
+            <th title="キル数" width="6%">キル</th>
+            <th title="被撃破数" width="6%">デス</th>
+            <th title="最高連続撃破数" width="6%">連</th>
+            <th title="累計与ダメージ" width="6%">与</th>
+            <th title="累計被ダメージ" width="6%">被</th>
+            <th title="累計防御ダメージ" width="6%">防</th>
+            <th title="累計Gマニューバースキル使用回数">G</th>
+            <th title="拠点を制圧した回数">占拠</th>
+            <th title="制圧に貢献した時間">貢献</th>
+            <th title="制圧した拠点が維持されていた時間">維持</th>
+          </tr>
+          <tr ng-repeat-start="(j, mss) in stat.mobilesuit_stat | orderBy:'time':true" name="row_{{stat._id}}" style="display:none;">
+            <td class="c{{j%2+2}}" title="{{mss.msId}}" id="col_ms_{{mss._id}}" ng-click="onClickMs(mss)">{{mstable[mss.msId]}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.sortie}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{getTimeString(mss.time)}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{getTimeString(mss.lifespan_longest)}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.win}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.lose}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.finalblows}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.eliminations}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.death}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.killstreak}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.damage_given}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.damage_taken}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.damage_guard}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.skill_use}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{mss.conquered_times}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{getTimeString(mss.conquered_seconds)}}</td>
+            <td name="col_{{mss._id}}" rowspan="2" class="c{{j%2+2}}">{{getTimeString(mss.maintain_seconds)}}</td>
+          </tr>
+
+          <!-- ↓武装 ↓-->
+          <tr ng-if="stat.name.length>0" style="display:none;" name="row_ds_{{mss._id}}">
+            <th colspan="3">ダメージソース</th>
+            <th colspan="1" title="該当武器での累計撃破数">撃</th>
+            <th colspan="1" title="該当武器での累計与ダメージ">与</th>
+            <th colspan="1">攻撃回数</th>
+            <th colspan="1">ヒット回数</th>
+            <th colspan="1">ヘッドショット回数</th>
+            <th colspan="1">バックショット回数</th>
+            <th colspan="1">命中率</th>
+            <th colspan="1">ヘッドショット率</th>
+            <th colspan="1">バックショット率</th>
+            <th colspan="4">-</th>
+          </tr>
+          <tr ng-repeat="(k, ds) in mss.damage_source" name="row_ds_{{mss._id}}" style="display:none;">
+            <td class="c{{j%2+2}}" colspan="3">{{ds.name}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.kill}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.damage_given}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.emit_count}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.hit_count}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.headshot_count}}</td>
+            <td class="c{{j%2+2}}" colspan="1">{{ds.backshot_count}}</td>
+            <td class="c{{j%2+2}}">{{((ds.hit_count/ds.emit_count)*100).toFixed(1)}}%</td>
+            <td class="c{{j%2+2}}">{{((ds.headshot_count/ds.hit_count)*100).toFixed(1)}}%</td>
+            <td class="c{{j%2+2}}">{{((ds.backshot_count/ds.hit_count)*100).toFixed(1)}}%</td>
+            <td class="c{{j%2+2}}" colspan="4">-</td>
+          </tr>
+          <!-- ↑武装 ↑ -->
+          <tr name="row_{{stat._id}}" style="display:none;height:2px;">
+            <td class="c{{j%2+2}}" title="{{mss.msId}}" style="padding:0px;">
+              <div style="padding:0px;background-color:rgba(1,150,255,0.7);width:{{(mss.time / getMax(stat.mobilesuit_stat, 'time'))*100}}%;height:2px;"></div>
+            </td>
+          </tr>
+          <tr ng-repeat-end name="row_{{stat._id}}" style="display:none;"></tr>
+
+          <tr ng-repeat-end ng-if="stat.name.length>0" style="display:none;">
+            <td colspan="20" class="c{{i%2}}">
+              <div style="width:100px;" id="graph_{{stat._id}}">
+                <div d3-userstat-test stat="stat"></div>
+              </div>
+            </td>
+          </tr>
+          <!-- ↑機体↑ -->
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

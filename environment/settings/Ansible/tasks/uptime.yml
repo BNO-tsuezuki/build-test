@@ -1,0 +1,5 @@
+
+
+- name: マシンの稼動時間表示
+  command: uptime
+  changed_when: false

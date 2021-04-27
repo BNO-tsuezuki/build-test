@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Unit</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Unit</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--<div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">
+                                        Some quick example text to build on the card title and make up the bulk of the card's
+                                        content.
+                                    </p>
+                                    <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>-->
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <table class="table mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th scope="col" class="border-0">MobileSuitId</th>
+                                                <th scope="col" class="border-0">DisplayName</th>
+                                                <th scope="col" class="border-0">isEnabledOnMasterData</th>
+                                                <th scope="col" class="border-0">isEnabledOnGmTool</th>
+                                                <th scope="col" class="border-0">isAvailable</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr v-for="item in dispData" :key="item.itemId" v-cloak>
+                                                <td>{{item.mobileSuitId}}</td>
+                                                <td>{{lang=='ja'?item.displayNameJapanese:item.displayNameEnglish}}</td>
+                                                <td>
+                                                    <div v-if="item.isEnabledOnMasterData">{{item.isEnabledOnMasterData}}</div>
+                                                    <div v-else style="color:red;">{{item.isEnabledOnMasterData}}</div>
+                                                </td>
+                                                <td>
+                                                    
+                                                    <div class="custom-control custom-switch" >
+                                                        <input type="checkbox" style="cursor: pointer" class="custom-control-input" v-model="item.isEnabledOnGmTool" v-bind:id="item.mobileSuitId" v-on:change="changeEnable(item)">
+                                                        <label class="custom-control-label" style="cursor: pointer" v-bind:for="item.mobileSuitId">{{item.isEnabledOnGmTool}}</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div v-if="item.isAvailable">{{item.isAvailable}}</div>
+                                                    <div v-else  style="color:red;">{{item.isAvailable}}</div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/page/game/unit.js"></script>
+
+
+</body>
+</html>

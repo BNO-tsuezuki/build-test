@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>0.2.0</Version>
+    <Product>TSS (Test Situation Setter)</Product>
+    <Company>BANDAI NAMCO Online Inc.</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\evoapi\ProtocolModels\Auth/Login.cs" Link="ApiServer\Login.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\Auth/Logout.cs" Link="ApiServer\Logout.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\PlayerInformation/SetFirstOnetime.cs" Link="ApiServer\SetFirstOnetime.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\PlayerInformation/PlayerNameValidateAttribute.cs" Link="ApiServer\PlayerNameValidateAttribute.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\PlayerInformation/ReportBattleResult.cs" Link="ApiServer\ReportBattleResult.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\Social/SendFriendRequest.cs" Link="ApiServer\SendFriendRequest.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\Social/ResponseFriendRequest.cs" Link="ApiServer\ResponseFriendRequest.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\Social/GetFriends.cs" Link="ApiServer\GetFriends.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\HandShake/HandShake.cs" Link="ApiServer\HandShake.cs" />
+    <Compile Include="..\evoapi\ProtocolModels\Test/TssVersion.cs" Link="ApiServer\TssVersion.cs" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\evolib\evolib.csproj" />
+  </ItemGroup>
+
+</Project>

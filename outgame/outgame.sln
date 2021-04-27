@@ -1,0 +1,110 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evoapi", "evoapi\evoapi.csproj", "{22DD4865-F73E-4C05-A660-EF717A3BA2B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evotool", "evotool\evotool.csproj", "{BF977753-3332-4AD1-AE91-A593F583C0F4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evolib", "evolib\evolib.csproj", "{53F55691-3375-4929-8AD3-2236D7A5F075}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evomatching", "evomatching\evomatching.csproj", "{1B3849ED-2D11-4C65-950D-00482030645A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC0BC165-8D81-41C2-A9F0-C2046C9A7320}"
+	ProjectSection(SolutionItems) = preProject
+		appsettings.Development.json = appsettings.Development.json
+		appsettings.DevEnv.json = appsettings.DevEnv.json
+		appsettings.json = appsettings.json
+		AuthenticationServer.json = AuthenticationServer.json
+		DeliveryData.json = DeliveryData.json
+		KvsConnections.json = KvsConnections.json
+		MatchingServer.json = MatchingServer.json
+		RdbConnections.json = RdbConnections.json
+		SequencingServer.json = SequencingServer.json
+		systeminfo.json = systeminfo.json
+		ToolServer.json = ToolServer.json
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		__JSONSchema = http://json.schemastore.org/bowerrc
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evosequencing", "evosequencing\evosequencing.csproj", "{59E2AD06-C951-4F35-BE68-7255FFD514B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StressTest", "StressTest\StressTest.csproj", "{4395E2C9-610B-4759-ABD4-17C840D9FE2D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22DD4865-F73E-4C05-A660-EF717A3BA2B6} = {22DD4865-F73E-4C05-A660-EF717A3BA2B6}
+		{53F55691-3375-4929-8AD3-2236D7A5F075} = {53F55691-3375-4929-8AD3-2236D7A5F075}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchmakeTest", "MatchmakeTest\MatchmakeTest.csproj", "{3342610A-D303-4C7A-AD98-DE536D20923E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{53F55691-3375-4929-8AD3-2236D7A5F075} = {53F55691-3375-4929-8AD3-2236D7A5F075}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationServer", "AuthenticationServer\AuthenticationServer.csproj", "{7221556D-21BF-4725-8528-96F839F1FB11}"
+	ProjectSection(ProjectDependencies) = postProject
+		{53F55691-3375-4929-8AD3-2236D7A5F075} = {53F55691-3375-4929-8AD3-2236D7A5F075}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "evogmtool", "evogmtool\evogmtool.csproj", "{41647F09-A566-4B40-8C0E-C323968E5F28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSituationSetter", "TestSituationSetter\TestSituationSetter.csproj", "{2C17D369-20A0-4D77-82C6-2E7E0EFC606D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{53F55691-3375-4929-8AD3-2236D7A5F075} = {53F55691-3375-4929-8AD3-2236D7A5F075}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22DD4865-F73E-4C05-A660-EF717A3BA2B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DD4865-F73E-4C05-A660-EF717A3BA2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DD4865-F73E-4C05-A660-EF717A3BA2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DD4865-F73E-4C05-A660-EF717A3BA2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF977753-3332-4AD1-AE91-A593F583C0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF977753-3332-4AD1-AE91-A593F583C0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF977753-3332-4AD1-AE91-A593F583C0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF977753-3332-4AD1-AE91-A593F583C0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F55691-3375-4929-8AD3-2236D7A5F075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F55691-3375-4929-8AD3-2236D7A5F075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F55691-3375-4929-8AD3-2236D7A5F075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F55691-3375-4929-8AD3-2236D7A5F075}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3849ED-2D11-4C65-950D-00482030645A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3849ED-2D11-4C65-950D-00482030645A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3849ED-2D11-4C65-950D-00482030645A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3849ED-2D11-4C65-950D-00482030645A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59E2AD06-C951-4F35-BE68-7255FFD514B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E2AD06-C951-4F35-BE68-7255FFD514B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E2AD06-C951-4F35-BE68-7255FFD514B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E2AD06-C951-4F35-BE68-7255FFD514B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4395E2C9-610B-4759-ABD4-17C840D9FE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4395E2C9-610B-4759-ABD4-17C840D9FE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4395E2C9-610B-4759-ABD4-17C840D9FE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4395E2C9-610B-4759-ABD4-17C840D9FE2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3342610A-D303-4C7A-AD98-DE536D20923E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3342610A-D303-4C7A-AD98-DE536D20923E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3342610A-D303-4C7A-AD98-DE536D20923E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3342610A-D303-4C7A-AD98-DE536D20923E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7221556D-21BF-4725-8528-96F839F1FB11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7221556D-21BF-4725-8528-96F839F1FB11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7221556D-21BF-4725-8528-96F839F1FB11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7221556D-21BF-4725-8528-96F839F1FB11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41647F09-A566-4B40-8C0E-C323968E5F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41647F09-A566-4B40-8C0E-C323968E5F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41647F09-A566-4B40-8C0E-C323968E5F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41647F09-A566-4B40-8C0E-C323968E5F28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C17D369-20A0-4D77-82C6-2E7E0EFC606D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C17D369-20A0-4D77-82C6-2E7E0EFC606D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C17D369-20A0-4D77-82C6-2E7E0EFC606D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C17D369-20A0-4D77-82C6-2E7E0EFC606D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92F0BA72-EAA3-47A4-BA0F-C7F275A111BC}
+	EndGlobalSection
+EndGlobal

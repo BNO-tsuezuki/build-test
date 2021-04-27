@@ -1,0 +1,8 @@
+
+
+- name: ユーザーを追加
+  become: yes
+  user:
+    name: "{{username}}"
+    password: "{{userpass}}"
+    group: "{{group}}"

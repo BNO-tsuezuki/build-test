@@ -1,0 +1,10 @@
+- name: <Nodejs> repo登録 & repo更新
+  become: yes
+  shell: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+  changed_when: false
+
+- name: <Nodejs> install
+  become: yes
+  apt:
+    name: nodejs
+    force: yes

@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "AnalysisLogProcessTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "d:\\dev\\evo\\temp\\dev-evo-516d365413e6.json",
+        "BQ_PROJECT_ID": "dev-evo",
+        "BQ_DATASET_ID": "yokota_test_dataset",
+        "S3_API_SERVER_LOG_KEYWORD": "devenv2",
+        "S3_DEDICATED_SERVER_LOG_KEYWORD": "sand",
+        "HASH_PEPPER": "SecretStringOf8CharactersOrLonger",
+        "TEST_AWS_PROFILE": "wio-yokota",
+        "TEST_AWS_REGION": "ap-northeast-1",
+        "TEST_S3_BUCKET_NAME": "",
+        "TEST_S3_OBJECT_KEY": ""
+      }
+    }
+  }
+}

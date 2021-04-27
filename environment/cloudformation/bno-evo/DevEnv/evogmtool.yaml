@@ -1,0 +1,306 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Stack for evogmtool"
+Metadata:
+  LICENSE: Apache License, Version 2.0 
+  'AWS::CloudFormation::Interface':
+    
+    ParameterGroups:
+      - Label:
+          default: Amazon EC2 Configuration
+        Parameters:
+          - KeyPairName
+          - AMI
+          - InstanceType
+          - RootVolumeSize
+
+    ParameterLabels:
+      KeyPairName:
+        default: Key Pair Name
+      AMI:
+        default: AMI
+      InstanceType:
+        default: Instance Type
+      RootVolumeSize:
+        default: Root Volume Size
+
+Parameters:
+
+  KeyPairName:
+    Description: Enter a Public/private key pair. If you do not have one in this region, please create it before continuing
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  AMI:
+    Default:  ami-0daa7fcbd7aaff144
+    Description: The Linux distribution for the AMI to be used for instances. But "ap-northeast-1" region only!
+    Type: String
+
+  InstanceType:
+    Default: t2.micro
+    Description: Amazon EC2 instance type
+    Type: String
+
+  RootVolumeSize:
+    Description: Specify a size in GB for the root EBS volume
+    Type: Number
+    Default: '32'
+
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  PortNoFrom:
+    Type: Number
+    Default: 58261
+  PortNoTo:
+    Type: Number
+    Default: 58262
+
+
+
+Resources:
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: String
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          Description: "BNO"
+          CidrIp: 221.112.67.210/32 #BNO
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.177/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.45/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.210/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+          
+        -
+          CidrIp: {"Fn::ImportValue" : !Sub "jpop-VpcCidr-${EnvName}"}
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+
+        -
+          Description: "BNO"
+          CidrIp: 221.112.67.210/32 #BNO
+          FromPort: !Ref PortNoFrom
+          ToPort: !Ref PortNoTo
+          IpProtocol: "tcp"
+
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.177/32
+          FromPort: !Ref PortNoFrom
+          ToPort: !Ref PortNoTo
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.45/32
+          FromPort: !Ref PortNoFrom
+          ToPort: !Ref PortNoTo
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.210/32
+          FromPort: !Ref PortNoFrom
+          ToPort: !Ref PortNoTo
+          IpProtocol: "tcp"
+
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-evogmtool-${EnvName}"
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+
+
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref Role
+      Path: /
+
+  Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      # Affinity: String
+      # AvailabilityZone: String
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp2
+            DeleteOnTermination: true
+      # CreditSpecification: CreditSpecification
+      # DisableApiTermination: Boolean
+      # EbsOptimized: Boolean
+      # ElasticGpuSpecifications: [ ElasticGpuSpecification, ... ]
+      # ElasticInferenceAccelerators: 
+      #   - ElasticInferenceAccelerator
+      # HostId: String
+      IamInstanceProfile: !Ref InstanceProfile
+      ImageId: !Ref AMI
+      # InstanceInitiatedShutdownBehavior: String
+      InstanceType: !Ref InstanceType
+      # Ipv6AddressCount: Integer
+      # Ipv6Addresses:
+      #   - IPv6 Address Type
+      # KernelId: String
+      KeyName: !Ref KeyPairName
+      # LaunchTemplate: LaunchTemplateSpecification
+      # LicenseSpecifications: 
+      #   - LicenseSpecification
+      # Monitoring: Boolean
+      # NetworkInterfaces: 
+      #   - EC2 Network Interface
+      # PlacementGroupName: String
+      # PrivateIpAddress: String
+      # RamdiskId: String
+      SecurityGroupIds: 
+        - Fn::GetAtt:
+          - SecurityGroup
+          - GroupId
+      # SecurityGroups: 
+      #   - String
+      # SourceDestCheck: Boolean
+      # SsmAssociations: 
+      #   - SSMAssociation
+      SubnetId: {"Fn::ImportValue" : !Sub "jpop-PublicSubnet0-${EnvName}"}
+      Tags: 
+        - Key: Name
+          Value: !Sub "jpop-evogmtool-${EnvName}"
+      # Tenancy: String
+      UserData: !Base64 
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash
+            - |+
+
+
+            - |
+              # test echo
+            - 'echo '
+            - !Ref 'AWS::StackName'
+            - |+
+
+
+            - |
+              # cfn-init
+            - '/opt/aws/bin/cfn-init -c order -v'
+            - ' -s '
+            - !Ref 'AWS::StackName'
+            - ' --region '
+            - !Ref 'AWS::Region'
+            - ' -r Instance '
+            - |+
+
+
+            - |
+              # cfn-signal
+            - '/opt/aws/bin/cfn-signal -e $? --stack '
+            - !Ref 'AWS::StackName'
+            - ' --resource Instance --region '
+            - !Ref 'AWS::Region'
+            - |+
+
+
+            - |
+              # eof
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: PT30M
+
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          order:
+            - misc
+            - codedeployagent
+            - rmate
+
+        misc:
+          commands:
+            0_export-PS1:
+              command: echo 'export PS1="[\u@evogmtool \w]$"' >> /home/ec2-user/.bashrc
+
+        codedeployagent:
+          packages:
+            yum:
+              ruby:
+                [] # - "2.0.0.648-36.amzn2.0.1"
+          commands:
+            0_download:
+              command: "curl https://aws-codedeploy-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/latest/install -oinstall"
+              # env: string
+              cwd: "/home/ec2-user/"
+              # test: 
+              # ignoreErrors: false
+            1_chmod:
+              command: "sudo chmod +x ./install"
+              cwd: "/home/ec2-user/"
+            2_install:
+              command: "sudo ./install auto"
+              cwd: "/home/ec2-user/"
+            3_checkstatus:
+              command: "sudo service codedeploy-agent status"
+
+        rmate:
+          commands:
+            0_download:
+              command: "curl https://raw.githubusercontent.com/textmate/rmate/master/bin/rmate -o/usr/bin/rmate"
+            1_chmod:
+              command: "chmod a+x /usr/bin/rmate"
+
+      # Volumes: 
+      #   - EC2 MountPoint
+      # AdditionalInfo: String
+
+  # WaitConditionHandle:
+  #   Type: AWS::CloudFormation::WaitConditionHandle
+
+  # WaitCondition:
+  #   Type: AWS::CloudFormation::WaitCondition
+  #   Properties: 
+  #     # Count: Integer
+  #     Handle: !Ref WaitConditionHandle
+  #     Timeout: 600

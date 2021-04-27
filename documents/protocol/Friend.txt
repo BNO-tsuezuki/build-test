@@ -1,0 +1,77 @@
+title Friend関連
+
+participant -      -
+participant Player_A
+participant Player_B
+participant api
+participant DataStore
+participant sequencing
+
+
+
+
+note over -      -:友達リクエスト
+Player_A->+api:SendFriendRequest
+api->+sequencing:SendFriendRequest
+sequencing->>*DataStore:
+sequencing->-api:
+api->-Player_A:
+
+Player_B->+api:HandShake
+DataStore->api:
+destroy DataStore
+api-->-Player_B:RecievedFriendRequest
+note over Player_B:GetFriendsでリスト更新
+
+
+
+
+note over -      -:友達リクエスト返信
+Player_B->+api:ResponseFriendRequest
+api->+sequencing:ResponseFriendRequest
+sequencing->>*DataStore:
+sequencing->-api:
+api->-Player_B:
+
+
+Player_A->+api:HandShake
+note over DataStore:返信がOKで友達成立の場合のみ
+DataStore->api:
+destroy DataStore
+api-->-Player_A:UpdateFriends
+note over Player_A:GetFriendsでリスト更新
+
+
+
+
+note over -      -:友達解消
+Player_B->+api:RuptureFriend
+api->+sequencing:RuptureFriend
+sequencing->>*DataStore:
+sequencing->-api:
+api->-Player_B:
+
+
+Player_A->+api:HandShake
+DataStore->api:
+destroy DataStore
+api-->-Player_A:UpdateFriends
+note over Player_A:GetFriendsでリスト更新
+
+
+
+
+
+note over -      -:ブロック
+Player_B->+api:BlockPlayer
+api->+sequencing:BlockPlayer
+sequencing->>*DataStore:
+sequencing->-api:
+api->-Player_B:
+
+
+Player_A->+api:HandShake
+DataStore->api:
+destroy DataStore
+api-->-Player_A:UpdateFriends
+note over Player_A:GetFriendsでリスト更新

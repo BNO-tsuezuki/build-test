@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for Log (Firehose & S3 Bucket)"
+
+Parameters:
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+Resources:
+
+  DeliveryStream:
+    Type: AWS::KinesisFirehose::DeliveryStream
+    Properties: 
+      DeliveryStreamName: !Sub "jpop-log-${EnvName}"
+      DeliveryStreamType: DirectPut # DirectPut | KinesisStreamAsSource
+      # ElasticsearchDestinationConfiguration: 
+      #   ElasticsearchDestinationConfiguration
+      # ExtendedS3DestinationConfiguration: 
+      #   ExtendedS3DestinationConfiguration
+      # KinesisStreamSourceConfiguration: 
+      #   KinesisStreamSourceConfiguration
+      # RedshiftDestinationConfiguration: 
+      #   RedshiftDestinationConfiguration
+      # SplunkDestinationConfiguration: 
+      #   SplunkDestinationConfiguration
+      S3DestinationConfiguration: 
+        BucketARN: !Join 
+          - ''
+          - - 'arn:aws:s3:::'
+            - !Ref Bucket
+        BufferingHints:
+          IntervalInSeconds: '300'
+          SizeInMBs: '10'
+        # CloudWatchLoggingOptions: 
+        #   CloudWatchLoggingOptions
+        CompressionFormat: UNCOMPRESSED # GZIP | Snappy | UNCOMPRESSED | ZIP
+        # EncryptionConfiguration: 
+        #   EncryptionConfiguration
+        ErrorOutputPrefix: "errlog/"
+        Prefix: "log/"
+        RoleARN: !GetAtt Role.Arn
+
+
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      # AccelerateConfiguration: 
+      #   AccelerateConfiguration
+      # AccessControl: String
+      # AnalyticsConfigurations: 
+      #   - AnalyticsConfiguration
+      # BucketEncryption: 
+      #   BucketEncryption
+      BucketName: !Sub "jpop-logbucket-${EnvName}"
+      # CorsConfiguration: 
+      #   CorsConfiguration
+      # InventoryConfigurations: 
+      #   - InventoryConfiguration
+      # LifecycleConfiguration: 
+      #   LifecycleConfiguration
+      # LoggingConfiguration: 
+      #   LoggingConfiguration
+      # MetricsConfigurations: 
+      #   - MetricsConfiguration
+      # NotificationConfiguration: 
+      #   NotificationConfiguration
+      # ObjectLockConfiguration: 
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration: 
+      #   ReplicationConfiguration
+      # Tags: 
+      #   - Tag
+      # VersioningConfiguration: 
+      #   VersioningConfiguration
+      # WebsiteConfiguration: 
+      #   WebsiteConfiguration
+
+  Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: ''
+            Effect: Allow
+            Principal:
+              Service: firehose.amazonaws.com
+            Action: 'sts:AssumeRole'
+            Condition:
+              StringEquals:
+                'sts:ExternalId': !Ref 'AWS::AccountId'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+
+
+Outputs:
+  LogDeliveryStreamName:
+    Value: !Sub "jpop-log-${EnvName}"
+    Export:
+      Name: !Sub "jpop-LogDeliveryStreamName-${EnvName}"

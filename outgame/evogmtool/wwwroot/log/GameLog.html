@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Game Log</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Game Log</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <label>Log:</label>
+                                    <div class="input-group">
+                                        <select size="7" class="form-control" v-model="selected">
+                                            <option v-for="option in searchArray" v-bind:value="option.apiName" v-bind:key="option.id">
+
+                                                {{ option.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <label>Date and time range:</label>
+
+                                    <div class="input-group">
+                                        <date-range-picker v-if="locale" :time-picker="true" v-model="dateRange" :locale-data="locale" style="width:100%;" @update="rageUpdate">
+                                        </date-range-picker>
+                                    </div>
+                                    <!-- /.input group -->
+
+                                    <div v-show="showPlayerId">
+                                        <label>PlayerId:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter PlayerId" v-model="selectedAccount">
+                                        </div>
+                                    </div>
+
+                                    <div v-show="showSearchType ">
+                                        <label>SearchType:</label>
+                                        <div class="input-group">
+                                            <select v-model="selectedSearchType">
+                                                <option value="0">All</option>
+                                                <option value="1">Party</option>
+                                                <option value="2">Team</option>
+                                                <option value="3">Room</option>
+                                            </select>
+
+
+
+                                        </div>
+
+                                        <div v-if="selectedSearchType == 0">
+                                            <label>PlayerId:</label><label style="color: red;">*</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Enter PlayerId (required)" v-model="selectedAccount">
+                                            </div>
+                                        </div>
+
+                                        <div v-if="selectedSearchType == 1">
+                                            <label>GroupId:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Enter GroupId" v-model="selectedGroupId">
+                                            </div>
+                                        </div>
+
+                                        <div v-if="selectedSearchType == 2">
+                                            <label>MatchId:</label><label style="color: red;">*</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Enter MatchId (required)" v-model="selectedMatchId">
+                                            </div>
+
+                                            <label>Side:</label><label style="color: red;">*</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" placeholder="Enter Side (required)" v-model="selectedSide">
+                                            </div>
+                                        </div>
+
+                                        <div v-if="selectedSearchType == 3">
+                                            <label>MatchId:</label><label style="color: red;">*</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Enter MatchId (required)" v-model="selectedMatchId">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div v-show="showMatchId">
+                                        <label>MatchId:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter MatchId" v-model="selectedMatchId">
+                                        </div>
+                                    </div>
+
+                                    <div v-show="showIpAddress">
+                                        <label>IPAddres:</label>
+                                        <div class="input-group">
+                                            <!--<div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                                            </div>-->
+                                            <input id="ipInput" type="text" class="form-control" placeholder="Enter IPAddres" data-inputmask="'alias': 'ip'" data-mask v-model="selectedIpAddress">
+                                        </div>
+                                    </div>
+
+                                    <div v-show="showGroupId">
+                                        <label>GroupId:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Enter GroupId" v-model="selectedGroupId">
+                                        </div>
+                                    </div>
+
+                                    <div v-show="showSide">
+                                        <label>Side:</label>
+                                        <div class="input-group">
+                                            <input type="number" class="form-control" placeholder="Enter Side" v-model="selectedSide">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <button v-if="showSearchType==false" type="button" class="btn btn-primary" v-on:click="search">Search</button>
+
+                                    <button v-if="showSearchType==true && selectedSearchType==0" type="button" class="btn btn-primary" v-on:click="search" :disabled="selectedAccount==''">Search</button>
+                                    <button v-if="showSearchType==true && selectedSearchType==1" type="button" class="btn btn-primary" v-on:click="search" >Search</button>
+                                    <button v-if="showSearchType==true && selectedSearchType==2" type="button" class="btn btn-primary" v-on:click="search" :disabled="selectedMatchId=='' || selectedSide==''">Search</button>
+                                    <button v-if="showSearchType==true && selectedSearchType==3" type="button" class="btn btn-primary" v-on:click="search" :disabled="selectedMatchId==''">Search</button>
+
+
+                                </div>
+                            </div>
+
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+
+                                    <div class="tab-content">
+                                        <!--<div v-for="(list, index) in searchDataList" class="tab-pane fade" v-bind:class="{ active: list.isActive, show: list.isActive }" v-bind:id="'resultTab_'+parseInt(index+1)" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+
+                                        </div>-->
+
+
+                                        <div class="col-12" style="float:left;">
+                                            <button v-for="(list, index) in searchDataList" :key="index" type="button" class="btn btn-outline-info" style="width: max-content;margin: 1px;"
+                                                    v-bind:class="{ active: list.isActive }"
+                                                    v-tooltip.top="getTooltipValue(list)"
+                                                    v-on:click="tabClick(searchDataList, list)">
+                                                {{getResultName(list)}}
+                                                <p class="material-icons" style="margin: auto; vertical-align: middle;"onMouseOut="this.style.background=''"
+                                                   onMouseOver="this.style.background='red'"
+                                                   v-on:click="removeItem(searchDataList, list)">
+                                                    clear
+                                                </p>
+                                            </button>
+                                            <div class="card card-primary card-outline card-tabs">
+
+                                                <div v-for="(list, index) in searchDataList" v-show="list.isActive==true" style="height: 638px;">
+                                                    <table class="table table-hover text-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                                <th v-for="headItem in list.searchItems.headerItems">{{headItem}}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr v-for="bodyList in list.searchItems.bodyItems">
+                                                                <td v-for="body in bodyList">{{body}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <paginate v-if="list.searchItems.pageCount>0" :page-count="list.searchItems.pageCount"
+                                                              :page-range="3"
+                                                              :margin-pages="2"
+                                                              :click-handler="list.searchItems.getList"
+                                                              :prev-text="'＜'"
+                                                              :next-text="'＞'"
+                                                              :container-class="'pagination'"
+                                                              :page-class="'page-item'">
+                                                    </paginate>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/lib/vue2-daterange-picker.umd.js"></script>
+    <link href="/styles/dateRangePicker.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue-tabs-component@1.5.0/dist/index.min.js"></script>
+    <link href="/styles/tab.css" rel="stylesheet" />
+    <script src="/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+
+    <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+
+    <script src="https://unpkg.com/v-tooltip"></script>
+    <link href="/styles/tooltip.css" rel="stylesheet" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.7/jstz.min.js"></script>
+
+
+    <script src="/scripts/app/page/log/GameLog.js"></script>
+    <link href="/styles/paging.css" rel="stylesheet" />
+
+</body>
+</html>

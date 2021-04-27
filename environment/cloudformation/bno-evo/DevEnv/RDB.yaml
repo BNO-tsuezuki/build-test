@@ -1,0 +1,191 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for DB"
+
+Parameters:
+  
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  PortNo:
+    Type: Number
+    Default: 3306
+
+
+Resources:
+
+  SubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupDescription: !Sub "for ${EnvName}."
+      DBSubnetGroupName: !Sub "${EnvName}-dbsubnetgroup"
+      SubnetIds:
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet0-${EnvName}"}
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet1-${EnvName}"}
+      # Tags:
+      #   - Resource Tag 
+
+  DBClusterParameterGroup:
+    Type: "AWS::RDS::DBClusterParameterGroup"
+    Properties: 
+      Description: !Sub "for ${EnvName}."
+      Family: "aurora-mysql5.7"
+      Parameters:
+        time_zone: "UTC"
+        character_set_client: "utf8mb4"
+        character_set_connection: "utf8mb4"
+        character_set_database: "utf8mb4"
+        character_set_results: "utf8mb4"
+        character_set_server: "utf8mb4"
+      # Tags:
+      #   - Resource Tag 
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: !Sub "${EnvName}-DB"
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: {"Fn::ImportValue" : !Sub "jpop-VpcCidr-${EnvName}"}
+          # CidrIpv6: String
+          # Description: String
+          FromPort: !Ref PortNo
+          IpProtocol: "tcp"
+          # SourceSecurityGroupId: String
+          # SourceSecurityGroupName: String
+          # SourceSecurityGroupOwnerId: String
+          ToPort: !Ref PortNo
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvName}-DB"
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+
+  DBCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      # AvailabilityZones: !GetAZs  ''
+      #   - 文字列
+      # BacktrackWindow: Integer
+      BackupRetentionPeriod: 10
+      DatabaseName: "evogamedb"
+      DBClusterIdentifier: !Sub "${EnvName}-all"
+      DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+      DBSubnetGroupName: !Ref SubnetGroup
+      DeletionProtection: false
+      EnableCloudwatchLogsExports:
+        - general
+        - error
+        - slowquery
+        - audit
+      EnableIAMDatabaseAuthentication: true
+      Engine: "aurora-mysql"
+      # EngineMode: String
+      # EngineVersion: String
+      # KmsKeyId: String
+      MasterUsername: evouser
+      MasterUserPassword: evopassword
+      Port: !Ref PortNo
+      PreferredBackupWindow: "20:00-20:30"
+      PreferredMaintenanceWindow: "sun:21:00-sun:21:30"
+      # ReplicationSourceIdentifier: String
+      # ScalingConfiguration: 
+      #   ScalingConfiguration
+      # SnapshotIdentifier: String
+      # StorageEncrypted: Boolean
+      # Tags:
+      #   - Resource Tag
+      VpcSecurityGroupIds:
+        - !Ref SecurityGroup
+
+  DBParameterGroup:
+    Type: AWS::RDS::DBParameterGroup
+    Properties: 
+      Description: !Sub "for ${EnvName}."
+      Family: "aurora-mysql5.7"
+      # Parameters:
+      #   DBParameters
+      # Tags:
+      #   - Resource Tag 
+
+  OptionGroup:
+    Type: "AWS::RDS::OptionGroup"
+    Properties: 
+      EngineName: "aurora-mysql"
+      MajorEngineVersion: "5.7"
+      OptionGroupDescription: !Sub "for ${EnvName}."
+      # OptionConfigurations:
+      #   - OptionConfiguration
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvName}"
+
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      # AllocatedStorage: String
+      # AllowMajorVersionUpgrade: Boolean
+      AutoMinorVersionUpgrade: false
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      # BackupRetentionPeriod: String
+      # CharacterSetName: String
+      # CopyTagsToSnapshot: Boolean
+      DBClusterIdentifier: !Ref DBCluster
+      DBInstanceClass: "db.r3.large"
+      DBInstanceIdentifier: !Sub "write-instance-${EnvName}"
+      # DBName: String
+      DBParameterGroupName: !Ref DBParameterGroup
+      # DBSecurityGroups:
+      #   - 文字列
+      # DBSnapshotIdentifier: String
+      # DBSubnetGroupName: String
+      # DeleteAutomatedBackups: Boolean
+      # DeletionProtection: Boolean
+      # Domain: String
+      # DomainIAMRoleName: String
+      # EnableCloudwatchLogsExports:
+      #   - 文字列
+      # EnableIAMDatabaseAuthentication: Boolean
+      # EnablePerformanceInsights: Boolean
+      Engine: "aurora-mysql"
+      # EngineVersion: String
+      # Iops: Integer
+      # KmsKeyId: String
+      # LicenseModel: String
+      # MasterUsername: String
+      # MasterUserPassword: String
+      # MonitoringInterval: Integer
+      # MonitoringRoleArn: String
+      # MultiAZ: Boolean
+      OptionGroupName: !Ref OptionGroup
+      # PerformanceInsightsKMSKeyId: String
+      # PerformanceInsightsRetentionPeriod: Integer
+      # Port: String
+      # PreferredBackupWindow: String
+      # PreferredMaintenanceWindow: String
+      # ProcessorFeatures:
+      #   - ProcessorFeature
+      # PromotionTier: Integer
+      PubliclyAccessible: false
+      # SourceDBInstanceIdentifier: String
+      # SourceRegion: String
+      # StorageEncrypted: Boolean
+      # StorageType: String
+      # Tags:
+      #   - Resource Tag
+      # Timezone: String
+      # VPCSecurityGroups:
+      #   - 文字列
+
+Outputs:
+  DbWriteEndPoint:
+    Value: !GetAtt DBInstance.Endpoint.Address
+    Export:
+      Name: !Sub "jpop-DbWriteEndPoint-${EnvName}"

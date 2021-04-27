@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Mock Lambda Test Tool": {
+      "commandName": "Executable",
+      "commandLineArgs": "--port 5051",
+      "workingDirectory": ".\\bin\\$(Configuration)\\netcoreapp2.1",
+      "executablePath": "%USERPROFILE%\\.dotnet\\tools\\dotnet-lambda-test-tool-2.1.exe",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "google_application_credencials.json",
+        "BQ_PROJECT_ID": "",
+        "BQ_DATASET_ID": "",
+        "S3_API_SERVER_LOG_KEYWORD": "",
+        "S3_DEDICATED_SERVER_LOG_KEYWORD": "",
+        "HASH_PEPPER": "SecretStringOf8CharactersOrLonger"
+      }
+    }
+  }
+}

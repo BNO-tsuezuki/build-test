@@ -1,0 +1,452 @@
+{
+	"mobilesuits": [
+		{
+			"Name": "MS0002",
+			"bIsAvailable": false,
+			"displayName": "ガンキャノン",
+			"type": "RX-77-2",
+			"tier": "3",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0002.T_uiIcThm_MS0002",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0010",
+				"WP0011",
+				"WP0012HE",
+				"WP0012BZ"
+			],
+			"mVPSequence": "MV000201",
+			"description": "一年戦争のV作戦により開発されたRXシリーズの1機で、同じRXシリーズであるガンダム、ガンタンクと共通規格のコア・ブロック・システムが採用されている。地球連邦軍初のMSガンタンクは、次世代の主力戦車 (MBT) として開発が進められていたRTX-44を急遽転用したものであったため、MSとしては機動力が低く種々の問題を抱えるであろうことは明らかであった。このため、続くこの機体では、ガンタンクにおいて発生した機動性の問題を解決すべく二足歩行型として開発に着手した。このとき、地球連邦軍では二足歩行型試作ロボット「RXM-1」が開発されていたため、このデータを基に開発が進められた他、鹵獲したジオン公国軍のザクの実戦データも反映された。こうして完成したガンキャノンは、ジオン公国軍のMSと比べてもひけをとらないものとなり、初期試作型のRX-77-1に続いてRX-77-2として本機がジャブローで6機製作され、そのうち3機がテストのためにサイド7へ送られた。その後、テスト中にジオン公国軍の強襲を受け、2機が破壊され、残った1機がホワイトベースで運用されることとなった。"
+		},
+		{
+			"Name": "MS0005",
+			"bIsAvailable": true,
+			"displayName": "ジム(90mmマシンガン)",
+			"type": "RGM-79",
+			"tier": "1",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0005_GM/BP_MS0005_GM.BP_MS0005_GM_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0005.T_uithm_SQ_MS0005",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0016",
+				"WP0017",
+				"WP0018",
+				"WP0019",
+				"WP0020",
+				"WP0021",
+				"WP0022"
+			],
+			"mVPSequence": "MV000501",
+			"description": "宇宙戦艦を中心とした戦力で地球圏を支配していた地球連邦軍は、一年戦争の序盤ではるかに国力の劣るジオン公国の新兵器・モビルスーツ (MS) により完敗を喫した。これにより連邦軍においてもMSの開発および生産が最重要事項とされ、極秘プロジェクト“V作戦”が発動された。これは以前から連邦軍内で進められていたMS開発計画“RX計画”の技術士官だったテム・レイ技術大尉を中心に進められ、その結果、RX-75 ガンタンク、RX-77 ガンキャノン、RX-78 ガンダムの3タイプのRXナンバー試作機の開発に成功した。各機は計画どおり、もしくはそれ以上の性能をもったMSであったが、そのままではコストが高すぎ、短期間のうちに量産できる仕様ではなかった。そこで3機種のうち近距離戦用であるガンダムの量産タイプとして、再設計されたのがジムである。"
+		},
+		{
+			"Name": "MS0005_2",
+			"bIsAvailable": true,
+			"displayName": "ジム(ビームスプレーガン)",
+			"type": "RGM-79",
+			"tier": "1",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/Proto4/MS0005_GM_BeamSprayGun/BP_MS0005_GM_BeamSprayGun.BP_MS0005_GM_BeamSprayGun_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0005.T_uithm_SQ_MS0005",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0016",
+				"WP0017",
+				"WP0018",
+				"WP0019",
+				"WP0020",
+				"WP0021",
+				"WP0022"
+			],
+			"mVPSequence": "MV000501",
+			"description": "宇宙戦艦を中心とした戦力で地球圏を支配していた地球連邦軍は、一年戦争の序盤ではるかに国力の劣るジオン公国の新兵器・モビルスーツ (MS) により完敗を喫した。これにより連邦軍においてもMSの開発および生産が最重要事項とされ、極秘プロジェクト“V作戦”が発動された。これは以前から連邦軍内で進められていたMS開発計画“RX計画”の技術士官だったテム・レイ技術大尉を中心に進められ、その結果、RX-75 ガンタンク、RX-77 ガンキャノン、RX-78 ガンダムの3タイプのRXナンバー試作機の開発に成功した。各機は計画どおり、もしくはそれ以上の性能をもったMSであったが、そのままではコストが高すぎ、短期間のうちに量産できる仕様ではなかった。そこで3機種のうち近距離戦用であるガンダムの量産タイプとして、再設計されたのがジムである。"
+		},
+		{
+			"Name": "MS0005_3",
+			"bIsAvailable": true,
+			"displayName": "ジム(ハイパーバズーカ)",
+			"type": "RGM-79",
+			"tier": "1",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/Proto4/MS0005_GM_HyperBazooka/BP_MS0005_GM_HyperBazooka.BP_MS0005_GM_HyperBazooka_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0005.T_uithm_SQ_MS0005",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0016",
+				"WP0017",
+				"WP0018",
+				"WP0019",
+				"WP0020",
+				"WP0021",
+				"WP0022"
+			],
+			"mVPSequence": "MV000501",
+			"description": "宇宙戦艦を中心とした戦力で地球圏を支配していた地球連邦軍は、一年戦争の序盤ではるかに国力の劣るジオン公国の新兵器・モビルスーツ (MS) により完敗を喫した。これにより連邦軍においてもMSの開発および生産が最重要事項とされ、極秘プロジェクト“V作戦”が発動された。これは以前から連邦軍内で進められていたMS開発計画“RX計画”の技術士官だったテム・レイ技術大尉を中心に進められ、その結果、RX-75 ガンタンク、RX-77 ガンキャノン、RX-78 ガンダムの3タイプのRXナンバー試作機の開発に成功した。各機は計画どおり、もしくはそれ以上の性能をもったMSであったが、そのままではコストが高すぎ、短期間のうちに量産できる仕様ではなかった。そこで3機種のうち近距離戦用であるガンダムの量産タイプとして、再設計されたのがジムである。"
+		},
+		{
+			"Name": "MS0006",
+			"bIsAvailable": true,
+			"displayName": "ザク",
+			"type": "MS-06F",
+			"tier": "1",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0006_ZakuII/BP_MS0006_ZakuII.BP_MS0006_ZakuII_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0006.T_uithm_SQ_MS0006",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0024",
+				"WP0025",
+				"WP0026",
+				"WP0027",
+				"WP0028",
+				"WP0029",
+				"WP0337",
+				"WP0023"
+			],
+			"mVPSequence": "MV000601",
+			"description": "宇宙世紀0074年、ジオン公国軍はMS-05 ザクI（開発時の名称はザク）を初の制式MSと決定し、量産を開始した。だがザクIはジェネレーター出力の低さなどの問題を抱えた機体であり、このザクIの構造を抜本的変更により[18]性能をさらに向上させた後継機「ザクII」が開発された[19]。一年戦争の序盤戦において大艦巨砲主義を引きずる地球連邦軍に対し壊滅的な打撃を与え、ジオン軍快進撃の立役者となり、宇宙世紀の戦争におけるMSの優位性を決定づけた機体である。"
+		},
+		{
+			"Name": "MS0114",
+			"bIsAvailable": false,
+			"displayName": "ユニコーンガンダム",
+			"type": "RX-0",
+			"tier": "5",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0114.T_uiIcThm_MS0114",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0099",
+				"WP0100",
+				"WP0101",
+				"WP0102"
+			],
+			"mVPSequence": "MV011401",
+			"description": "地球連邦軍の再編計画の一環である参謀本部直轄「UC計画」の最終段階として開発された実験機。宇宙世紀0096年に、アナハイム・エレクトロニクス社が保有する月面のグラナダ工場で2機が完成した。ガンダムタイプに区分されてはいるが、実際の名称は「RX-0 ユニコーン[2][注釈 1]」で、「ユニコーンガンダム」の名はいわゆる愛称である。第二次ネオ・ジオン抗争時のニュータイプ専用機で限定的に採用されていた特殊構造材「サイコフレーム」で、機体の駆動式内骨格「ムーバブルフレーム」のすべてを構築した、史上初のフル・サイコフレーム機である[注釈 2]。サイコフレームの限界能力を実証すべく先行開発された実験機・シナンジュのデータが反映されており、従来のサイコフレーム機を遥かに凌ぐ機体追従性を獲得している。"
+		},
+		{
+			"Name": "MS0115",
+			"bIsAvailable": false,
+			"displayName": "ユニコーンガンダム　デストロイモード",
+			"type": "RX-0",
+			"tier": "5",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0114.T_uiIcThm_MS0114",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0105",
+				"WP0106",
+				"WP0107",
+				"WP0108"
+			],
+			"mVPSequence": "MV011401",
+			"description": "NT-Dシステム : 本機体を「ユニコーンモード」から、ガンダムの姿である「デストロイモード」へと“変身”させる際に発動する特殊管制システム。1号機の開発に関わった技術者に対しては「ニュータイプ・ドライブ」の略であると説明されているが[9]、本来の意味は「ニュータイプ・デストロイヤー」[10]、すなわちニュータイプを抹殺するシステムとして設計されたものである[11]。ネオ・ジオン残党軍「袖付き」の首魁フル・フロンタルによれば、ジオン共和国初代首相ジオン・ズム・ダイクンが提唱した「ニュータイプ論」を根絶する=ジオンの存在そのものを根絶するためのシステムであるという。ただし、1号機のシステムは追加プログラム「La+（ラプラス）」によって発動条件が変更されているため、アナハイム・エレクトロニクスの重役でありバナージの異母兄であるアルベルト・ビストはこれを、もはや「ニュータイプ・デストロイヤー」とは呼べない「ニュータイプ・ドライブ」と呼ぶべき亜流のシステムであると評している。"
+		},
+		{
+			"Name": "MS0245",
+			"bIsAvailable": true,
+			"displayName": "∀ガンダム(ビームライフル)",
+			"type": "SYSTEMｰ∀99",
+			"tier": "6",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0245_TurnAGundam/BP_MS0245_TurnAGundam.BP_MS0245_TurnAGundam_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0245.T_uithm_SQ_MS0245",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0173",
+				"WP0175",
+				"WP0176",
+				"WP0177",
+				"WP0178"
+			],
+			"mVPSequence": "MV024501",
+			"description": "∀とは、全称記号で「すべてを内包する」という意味を持つ。運用思想は徹底した「単機による作戦行動」であり、通常の兵器に求められる「用途に応じた機能の特化」という大原則を無視したものとなっている。その常識外の思想背景の基となっているのは太陽系外勢力（後述）に対する恐怖心であり、それによって∀開発に関するすべての制限を消滅させてしまう結果となっていた。かつて月光蝶システムを使い、地球圏の人工物を砂に変えた機体で「地球文明を埋葬した」とされる。その後は北アメリア大陸の町、イングレッサ領ビシニティ北部のマウンテンサイクル（アーク山）に長年祀られていた神像内に隠されていた。ビシニティの成人式の日、ディアナ・カウンターのウォドムに反応して起動する。機体各部の意匠や機構にターンXとの共通点が多い。劇中で両者は「兄弟」「ターンタイプ」などと呼ばれた。過去のガンダムシリーズのIフィールドとは異なり、∀ガンダムのそれはメガ粒子ビームの他にも実体弾及び衝撃波等にも対応している。また広範囲への展開で背部広域を防御するなどの効果を見せた。これは、宇宙世紀0200年代を描いた小説『ガイア・ギア』に登場するIフィールドバリアと同じである。"
+		},
+		{
+			"Name": "MS0245_2",
+			"bIsAvailable": true,
+			"displayName": "∀ガンダム(ビームライフル［MAX］)",
+			"type": "SYSTEMｰ∀99",
+			"tier": "6",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/Proto4/MS0245_TurnAGundam_BeamRifle_Max/BP_MS0245_TurnAGundam_BeamRifleMax.BP_MS0245_TurnAGundam_BeamRifleMax_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0245.T_uithm_SQ_MS0245",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0173",
+				"WP0175",
+				"WP0176",
+				"WP0177",
+				"WP0178"
+			],
+			"mVPSequence": "MV024501",
+			"description": "∀とは、全称記号で「すべてを内包する」という意味を持つ。運用思想は徹底した「単機による作戦行動」であり、通常の兵器に求められる「用途に応じた機能の特化」という大原則を無視したものとなっている。その常識外の思想背景の基となっているのは太陽系外勢力（後述）に対する恐怖心であり、それによって∀開発に関するすべての制限を消滅させてしまう結果となっていた。かつて月光蝶システムを使い、地球圏の人工物を砂に変えた機体で「地球文明を埋葬した」とされる。その後は北アメリア大陸の町、イングレッサ領ビシニティ北部のマウンテンサイクル（アーク山）に長年祀られていた神像内に隠されていた。ビシニティの成人式の日、ディアナ・カウンターのウォドムに反応して起動する。機体各部の意匠や機構にターンXとの共通点が多い。劇中で両者は「兄弟」「ターンタイプ」などと呼ばれた。過去のガンダムシリーズのIフィールドとは異なり、∀ガンダムのそれはメガ粒子ビームの他にも実体弾及び衝撃波等にも対応している。また広範囲への展開で背部広域を防御するなどの効果を見せた。これは、宇宙世紀0200年代を描いた小説『ガイア・ギア』に登場するIフィールドバリアと同じである。"
+		},
+		{
+			"Name": "MS0427",
+			"bIsAvailable": false,
+			"displayName": "ライデン専用高機動型ザク",
+			"type": "MS-06R-2",
+			"tier": "",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0427.T_uiIcThm_MS0427",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV042701",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0113",
+			"bIsAvailable": true,
+			"displayName": "サザビー",
+			"type": "MSN-04",
+			"tier": "",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0113_Sazabi/BP_MS0113_Sazabi.BP_MS0113_Sazabi_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0113.T_uithm_SQ_MS0113",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV011301",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0195",
+			"bIsAvailable": false,
+			"displayName": "ガンダムデスサイズ",
+			"type": "XXXG-01D",
+			"tier": "4",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0195.T_uiIcThm_MS0195",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0149",
+				"WP0148",
+				"WP0147",
+				"WP0150"
+			],
+			"mVPSequence": "MV019501",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0001",
+			"bIsAvailable": false,
+			"displayName": "ガンダム",
+			"type": "RX-78-2",
+			"tier": "5",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0001.T_uiIcThm_MS0001",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0005",
+				"WP0006"
+			],
+			"mVPSequence": "MV000101",
+			"description": "ガンダム(仮)"
+		},
+		{
+			"Name": "MS0304",
+			"bIsAvailable": false,
+			"displayName": "ガンダムデュナメス",
+			"type": "GN-002",
+			"tier": "4",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0304.T_uiIcThm_MS0304",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0241",
+				"WP0242"
+			],
+			"mVPSequence": "MV030401",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0021",
+			"bIsAvailable": false,
+			"displayName": "アレックス",
+			"type": "RX-78NT-1",
+			"tier": "5",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "None",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0051",
+				"WP0479"
+			],
+			"mVPSequence": "None",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0003",
+			"bIsAvailable": false,
+			"displayName": "ガンタンク",
+			"type": "RX-75",
+			"tier": "5",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0003.T_uiIcThm_MS0003",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV000301",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0012",
+			"bIsAvailable": false,
+			"displayName": "シャア専用ザクⅡ",
+			"type": "MS-06S",
+			"tier": "6",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0012.T_uiIcThm_MS0012",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0037",
+				"WP0038",
+				"WP0039"
+			],
+			"mVPSequence": "MV001201",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0426",
+			"bIsAvailable": true,
+			"displayName": "ドズル専用ザクⅡ",
+			"type": "MSｰ06F［DZ］",
+			"tier": "5",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0426_ZakuIIDZ/BP_MS0426_ZakuIIDZ.BP_MS0426_ZakuIIDZ_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0426.T_uithm_SQ_MS0426",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP0480",
+				"WP0481",
+				"WP0482"
+			],
+			"mVPSequence": "MV042601",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0428",
+			"bIsAvailable": false,
+			"displayName": "ザクⅡFS型（ガルマ・ザビ機）",
+			"type": "ZakuIIGZ",
+			"tier": "",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "None",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV042801",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0246",
+			"bIsAvailable": false,
+			"displayName": "カプル",
+			"type": "AMX-109",
+			"tier": "",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0246.T_uiIcThm_MS0246",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV024601",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0023",
+			"bIsAvailable": true,
+			"displayName": "ジム・スナイパーⅡ",
+			"type": "RGMｰ79SP",
+			"tier": "",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0023_GMSniperII/BP_MS0023_GMSniperII.BP_MS0023_GMSniperII_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0023.T_uithm_SQ_MS0023",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV002301",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0406",
+			"bIsAvailable": true,
+			"displayName": "ガンダム・バルバトス［第4形態］",
+			"type": "ASW-G-08",
+			"tier": "",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0406_GundamBarbatosForm4/BP_MS0406_GundamBarbatosForm4.BP_MS0406_GundamBarbatosForm4_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0406.T_uithm_SQ_MS0406",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV040601",
+			"description": "備考"
+		},
+		{
+			"Name": "MA0002",
+			"bIsAvailable": false,
+			"displayName": "APSALUSIII",
+			"type": "undefined",
+			"tier": "6",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "None",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [
+				"WP9001"
+			],
+			"mVPSequence": "None",
+			"description": "アプサラスIIIテスト"
+		},
+		{
+			"Name": "MS0099",
+			"bIsAvailable": false,
+			"displayName": "ザクIII",
+			"type": "AMX-011",
+			"tier": "",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uiIcThm_MS0099.T_uiIcThm_MS0099",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV009901",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0059",
+			"bIsAvailable": true,
+			"displayName": "アッシマー",
+			"type": "NRX-044",
+			"tier": "",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0059_Asshimar/BP_MS0059_Asshimar.BP_MS0059_Asshimar_C",
+			"thumbnailAsset": "/Game/Assets/UserInterface/Thumbnails/T_uithm_SQ_MS0059.T_uithm_SQ_MS0059",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV005901",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0418",
+			"bIsAvailable": false,
+			"displayName": "マラサイUC",
+			"type": "",
+			"tier": "",
+			"characterClassAsset": "/Game/Blueprints/MobileSuits/MS0418_Marasai_UC/BP_MS0418_Marasai_UC.BP_MS0418_Marasai_UC_C",
+			"thumbnailAsset": "/Game/Blueprints/Widgets/HUD/Comm/Comm_Icon_Attack.Comm_Icon_Attack",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV041801",
+			"description": "備考"
+		},
+		{
+			"Name": "MS0419",
+			"bIsAvailable": false,
+			"displayName": "マヒロー",
+			"type": "",
+			"tier": "",
+			"characterClassAsset": "None",
+			"thumbnailAsset": "None",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV041901",
+			"description": "備考"
+		},
+		{
+			"Name": "Spectator",
+			"bIsAvailable": true,
+			"displayName": "スペクテイター",
+			"type": "Spectator",
+			"tier": "",
+			"characterClassAsset": "/Game/Developers/murata/HumanGM/BP_HumanGM.BP_HumanGM_C",
+			"thumbnailAsset": "/Game/Blueprints/Widgets/HUD/Comm/Comm_Icon_Cover.Comm_Icon_Cover",
+			"devTreeThumbnailAsset": "None",
+			"availableEquipments": [],
+			"mVPSequence": "MV000501",
+			"description": "スペクテイターを出撃機体一覧で選択させるためのデータ"
+		}
+	]
+}

@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" />
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content">
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Post Sample Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Post Sample Page</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="" style="width:780px;min-width:780px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-header d-flex p-0">
+                                        <h3 class="card-title p-3">Title:</h3>
+                                        <input type="text" class="form-control" style="margin-top: auto;margin-bottom: auto;" v-model="targetNewsData.title" />
+                                    </div>
+
+                                    <div class="card-header d-flex p-0">
+                                        <h3 class="card-title p-3">Category:</h3>
+                                        <select class="form-control" style="margin-top: auto;margin-bottom: auto;width:150px;" v-model="targetNews.category">
+                                            <option value="important">Important</option>
+                                            <option value="event">Event</option>
+                                            <option value="update">Update</option>
+                                        </select>
+                                        <ul class="nav nav-pills ml-auto p-2">
+                                            <li v-for="(la , index) in getLang()" class="nav-item"><a class="nav-link" v-bind:href="'#tab_' + index" data-toggle="tab" v-bind:class="{active: isLang(la)}" v-on:click="changeLangData(la)">{{la.languageName}}</a></li>
+
+                                            <!--<li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Tab 1</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Tab 2</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Tab 3</a></li>-->
+
+                                        </ul>
+                                    </div>
+                                    <div class="card-header d-flex p-0">
+                                        <h3 class="card-title p-3">Publishing:</h3>
+                                        <!--<vue-ctk-date-time-picker v-model="postData.newsHistories.displayStartTime"
+              :minute-interval="30"
+              :format="'YYYY-MM-DD HH:mm'"
+              :disabled-hours="['00', '01', '02', '03', '04', '05', '06', '07', '08', '17', '18', '19', '20', '21', '22', '23']"
+              :overlay="true"></vue-ctk-date-time-picker>-->
+                                        <vue-ctk-date-time-picker label="Select date and time" v-model="targetNews.displayStartTime" minute-interval="5" locale="en" style="margin-top:auto;margin-bottom:auto;"></vue-ctk-date-time-picker>
+                                        <ul class="nav nav-pills ml-auto p-2">
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                                                    {{publishing}}
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <div class="dropdown-menu" style="">
+                                                    <a class="dropdown-item" tabindex="-1" href="#" v-on:click="setPublishing(true)">Release</a>
+                                                    <a class="dropdown-item" tabindex="-1" href="#" v-on:click="setPublishing(false)">private</a>
+                                                    <!--<a class="dropdown-item" tabindex="-1" href="#">Something else here</a>-->
+                                                    <!--<div class="dropdown-divider"></div> <a class="dropdown-item" tabindex="-1" href="#">Separated link</a>-->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div id="editor" style="border: 2px solid #000000; width: 650px;margin-left: auto; margin-right: auto;"></div>
+                                    <hr>
+                                    <input type="button" class="btn btn-primary" value="Save" v-on:click="saveData">
+                                    <hr>
+                                    <div>
+                                        {{saveString}}
+                                    </div>
+
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                        <div class="" style="width:243px; min-width:243px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>File Upload</h5>
+                                    <file-upload @get_list="getList"></file-upload>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+            <!-- /.modal -->
+            <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog" style="max-width: 830px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Select Image</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="overflow: auto; height: 300px;">
+                                <vue-select-image :data-images="dataImages" :w="100" @onselectimage="onSelectImage"></vue-select-image>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 30px;">Width:</label>
+                            <input type="number" v-model="imageSize" />
+                        </div>
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" v-bind:disabled="isSelectImage()" v-on:click="insImg()">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="modal-video" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog" style="max-width: 830px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Select Video</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title">Video</h5>
+                            <div style="overflow: auto; height: 250px;">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>fileId</th>
+                                            <th>originalFileName</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="video in videoList" v-on:click="setSelectVideo(video)" v-bind:style="{'background-color':selectVideStyle(video)}" style="cursor : pointer;">
+                                            <td>{{video.fileId}}</td>
+                                            <td>{{video.originalFileName}}</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label style="margin-left: 30px;">Video Width:</label>
+                                <input type="number" v-model="imageSize" />
+                            </div>
+
+                            <h5 class="modal-title">Thumbnail</h5>
+                            <div style="overflow: auto; height: 250px;">
+
+                                <vue-select-image :data-images="dataImages" :w="100" @onselectimage="onSelectThumbnail"></vue-select-image>
+                            </div>
+
+                        </div>
+
+
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" v-on:click="insVideo()">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script src="/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+
+    <script src="/scripts/app/editor/image.js"></script>
+    <script src="/scripts/app/editor/image2.js"></script>
+    <script src="/scripts/app/editor/video.js"></script>
+
+    <link href="/scripts/app/editor/text/text.css" rel="stylesheet" />
+    <script src="/scripts/app/editor/text/text.js"></script>
+    <link href="/scripts/app/lib/selectImage/vue-select-image.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue-select-image@1.9.0/dist/vue-select-image.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" />
+    <link href="/scripts/app/components/fileUpload.css" rel="stylesheet" />
+    <script src="/scripts/app/components/fileUpload.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.5.0/dist/vue-ctk-date-time-picker.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.5.0/dist/vue-ctk-date-time-picker.umd.min.js"></script>
+
+
+    <script src="/scripts/app/page/cms/post.js" type="module"></script>
+    <script type="text/javascript">
+        var _fncImg;
+        var _fncVideo;
+    </script>
+
+</body>
+</html>

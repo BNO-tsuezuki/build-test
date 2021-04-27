@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Base Title</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+  </head>
+  <body class="h-100">
+      <div id="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- Main Sidebar -->
+                  <main-manu></main-manu>
+                  <!-- End Main Sidebar -->
+                  <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                      <!-- Main Navbar -->
+                      <info-form></info-form>
+                      <!-- / .main-navbar -->
+                      <div class="main-content-container container-fluid px-4">
+                          <!-- Page Header -->
+                          <div class="page-header row no-gutters py-4">
+                              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                  <span class="text-uppercase page-subtitle">GMTool</span>
+                                  <h3 class="page-title">Add Member</h3>
+                              </div>
+                          </div>
+                          <!-- End Page Header -->
+                          <div class="row">
+                              <div class="col-lg-9 col-md-12">
+                                  <!-- Add New Post Form -->
+
+                                  <strong class="text-muted d-block mb-2">Account</strong>
+                                  <div class="input-group mb-3">
+                                      <div class="input-group input-group-seamless">
+                                          <span class="input-group-prepend">
+                                              <span class="input-group-text">
+                                                  <i class="material-icons">person</i>
+                                              </span>
+                                          </span>
+                                          <input type="text" class="form-control" id="form1-username" placeholder="Account , e-mail" v-model="account" v-bind:class="{'is-invalid':isAccountError , 'is-valid':isAccountValid }" v-on:blur="onBlurAccount">
+                                      </div>
+
+                                      <select class="custom-select custom-select-sm" style="max-width: 130px;" v-model="role" v-bind:class="{'is-invalid':isRoleError , 'is-valid':isRoleValid }" v-on:blur="onBlurRole">
+                                          <option selected value="">Select role</option>
+                                          <option>administrator</option>
+                                          <option>operator</option>
+                                          <option>publisher</option>
+                                          <option>watcher</option>
+                                      </select>
+
+                                      <div class="input-group input-group-seamless">
+                                          <input type="text" class="form-control" id="form1-username" placeholder="Username" v-model="name" v-bind:class="{'is-invalid':isNameError , 'is-valid':isNameValid }" v-on:blur="onBlurName">
+                                      </div>
+                                  </div>
+
+                                  <button type="button" class="mb-2 btn btn-sm btn-primary mr-1" v-on:click="makeMember">Add</button>
+
+
+                                  <!-- / Add New Post Form -->
+
+                              </div>
+                              <div class="col-lg-3 col-md-12">
+                                  <!-- Post Overview -->
+                                  <!-- / Post Overview -->
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+          </div>
+          <!-- modal -->
+          <modal v-if="showModal == true" @close="showModal = false" :key="1">
+              <h3 slot="header">Result</h3>
+              <div slot="body">
+                  <p>{{message}}</p>
+                  <p v-if="success">account : {{account}}</p>
+                  <p v-if="success">password : {{password}}</p>
+              </div>
+              <div class="link_area" slot="footer">
+                  <p class="modal-default-button" @click="close">
+                      Close
+                  </p>
+              </div>
+          </modal>
+
+      </div>
+    <!-- liblary -->
+    <script src="scripts/app/lib/footer-write.js"></script>
+    <!-- pageJS -->
+    <script src="scripts/app/page/addMember.js"></script>
+  </body>
+</html>

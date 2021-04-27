@@ -1,0 +1,16 @@
+
+[Unit]
+Description=evosequencing server
+
+[Service]
+ExecStart=/usr/bin/dotnet /home/ubuntu/evo_packs/evosequencing/evosequencing.dll
+Restart=always
+RestartSec=10
+User=ubuntu
+Environment=ASPNETCORE_ENVIRONMENT=DevEnv
+Environment=DB_USAGE=APP
+WorkingDirectory=/home/ubuntu/evo_packs/evosequencing
+SyslogIdentifier=evosequencing
+
+[Install]
+WantedBy=multi-user.target

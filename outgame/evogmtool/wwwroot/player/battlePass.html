@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Battle Pass</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Battle Pass</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table style="border:1px solid #dee2e6;width: 300px;">
+                                        <thead style="background:#d3d3d347;">
+                                            <tr>
+                                                <th style="text-align:center">Player Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center">{{playerData.playerName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <table class="table mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th scope="col" class="border-0">id</th>
+                                                <th scope="col" class="border-0">name</th>
+                                                <th scope="col" class="border-0">level</th>
+                                                <th scope="col" class="border-0">levelExp</th>
+                                                <th scope="col" class="border-0">nextExp</th>
+                                                <th scope="col" class="border-0">rewardLevel</th>
+                                                <th scope="col" class="border-0">totalExp</th>
+                                                <th scope="col" class="border-0">isPremium</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr v-for="item in searchData.battlePasses" :key="item.id" v-cloak>
+                                                <td>{{item.id}}</td>
+                                                <td>{{lang=='ja'?item.displayNameJapanese:item.displayNameEnglish}}</td>
+                                                <td>{{item.level}}</td>
+                                                <td>{{item.levelExp}}</td>
+                                                <td>{{item.nextExp}}</td>
+                                                <td>{{item.rewardLevel}}</td>
+                                                <td>
+                                                    <div v-if="item.isEdit">
+                                                        <input type="text" style="width: 140px;" v-model="item.editExp" />
+                                                        <a href="#" v-on:click="cancelEdit(item);"><i class="material-icons" style="font-size: 18px;">disabled_by_default</i></a>
+                                                        <a href="#" v-on:click="saveEdit(item)"><i class="material-icons" style="font-size: 18px;">check_circle</i></a>
+                                                    </div>
+                                                    <div v-else>
+                                                        {{item.totalExp}}
+                                                        <a href="#" v-on:click="editExp(item)"><i class="material-icons">build</i></a>
+                                                        
+                                                    </div>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <div class="custom-control custom-toggle custom-toggle-sm mb-1">
+                                                        <input type="checkbox" v-bind:id="item.id" v-bind:name="item.id" v-model="item.isPremium" class="custom-control-input" v-on:click="isPremiumClick(item)">
+                                                        <label v-bind:for="item.id" class="custom-control-label"></label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/page/player/battlePass.js"></script>
+
+
+</body>
+</html>

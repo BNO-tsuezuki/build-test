@@ -1,0 +1,111 @@
+<div class="row" ng-controller="GamestatDetailsCtrl">
+  <div class="col-md-12">
+    <div style="background-color:rgba(0,0,0,0.6);border-radius:4px;padding:2px 4px;display:inline-block;color:#fff">
+      <b>GameID : {{stat._id}}</b><br>
+	</div>
+  </div>
+
+  <!-- グラフ -->
+  <div class="col-md-12">
+    <div d3-gamestat stat="stat"></div>
+  </div>
+  <div class="col-md-12">
+    <!--<div d3-bars></div>-->
+  </div> <!-- グラフ -->
+
+  <!-- リスト表示 -->
+  <div ng-repeat="team in stat.teams">
+    <div class="col-md-6">
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+        <th colspan="7">
+          <p><i ng-show="$index == stat.winner_team" class="glyphicon glyphicon-flag"></i>{{$index == 0 ? 'ALPHA' : 'BRAVO'}}</p>
+        </th>
+        </tr>
+        <tr>
+        <tr>
+          <th class="clickable" ng-click="sortTable('name')" rowspan="2">
+            Player
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </th>
+          <th colspan="2">
+            敵機
+          </th>
+          <th colspan="1">
+            自機
+          </th>
+          <th colspan="1">
+            味方機
+          </th>
+          <th colspan="2">
+            ルール固有
+          </th>
+        </tr>
+        <tr>
+        <th class="clickable" ng-click="sortTable('kill_count')">
+          中破数
+          <span ng-show="sortType == 'kill_count' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'kill_count' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('seriouslydamaged_count')">
+          大破数
+          <span ng-show="sortType == 'seriouslydamaged_count' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'seriouslydamaged_count' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('death_count')">
+          中破数
+          <span ng-show="sortType == 'death_count' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'death_count' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('recovery_count')">
+          リカバリ数
+          <span ng-show="sortType == 'recovery_count' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'recovery_count' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('fob_conquering')">
+          FOB制圧時間
+          <span ng-show="sortType == 'fob_conquering' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'fob_conquering' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('hq_attacking')">
+          HQダメージ
+          <span ng-show="sortType == 'hq_attacking' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'hq_attacking' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="player in team.players | orderBy:sortType:sortReverse">
+          <td>{{player.name}}</td>
+          <td>{{player.kill_count | number}}</td>
+          <td>{{player.seriouslydamaged_count | number}}</td>
+          <td>{{player.death_count | number}}</td>
+          <td>{{player.recovery_count | number}}</td>
+          <td>{{player.fob_conquering | number:0 | sec2minsec}}</td>
+          <td>{{player.hq_attacking | number:0}}</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+  </div> <!-- リスト表示 -->
+
+  <!-- 死亡情報 -->
+  <div class="col-md-12">
+    <b>死亡地点分布</b><br>
+    <div style="background-color:#f7f7f7;border-radius:8px;">
+      <div d3-map stat="stat"></div>
+    </div>
+  </div>
+  <!--
+  <div class="col-md-12">
+    <div ng-repeat="tl in stat.timeline" ng-if="tl.event_name=='decreased_ticket_by_killed'">
+      <div ng-repeat="param in tl.params" ng-if="param.key=='position'">
+        {{param.value}}
+      </div>
+    </div>
+  </div>
+  -->
+
+</div> <!-- row -->

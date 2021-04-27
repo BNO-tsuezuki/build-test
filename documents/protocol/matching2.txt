@@ -1,0 +1,86 @@
+title Matching
+
+participant BattleServer
+participant Player
+participant api
+participant DataStore
+participant matching
+participant tool
+
+note over BattleServer:BattleServer登録
+BattleServer->+api:EntryBattleServer
+api->+matching:EntryBattleServer
+matching->-api:
+api->-BattleServer:
+
+
+note over Player:Player登録
+Player->+api:EntryPlayer
+api->+matching:EntryPlayer
+matching->-api:
+api->-Player:
+
+
+
+note over tool:登録情報取得
+tool->+matching:GetEntries
+matching->-tool:
+
+
+note over tool:手動マッチメイク
+tool->+matching:ForceMatchmake
+matching->>*DataStore:
+matching->-tool:
+
+Player->+api:HandShake
+DataStore->>api:
+destroy DataStore
+api-->-Player:JoinBattle
+
+
+note over Player:Battle一覧取得
+Player->+api:GetBattlesList
+api->+matching:GetBattleServers
+matching->-api:
+api->-Player:
+
+note over Player:任意Battleへの参加
+Player->+api:RequestJoinBattle
+api->+matching:RequestJoinBattleServer
+matching->>*DataStore:
+matching->-api:
+api->-Player:
+
+Player->+api:HandShake
+DataStore->>api:
+destroy DataStore
+api-->-Player:JoinBattle
+
+
+note over matching: バトル進捗 指令
+matching->>*DataStore:
+Player->+api:HandShake
+DataStore->api:
+destroy DataStore
+api-->-BattleServer:ChangeBattlePhase
+
+note over BattleServer:バトル進捗を報告
+BattleServer->+api:ReportBattlePhase
+api->+matching:ReportBattlePhase
+matching->-api:
+api->-BattleServer:
+
+
+note over BattleServer:Playerが接続してきた報告
+BattleServer->+api:ReportAcceptPlayer
+api->+matching:ReportAcceptPlayer
+matching->-api:
+api->-BattleServer:
+
+note over BattleServer:Playerが切断した報告
+BattleServer->+api:ReportDisconnectPlayer
+api->+matching:ReportDisconnectPlayer
+matching->-api:
+api->-BattleServer:
+
+

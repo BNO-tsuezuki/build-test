@@ -1,0 +1,39 @@
+- name: <pip> ダウンロード
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: "{{ansible_home}}/get-pip.py.new" # べき等性のためファイル名で指定(Dirを指定すると常にダウンロードされる)
+    force: yes
+  changed_when: false
+
+- name: <pip> ダウンロード ファイル情報取得
+  stat:
+    path: "{{ansible_home}}/get-pip.py.new"
+    checksum_algorithm: sha256
+  register: newFile
+
+- name: <pip> 前回ダウンロード ファイル情報取得
+  stat:
+    path: "{{ansible_home}}/get-pip.py"
+    checksum_algorithm: sha256
+  register: oldFile
+
+- name: <pip> 差分確認
+  shell: echo unmatch
+  when: (oldFile.stat.exists == false) or ( oldFile.stat.checksum != newFile.stat.checksum )
+  register: matchResult
+
+- name: <pip> install
+  become: yes
+  shell: python3 {{ansible_home}}/get-pip.py.new
+  when: matchResult.changed
+
+- name: <pip> 新旧差し替え
+  shell: mv {{ansible_home}}/get-pip.py.new {{ansible_home}}/get-pip.py
+  changed_when: false
+
+
+# - name: <pip> install
+#   become: yes
+#   shell: python3 {{ansible_home}}/get-pip.py
+#   args:
+#     creates: "/usr/local/bin/pip"

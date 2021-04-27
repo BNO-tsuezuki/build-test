@@ -1,0 +1,11 @@
+﻿.vue-progress-path path {
+    stroke-width: 12;
+}
+
+.vue-progress-path .progress {
+    stroke: green;
+}
+
+.vue-progress-path .background {
+    stroke: #edd;
+}

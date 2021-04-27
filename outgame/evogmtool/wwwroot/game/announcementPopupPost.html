@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Announcement(Popup)</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="/game/announcementPopup.html">Announcement(Popup)</a></li>
+                                <li class="breadcrumb-item active">{{mode}}</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Schedule</h3>
+                                <div class="card-body">
+                                    <div>
+                                        <div class="input-group" style="width:540px;">
+                                            <div style="float: left;width:80px;">
+                                                <label class="col-sm-2 col-form-label" style="max-width: 80px;">start:</label>
+                                            </div>
+                                            <date-time-picker v-if="pickerShow" v-bind:value="postData.beginDate" @input="postData.beginDate = $event"></date-time-picker>
+                                        </div>
+                                        <div class="input-group" style="width:540px;">
+                                            <div style="float: left;width:80px;">
+                                                <label class="col-sm-2 col-form-label" style="max-width: 80px;">end:</label>
+                                            </div>
+                                            <date-time-picker v-if="pickerShow" v-bind:value="postData.endDate" @input="postData.endDate = $event"></date-time-picker>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card card-primary" style="background-color:antiquewhite">
+                                <div class="card-body">
+                                    <div style="float:left;width:100px;height: 120px;    margin-top: 23px;">
+                                        <span class="material-icons" style="font-size: 70px;">warning</span>
+                                    </div>
+                                    <div style="float:left;width:600px;">
+                                        <span>・メッセージは最大で「○文字　x 16行」となります。</span><br />
+                                        <span style="margin-left:1rem;">The maximum message is "o characters x 16 lines."</span><br /><br />
+                                        <span>・見切れ等、意図しない表示になっていないか配信前にチェックしてください。</span><br />
+                                        <span style="margin-left:1rem;">Please be sure to check before delivery for any cut-outs or unintended layouts."</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Message</h3>
+                                <div class="card-body">
+
+                                    <div class="cp_tab">
+                                        <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01" checked>
+                                        <label for="tab1_1"><input type="checkbox" v-model="postData.enabledJapanese" />Japanese</label>
+                                        <input type="radio" name="cp_tab" id="tab1_2" aria-controls="second_tab01">
+                                        <label for="tab1_2"><input type="checkbox" v-model="postData.enabledEnglish" />English</label>
+                                        <input type="radio" name="cp_tab" id="tab1_3" aria-controls="third_tab01">
+                                        <label for="tab1_3"><input type="checkbox" v-model="postData.enabledFrench" />French</label>
+                                        <input type="radio" name="cp_tab" id="tab1_4" aria-controls="force_tab01">
+                                        <label for="tab1_4"><input type="checkbox" v-model="postData.enabledGerman" />German</label>
+                                        <div class="cp_tabpanels">
+                                            <div id="first_tab01" class="cp_tabpanel">
+                                                <div><label>Title</label><label style="color:red;">*</label></div>
+                                                <div><input type="text" v-model="postData.titleJapanese" /></div>
+
+                                                <div><label>Message</label></div>
+                                                <!--<div id="editor_ja" style="border: 2px solid #000000; width: 650px;"></div>-->
+                                                <textarea style="width:100%;" v-model="editorData.ja"></textarea>
+                                            </div>
+                                            <div id="second_tab01" class="cp_tabpanel">
+                                                <div><label>Title</label><label style="color:red;">*</label></div>
+                                                <div><input type="text" v-model="postData.titleEnglish" /></div>
+
+                                                <div><label>Message</label></div>
+                                                <!--<div id="editor_en" style="border: 2px solid #000000; width: 650px;"></div>-->
+                                                <textarea style="width:100%;" v-model="editorData.en"></textarea>
+
+                                            </div>
+                                            <div id="third_tab01" class="cp_tabpanel">
+                                                <div><label>Title</label><label style="color:red;">*</label></div>
+                                                <div><input type="text" v-model="postData.titleFrench" /></div>
+
+                                                <div><label>Message</label></div>
+                                                <!--<div id="editor_fr" style="border: 2px solid #000000; width: 650px;"></div>-->
+                                                <textarea style="width:100%;" v-model="editorData.fr"></textarea>
+
+                                            </div>
+                                            <div id="force_tab01" class="cp_tabpanel">
+                                                <div><label>Title</label><label style="color:red;">*</label></div>
+                                                <div><input type="text" v-model="postData.titleGerman" /></div>
+
+                                                <div><label>Message</label></div>
+                                                <!--<div id="editor_ger" style="border: 2px solid #000000; width: 650px;"></div>-->
+                                                <textarea style="width:100%;" v-model="editorData.ger"></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Memo</h3>
+                                <div class="card-body">
+                                    <textarea rows="2" style="width:100%;" v-model="postData.memo"></textarea>
+                                </div>
+                            </div>
+
+                            <div v-show="mode!='View'">
+                                <div v-show="mode=='Edit'" style="float:left;">
+                                    <input type="button" value="Delete" v-on:click="deleteConfirm()" />
+                                </div>
+                                <div style="float:right;">
+                                    <input type="checkbox" id="release_checkbox" v-model="postData.release" />
+                                    <label for="release_checkbox">Release</label>
+                                    <input type="button" value="Save" v-on:click="saveConfirm()" />
+                                </div>
+                            </div>
+
+                        </div><!-- /.card -->
+                    </div>
+
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js"></script>
+
+    <script src="/scripts/app/editor/text/text.js"></script>
+    <link href="/scripts/app/editor/text/text.css" rel="stylesheet" />
+
+    <script src="/scripts/app/editor/color_red/index.js"></script>
+    <link href="/scripts/app/editor/color_red/index.css" rel="stylesheet" />
+
+    <script src="/scripts/app/editor/color_blue/index.js"></script>
+    <link href="/scripts/app/editor/color_blue/index.css" rel="stylesheet" />
+
+    <script src="/scripts/app/editor/color_black/index.js"></script>
+    <link href="/scripts/app/editor/color_black/index.css" rel="stylesheet" />
+
+    <script src="/scripts/app/page/game/announcementPopupPost.js"></script>
+
+    <style>
+        .cp_tab *, .cp_tab *:before, .cp_tab *:after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .cp_tab {
+            margin: 1em auto;
+        }
+
+            .cp_tab > input[type='radio'] {
+                margin: 0;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                outline: none;
+                background: none;
+                -webkit-appearance: none;
+                appearance: none;
+                display: none;
+            }
+
+            .cp_tab .cp_tabpanel {
+                display: none;
+            }
+
+            .cp_tab > input:first-child:checked ~ .cp_tabpanels > .cp_tabpanel:first-child,
+            .cp_tab > input:nth-child(3):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(2),
+            .cp_tab > input:nth-child(5):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(3),
+            .cp_tab > input:nth-child(7):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(4),
+            .cp_tab > input:nth-child(9):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(5),
+            .cp_tab > input:nth-child(11):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(6) {
+                display: block;
+            }
+
+            .cp_tab > label {
+                position: relative;
+                display: inline-block;
+                padding: 15px;
+                cursor: pointer;
+                border: 1px solid transparent;
+                border-bottom: 0;
+            }
+
+                .cp_tab > label:hover,
+                .cp_tab > input:focus + label {
+                    color: #0066cc;
+                }
+
+            .cp_tab > input:checked + label {
+                margin-bottom: -1px;
+                border-color: #cccccc;
+                border-bottom: 1px solid #ffffff; /*背景色と同じ*/
+                border-radius: 6px 6px 0 0;
+            }
+
+            .cp_tab .cp_tabpanel {
+                padding: 0.5em 1em;
+                border-top: 1px solid #cccccc;
+            }
+
+        @media (max-width: 480px) {
+            .cp_tab {
+                width: 100%;
+                font-size: 0.8em;
+            }
+
+                .cp_tab label {
+                    padding: 0.5em;
+                }
+        }
+    </style>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+title Login(BattleServer)
+
+participant BattleServer
+participant api
+
+note over BattleServer:Login
+BattleServer->+api:/Auth/Login
+api->-BattleServer:
+
+note over BattleServer:Logout
+BattleServer->+api:/Auth/Logout
+api->-BattleServer:

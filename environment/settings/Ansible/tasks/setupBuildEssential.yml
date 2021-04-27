@@ -1,0 +1,6 @@
+
+- name: <BuildEssential> install
+  become: yes
+  apt:
+    name: build-essential
+    update_cache: yes # apt updateを実行する

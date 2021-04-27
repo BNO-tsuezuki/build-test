@@ -1,0 +1,202 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Base Title</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+  </head>
+  <body class="h-100">
+      <div id="content">
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- Main Sidebar -->
+                  <main-manu></main-manu>
+                  <!-- End Main Sidebar -->
+                  <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                      <!-- Main Navbar -->
+                      <info-form></info-form>
+                      <!-- / .main-navbar -->
+                      <div class="main-content-container container-fluid px-4">
+                          <!-- Page Header -->
+                          <div class="page-header row no-gutters py-4">
+                              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                  <span class="text-uppercase page-subtitle">player</span>
+                                  <h3 class="page-title">Player Info</h3>
+                              </div>
+                          </div>
+                          <!-- End Page Header -->
+                          <div class="row">
+                              <div class="col-md-12 mb-4">
+                                  <div class="card card-small mb-4">
+                                      <!-- Add New Post Form -->
+                                      <ul class="list-group list-group-flush">
+                                          <li class="list-group-item p-0 px-3 pt-3">
+                                              <div class="divTable" style="background-color: cornflowerblue">
+                                                  <div class="divTableBody">
+                                                      <div class="divTableRow">
+                                                          <div class="divTableCell" style="width:25%;">PlayerName</div>
+                                                          <div class="divTableCell" style="width:25%;">PlayerNo</div>
+                                                          <div class="divTableCell" style="width:15%;">Point</div>
+                                                          <div class="divTableCell" style="width:15%;">Seazon</div>
+                                                          <div class="divTableCell" style="width:10%;">Stats</div>
+                                                          <div class="divTableCell" style="width:10%;">Level;</div>
+                                                      </div>
+                                                      <div class="divTableRow">
+                                                          <div class="divTableCell" style="width:25%;">Rename</div>
+                                                          <div class="divTableCell" style="width:25%;">Tutorial Reset</div>
+                                                          <div class="divTableCell" style="width:15%;">Item</div>
+                                                          <div class="divTableCell" style="width:15%;">Unit</div>
+                                                          <div class="divTableCell" style="width:10%;">&nbsp;</div>
+                                                          <div class="divTableCell" style="width:10%;">User Option</div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                              <div class="divTable">
+                                                  <div class="divTableBody">
+                                                      <div class="divTableRow">
+                                                          <div class="divTableCell" style="width:25%;">{{searchData.player.playerName}}</div>
+                                                          <div class="divTableCell" style="width:25%;">{{searchData.player.playerNo}}</div>
+                                                          <div class="divTableCell" style="width:15%;">Point</div>
+                                                          <div class="divTableCell" style="width:15%;"><a v-bind:href="myUrl('battlePass.html')">Seazon</a></div>
+                                                          <div class="divTableCell" style="width:10%;">Stats</div>
+                                                          <div class="divTableCell" style="width:10%;">Level;</div>
+                                                      </div>
+                                                      <div class="divTableRow">
+                                                          <div class="divTableCell" style="width:25%;"><a v-on:click="editName" href="#">Rename</a></div>
+                                                          <div class="divTableCell" style="width:25%;">Tutorial Reset</div>
+                                                          <div class="divTableCell" style="width:15%;"><a v-bind:href="myUrl('item.html')">Item</a></div>
+                                                          <div class="divTableCell" style="width:15%;"><a v-bind:href="myUrl('item.html')+'&dispType=MobileSuit'">Unit</a></div>
+                                                          <div class="divTableCell" style="width:10%;">&nbsp;</div>
+                                                          <div class="divTableCell" style="width:10%;"><a v-bind:href="myUrl('userOption.html')">User Option</a></div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="divTable" style="margin-bottom: 15px;"></div>
+                                          </li>
+                                          <!--<li class="list-group-item p-0 px-3 pt-3">
+                                        <div class="divTable" style="background-color: cornflowerblue">
+                                            <div class="divTableBody">
+                                                <div class="divTableRow">
+                                                    <div class="divTableCell" style="width:25%;">PlayerName</div>
+                                                    <div class="divTableCell" style="width:25%;">PlayerNo</div>
+                                                    <div class="divTableCell" style="width:15%;">Point</div>
+                                                    <div class="divTableCell" style="width:15%;">Seazon</div>
+                                                    <div class="divTableCell" style="width:10%;">Stats</div>
+                                                    <div class="divTableCell" style="width:10%;">Level;</div>
+                                                </div>
+                                                <div class="divTableRow">
+                                                    <div class="divTableCell" style="width:25%;">Rename</div>
+                                                    <div class="divTableCell" style="width:25%;">Tutorial Reset</div>
+                                                    <div class="divTableCell" style="width:15%;">Item</div>
+                                                    <div class="divTableCell" style="width:15%;">Unit</div>
+                                                    <div class="divTableCell" style="width:10%;">&nbsp;</div>
+                                                    <div class="divTableCell" style="width:10%;">Customization</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="divTable">
+                                            <div class="divTableBody">
+                                                <div class="divTableRow">
+                                                    <div class="divTableCell" style="width:25%;">PlayerName</div>
+                                                    <div class="divTableCell" style="width:25%;">PlayerNo</div>
+                                                    <div class="divTableCell" style="width:15%;">Point</div>
+                                                    <div class="divTableCell" style="width:15%;">Seazon</div>
+                                                    <div class="divTableCell" style="width:10%;">Stats</div>
+                                                    <div class="divTableCell" style="width:10%;">Level;</div>
+                                                </div>
+                                                <div class="divTableRow">
+                                                    <div class="divTableCell" style="width:25%;">Rename</div>
+                                                    <div class="divTableCell" style="width:25%;">Tutorial Reset</div>
+                                                    <div class="divTableCell" style="width:15%;">Item</div>
+                                                    <div class="divTableCell" style="width:15%;">Unit</div>
+                                                    <div class="divTableCell" style="width:10%;">&nbsp;</div>
+                                                    <div class="divTableCell" style="width:10%;">Customization</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="divTable" style="margin-bottom: 15px;"></div>-->
+                                          </li>
+                                      </ul>
+
+                                      <!-- DivTable.com -->
+                                      <!-- / Add New Post Form -->
+                                  </div>
+                              </div>
+                              <div class="col-lg-3 col-md-12">
+                                  <!-- Post Overview -->
+                                  <!-- / Post Overview -->
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+          </div>
+          <!-- modal -->
+          <modal v-if="showEditName == true" @close="showEditName = false" :key="1">
+              <h3 slot="header">Edit Name</h3>
+              <div slot="body">
+                  <p>
+                      <input type="text" class="form-control" v-model="editTarget.playerName">
+                  </p>
+              </div>
+              <div class="link_area" slot="footer">
+                  <p class="modal-close-button" @click="showEditName = false">
+                      close
+                  </p>
+                  <p class="modal-save-button" @click="saveEdit">
+                      save
+                  </p>
+              </div>
+          </modal>
+
+      </div>
+      <!-- liblary -->
+      <script src="scripts/app/lib/footer-write.js"></script>
+      <!-- pageJS -->
+      <script src="scripts/app/page/player.js"></script>
+      <style>
+          /* DivTable.com */
+          .divTable {
+              display: table;
+              width: 100%;
+          }
+
+          .divTableRow {
+              display: table-row;
+          }
+
+          .divTableHeading {
+              background-color: #EEE;
+              display: table-header-group;
+          }
+
+          .divTableCell, .divTableHead {
+              border: 1px solid #999999;
+              display: table-cell;
+              padding: 3px 10px;
+          }
+
+          .divTableHeading {
+              background-color: #EEE;
+              display: table-header-group;
+              font-weight: bold;
+          }
+
+          .divTableFoot {
+              background-color: #EEE;
+              display: table-footer-group;
+              font-weight: bold;
+          }
+
+          .divTableBody {
+              display: table-row-group;
+          }
+      </style>
+  </body>
+</html>

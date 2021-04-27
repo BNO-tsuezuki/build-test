@@ -1,0 +1,16 @@
+
+[Unit]
+Description=evomatching server
+
+[Service]
+ExecStart=/usr/bin/dotnet /home/ubuntu/evo_packs/evomatching/evomatching.dll
+Restart=always
+RestartSec=10
+User=ubuntu
+Environment=ASPNETCORE_ENVIRONMENT=DevEnv
+Environment=DB_USAGE=APP
+WorkingDirectory=/home/ubuntu/evo_packs/evomatching
+SyslogIdentifier=evomatching
+
+[Install]
+WantedBy=multi-user.target

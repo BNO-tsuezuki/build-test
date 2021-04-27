@@ -1,0 +1,17 @@
+{
+  "git": {
+    "committer_date": "----"
+  },
+
+  "inky": {
+    "url": "https://stg-api.bnea.io",
+    "apikey_name": "X-BNEA-Api-Id",
+    "apikey_value": "eJdBnRCPQn3DqxjvUCvE5h8c5Q9AxK79",
+    "apisecretkey_name": "X-BNEA-Api-Secret",
+    "apisecretkey_value": "kEJj7rDk5n72bLm9W2P3TEHfZx2yyqDB"
+  },
+
+  "battleserver": {
+    "password": "lq8lG5SwQmZGCaCl2wYKV4AaWntTN6vo"
+  }
+}

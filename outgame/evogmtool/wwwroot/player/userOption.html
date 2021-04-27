@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">User Option</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">User Option</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table style="border:1px solid #dee2e6;width: 300px;">
+                                        <thead style="background:#d3d3d347;">
+                                            <tr>
+                                                <th style="text-align:center">Player Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center">{{searchData.player.playerName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div data-toggle="buttons" class="btn-group btn-group-toggle mb-3">
+                                        <label class="btn btn-primary" @click="dispType='Game options';getData();" v-bind:class="{ active: dispType== 'Game options' }">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" checked="checked"> Game options
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Graphic options';getData();" v-bind:class="{ active: dispType== 'Graphic options' }">
+                                            <input type="radio" name="options" id="option2" autocomplete="off"> Graphic options
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Control options';getMSData();" v-bind:class="{ active: dispType== 'Control options' }">
+                                            <input type="radio" name="options" id="option2" autocomplete="off"> Control options
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Sound options';getData();" v-bind:class="{ active: dispType== 'Sound options' }">
+                                            <input type="radio" name="options" id="option3" autocomplete="off"> Sound options
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <div  v-if="dispType== 'Control options'" class="card-header border-bottom">
+                                        <select v-model="targetMS" v-on:change="getMSData();">
+                                            <option value="Common">Common</option>
+                                            <option v-for="item in mobileSuitList" v-bind:value="item.mobileSuitId">{{lang=='ja'?item.displayNameJapanese:item.displayNameEnglish}}</option>
+                                        </select>
+
+                                    </div>
+                                    <div v-if="dispType != 'Control options'" class="card-body p-0 pb-3 text-center">
+                                        <table class="table mb-0">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th scope="col" class="border-0">OptionNo</th>
+                                                    <th scope="col" class="border-0">Text</th>
+                                                    <th scope="col" class="border-0">Use local settings</th>
+                                                    <th scope="col" class="border-0">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr v-for="(item, index) in searchData.options" v-cloak>
+                                                    <td>{{item.optionNo}}</td>
+                                                    <td>{{lang=='ja'?item.jpText:item.enText}}</td>
+                                                    <td>
+                                                        <span v-if="item.isLocal" style="color:green;">{{item.isLocal}}</span>
+                                                        <span v-else style="color:red;">{{item.isLocal}}</span>
+                                                    </td>
+
+                                                    <td v-if="item.valueType == 'switch'" v-on:change="save(item)">
+                                                        <select v-model="item.value" v-bind:disabled="item.isLocal" class="form-control">
+                                                            <option v-for="opt in item.switchSetting.items" v-bind:value="opt.index">{{lang=='ja'?opt.jpText:opt.enText}}</option>
+                                                        </select>
+                                                    </td>
+                                                    <td v-if="item.valueType == 'range'"><input v-bind:disabled="item.isLocal" type="number" v-bind:class="{'is-invalid':validationRange(item)}" v-tooltip.top="rangeString(item)" style="text-align: right;" class="form-control" name="number" v-model="item.value" :min="item.rangeSetting.min" :max="item.rangeSetting.max" v-on:change="save(item)" /></td>
+                                                    <td v-if="item.valueType == 'key'"><input v-bind:disabled="item.isLocal" type="number" class="form-control" text-align: right;" name="number" v-model="item.value" v-on:change="save(item)" /></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div v-if="dispType== 'Control options'" class="card-body p-0 pb-3 text-center">
+                                        
+                                        <table class="table mb-0">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th scope="col" class="border-0">OptionNo</th>
+                                                    <th scope="col" class="border-0">Text</th>
+                                                    <th scope="col" class="border-0">Use local settings</th>
+                                                    <th scope="col" class="border-0">Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr v-for="(item, index) in searchData.options" v-cloak>
+                                                    <td>{{item.optionNo}}</td>
+                                                    <td>{{lang=='ja'?item.jpText:item.enText}}</td>
+                                                    <td>
+                                                        <span v-if="item.isLocal" style="color:green;">{{item.isLocal}}</span>
+                                                        <span v-else style="color:red;">{{item.isLocal}}</span>
+                                                    </td>
+
+                                                    <td v-if="item.valueType == 'switch'" v-on:change="save(item)">
+                                                        <select v-model="item.value" class="form-control">
+                                                            <option v-for="opt in item.switchSetting.items" v-bind:value="opt.index">{{lang=='ja'?opt.jpText:opt.enText}}</option>
+                                                        </select>
+                                                    </td>
+                                                    <td v-if="item.valueType == 'range'"><input v-bind:disabled="item.isLocal" type="number" v-bind:class="{'is-invalid':validationRange(item)}" v-tooltip.top="rangeString(item)" style="text-align: right;" class="form-control" name="number" v-model="item.value" :min="item.rangeSetting.min" :max="item.rangeSetting.max" v-on:change="save(item)" /></td>
+                                                    <td v-if="item.valueType == 'key'"><input v-bind:disabled="item.isLocal" type="number" class="form-control" style="text-align: right;" name="number" v-model="item.value" v-on:change="save(item)" /></td>
+                                                    <td v-if="item.valueType == 'switch-ms'">
+                                                        <div v-if="item.switchMsSetting.isCommonSettingAvailable">
+                                                            <input class="custom-control-input" type="checkbox" v-bind:disabled="item.isLocal" :id="item.optionNo" v-model="item.useCommon" v-on:change="save(item)">
+                                                            <label :for="item.optionNo" class="custom-control-label">Use common settings.</label>
+                                                        </div>
+                                                        <select v-model="item.value" v-bind:disabled="item.useCommon || item.isLocal" class="form-control" v-on:change="save(item)">
+                                                            <option v-for="opt in item.switchMsSetting.items" v-bind:value="opt.index">{{lang=='ja'?opt.jpText:opt.enText}}</option>
+                                                        </select>
+                                                    </td>
+                                                    <td v-if="item.valueType == 'range-ms'">
+                                                        <div v-if="item.rangeMsSetting.isCommonSettingAvailable">
+                                                            <input class="custom-control-input" type="checkbox" v-bind:disabled="item.isLocal" :id="item.optionNo" v-model="item.useCommon" v-on:change="save(item)">
+                                                            <label :for="item.optionNo" class="custom-control-label">Use common settings.</label>
+                                                        </div>
+                                                        <input v-if="item.useCommon" type="number" disabled style="text-align: right;" class="form-control" name="number" v-model="item.value" />
+                                                        <input v-else type="number" v-bind:disabled="item.isLocal" v-bind:class="{'is-invalid':validationRange(item)}" v-tooltip.top="rangeString(item)" style="text-align: right;" class="form-control" name="number" v-model="item.value" :min="item.rangeMsSetting.min" :max="item.rangeMsSetting.max" v-on:change="save(item)" />
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12">
+                                        <!-- Post Overview -->
+                                        <!-- / Post Overview -->
+                                    </div>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="https://unpkg.com/v-tooltip"></script>
+    <link href="/styles/tooltip.css" rel="stylesheet" />
+    <script src="/scripts/app/page/player/userOption.js"></script>
+
+
+</body>
+</html>

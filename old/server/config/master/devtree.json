@@ -1,0 +1,1319 @@
+{
+	"devtree": [
+		{
+			"Name": "GM",
+			"parent": [],
+			"parentMobileSuit": "MS0005",
+			"description": "ジム",
+			"type": "MobileSuit",
+			"id": "MS0005",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": [
+				"GM_Color_v1"
+			]
+		},
+		{
+			"Name": "GM_Color_v1",
+			"parent": [
+				"GM"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000501",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v2",
+			"parent": [
+				"GM_Color_v1"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000502",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v3",
+			"parent": [
+				"GM_Color_v1"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000503",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v4",
+			"parent": [
+				"GM_Color_v1"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000504",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v5",
+			"parent": [
+				"GM_Color_v2"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000505",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v6",
+			"parent": [
+				"GM_Color_v3"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000506",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v7",
+			"parent": [
+				"GM_Color_v4"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000507",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v8",
+			"parent": [
+				"GM_Color_v5"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000508",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v9",
+			"parent": [
+				"GM_Color_v6"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000509",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GM_Color_v10",
+			"parent": [
+				"GM_Color_v7"
+			],
+			"parentMobileSuit": "MS0005",
+			"description": "",
+			"type": "Color",
+			"id": "CC000510",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe",
+			"parent": [],
+			"parentMobileSuit": "MS0195",
+			"description": "デスサイズ",
+			"type": "MobileSuit",
+			"id": "MS0195",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"GundamDeathscythe_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v1",
+			"parent": [
+				"GundamDeathscythe"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019501",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v2",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019502",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v3",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019503",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v4",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019504",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v5",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019505",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v6",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019506",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v7",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019507",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v8",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019508",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v9",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019509",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDeathscythe_ColorNode_v10",
+			"parent": [
+				"GundamDeathscythe_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0195",
+			"description": "",
+			"type": "Color",
+			"id": "CC019510",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnAGundam",
+			"parent": [],
+			"parentMobileSuit": "MS0245",
+			"description": "∀ガンダム",
+			"type": "MobileSuit",
+			"id": "MS0245",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"TurnA_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "TurnA_ColorNode_v1",
+			"parent": [
+				"TurnAGundam"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024501",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v2",
+			"parent": [
+				"TurnA_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024502",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v3",
+			"parent": [
+				"TurnA_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024503",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v4",
+			"parent": [
+				"TurnA_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024504",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v5",
+			"parent": [
+				"TurnA_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024505",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v6",
+			"parent": [
+				"TurnA_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024506",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v7",
+			"parent": [
+				"TurnA_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024507",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v8",
+			"parent": [
+				"TurnA_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024508",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v9",
+			"parent": [
+				"TurnA_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024509",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "TurnA_ColorNode_v10",
+			"parent": [
+				"TurnA_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0245",
+			"description": "",
+			"type": "Color",
+			"id": "CC024510",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames",
+			"parent": [],
+			"parentMobileSuit": "MS0304",
+			"description": "デュナメス",
+			"type": "MobileSuit",
+			"id": "MS0304",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"GundamDynames_GNSniperRifle",
+				"GundamDynames_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v1",
+			"parent": [
+				"GundamDynames"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030401",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v2",
+			"parent": [
+				"GundamDynames_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030402",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v3",
+			"parent": [
+				"GundamDynames_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030403",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v4",
+			"parent": [
+				"GundamDynames_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030404",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v5",
+			"parent": [
+				"GundamDynames_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030405",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v6",
+			"parent": [
+				"GundamDynames_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030406",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v7",
+			"parent": [
+				"GundamDynames_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030407",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v8",
+			"parent": [
+				"GundamDynames_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030408",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v9",
+			"parent": [
+				"GundamDynames_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030409",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamDynames_ColorNode_v10",
+			"parent": [
+				"GundamDynames_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0304",
+			"description": "",
+			"type": "Color",
+			"id": "CC030410",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "RiddenZaku",
+			"parent": [],
+			"parentMobileSuit": "MS0427",
+			"description": "",
+			"type": "MobileSuit",
+			"id": "MS0427",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"RiddenZaku_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "RiddenZaku_ColorNode_v1",
+			"parent": [
+				"RiddenZaku"
+			],
+			"parentMobileSuit": "MS0427",
+			"description": "",
+			"type": "Color",
+			"id": "CC042701",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos",
+			"parent": [],
+			"parentMobileSuit": "MS0406",
+			"description": "ガンダムバルバトス",
+			"type": "MobileSuit",
+			"id": "MS0406",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"Mace",
+				"GundamBarbatos_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v1",
+			"parent": [
+				"GundamBarbatos"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040601",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v2",
+			"parent": [
+				"GundamBarbatos_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040602",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v3",
+			"parent": [
+				"GundamBarbatos_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040603",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v4",
+			"parent": [
+				"GundamBarbatos_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040604",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v5",
+			"parent": [
+				"GundamBarbatos_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040605",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v6",
+			"parent": [
+				"GundamBarbatos_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040606",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v7",
+			"parent": [
+				"GundamBarbatos_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040607",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v8",
+			"parent": [
+				"GundamBarbatos_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040608",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v9",
+			"parent": [
+				"GundamBarbatos_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040609",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "GundamBarbatos_ColorNode_v10",
+			"parent": [
+				"GundamBarbatos_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0406",
+			"description": "",
+			"type": "Color",
+			"id": "CC040610",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII",
+			"parent": [],
+			"parentMobileSuit": "MS0099",
+			"description": "ザク",
+			"type": "MobileSuit",
+			"id": "MS0099",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"ZakuIII_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v1",
+			"parent": [
+				"ZakuIII"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009901",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v2",
+			"parent": [
+				"ZakuIII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009902",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v3",
+			"parent": [
+				"ZakuIII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009903",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v4",
+			"parent": [
+				"ZakuIII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009904",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v5",
+			"parent": [
+				"ZakuIII_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009905",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v6",
+			"parent": [
+				"ZakuIII_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009906",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v7",
+			"parent": [
+				"ZakuIII_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009907",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v8",
+			"parent": [
+				"ZakuIII_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009908",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v9",
+			"parent": [
+				"ZakuIII_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009909",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuIII_ColorNode_v10",
+			"parent": [
+				"ZakuIII_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0099",
+			"description": "",
+			"type": "Color",
+			"id": "CC009910",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool",
+			"parent": [],
+			"parentMobileSuit": "MS0246",
+			"description": "カプル",
+			"type": "MobileSuit",
+			"id": "MS0246",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"Kapool_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "Kapool_ColorNode_v1",
+			"parent": [
+				"Kapool"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024601",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v2",
+			"parent": [
+				"Kapool_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024602",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v3",
+			"parent": [
+				"Kapool_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024603",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v4",
+			"parent": [
+				"Kapool_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024604",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v5",
+			"parent": [
+				"Kapool_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024605",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v6",
+			"parent": [
+				"Kapool_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024606",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v7",
+			"parent": [
+				"Kapool_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024607",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v8",
+			"parent": [
+				"Kapool_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024608",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v9",
+			"parent": [
+				"Kapool_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024609",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Kapool_ColorNode_v10",
+			"parent": [
+				"Kapool_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0246",
+			"description": "",
+			"type": "Color",
+			"id": "CC024610",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII",
+			"parent": [],
+			"parentMobileSuit": "MS0006",
+			"description": "ザクⅡ",
+			"type": "MobileSuit",
+			"id": "MS0006",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"ZakuII_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "ZakuII_ColorNode_v1",
+			"parent": [
+				"ZakuII"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000601",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v2",
+			"parent": [
+				"ZakuII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000602",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v3",
+			"parent": [
+				"ZakuII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000603",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v4",
+			"parent": [
+				"ZakuII_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000604",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v5",
+			"parent": [
+				"ZakuII_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000605",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v6",
+			"parent": [
+				"ZakuII_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000606",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v7",
+			"parent": [
+				"ZakuII_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000607",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v8",
+			"parent": [
+				"ZakuII_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000608",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v9",
+			"parent": [
+				"ZakuII_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000609",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "ZakuII_ColorNode_v10",
+			"parent": [
+				"ZakuII_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0006",
+			"description": "",
+			"type": "Color",
+			"id": "CC000610",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi",
+			"parent": [],
+			"parentMobileSuit": "MS0113",
+			"description": "サザビー",
+			"type": "MobileSuit",
+			"id": "MS0113",
+			"exp": 0,
+			"gp": 1000,
+			"bundleNodes": [
+				"Sazabi_ColorNode_v1"
+			]
+		},
+		{
+			"Name": "Sazabi_ColorNode_v1",
+			"parent": [
+				"Sazabi"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011301",
+			"exp": 0,
+			"gp": 0,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v2",
+			"parent": [
+				"Sazabi_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011302",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v3",
+			"parent": [
+				"Sazabi_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011303",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v4",
+			"parent": [
+				"Sazabi_ColorNode_v1"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011304",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v5",
+			"parent": [
+				"Sazabi_ColorNode_v2"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011305",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v6",
+			"parent": [
+				"Sazabi_ColorNode_v3"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011306",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v7",
+			"parent": [
+				"Sazabi_ColorNode_v4"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011307",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v8",
+			"parent": [
+				"Sazabi_ColorNode_v5"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011308",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v9",
+			"parent": [
+				"Sazabi_ColorNode_v6"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011309",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		},
+		{
+			"Name": "Sazabi_ColorNode_v10",
+			"parent": [
+				"Sazabi_ColorNode_v7"
+			],
+			"parentMobileSuit": "MS0113",
+			"description": "",
+			"type": "Color",
+			"id": "CC011310",
+			"exp": 100,
+			"gp": 100,
+			"bundleNodes": []
+		}
+	]
+}

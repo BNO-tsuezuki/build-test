@@ -1,0 +1,347 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for Network"
+
+
+Parameters:
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "products"
+
+Mappings: 
+  Const:
+    Cidr:
+      Vpc: "10.0.0.0/16"
+
+Resources:
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties: 
+      CidrBlock: !FindInMap [Const,Cidr,Vpc]
+      # EnableDnsSupport: Boolean
+      # EnableDnsHostnames: Boolean
+      # InstanceTenancy: String
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-${EnvName}"
+
+  IGW:
+    Type: AWS::EC2::InternetGateway
+    Properties: 
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-${EnvName}"
+
+  VPCGA:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      InternetGatewayId: !Ref IGW
+      VpcId: !Ref VPC
+      # VpnGatewayId: String
+
+
+####################
+#    RouteTable    #
+####################
+
+# Public
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn: VPCGA
+    Properties: 
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-public-${EnvName}"
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGA
+    Properties: 
+      DestinationCidrBlock: 0.0.0.0/0
+      # DestinationIpv6CidrBlock: String
+      # EgressOnlyInternetGatewayId: String
+      GatewayId: !Ref IGW
+      # InstanceId: String
+      # NatGatewayId: String
+      # NetworkInterfaceId: String
+      RouteTableId: !Ref PublicRouteTable
+      # VpcPeeringConnectionId: String
+
+# Private
+
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn: VPCGA
+    Properties: 
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-private-${EnvName}"
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGA
+    Properties: 
+      DestinationCidrBlock: 0.0.0.0/0
+      # DestinationIpv6CidrBlock: String
+      # EgressOnlyInternetGatewayId: String
+      # GatewayId: String
+      # InstanceId: String
+      NatGatewayId: !Ref NatGateway
+      # NetworkInterfaceId: String
+      RouteTableId: !Ref PrivateRouteTable
+      # VpcPeeringConnectionId: String
+
+
+
+################
+#    Subnet    #
+################
+
+# Public
+
+  PublicSubnet0:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      CidrBlock: 10.0.0.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-public-0-${EnvName}"
+      VpcId: !Ref VPC
+  PublicSubnetRouteTableAssociation0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet0
+
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: 10.0.4.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-public-1-${EnvName}"
+      VpcId: !Ref VPC
+  PublicSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1
+
+
+# Private
+
+  PrivateSubnet0:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      CidrBlock: 10.0.128.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-private-0-${EnvName}"
+      VpcId: !Ref VPC
+  PrivateSubnetRouteTableAssociation0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet0
+
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: 10.0.132.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-private-1-${EnvName}"
+      VpcId: !Ref VPC
+  PrivateSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      SubnetId: !Ref PrivateSubnet1
+
+
+  ################################
+  #    Nat Gateway
+  ################################
+  
+  NatGatewayEIP: 
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: !Ref VPC
+      # InstanceId: String
+      # PublicIpv4Pool: String
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    DependsOn: VPCGA
+    Properties: 
+      AllocationId:
+        Fn::GetAtt:
+        - NatGatewayEIP
+        - AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags: 
+        - Key: Name
+          Value: !Sub "jpop-${EnvName}"
+
+ 
+  ################################
+  #    VPCEndpoint
+  ################################
+  EndPoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties: 
+      RouteTableIds:
+        - !Ref PublicRouteTable
+        - !Ref PrivateRouteTable
+      ServiceName: !Join 
+        - ''
+        - - com.amazonaws.
+          - !Ref 'AWS::Region'
+          - .s3
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:*'
+            Resource:
+              - !Join
+                - ''
+                - - arn:aws:s3:::amazonlinux.
+                  - !Ref 'AWS::Region'
+                  - .amazonaws.com
+              - !Join
+                - ''
+                - - arn:aws:s3:::amazonlinux.
+                  - !Ref 'AWS::Region'
+                  - .amazonaws.com/*
+              - !Join 
+                - ''
+                - - arn:aws:s3:::aws-codedeploy-
+                  - !Ref 'AWS::Region'
+                  - /*
+              - !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Sub "jpop-buildpackages-${EnvName}"
+                  - /*
+              
+              # For access for EvoMasterData.json 
+              - arn:aws:s3:::bno-evo-workspace/*
+
+      VpcEndpointType: Gateway # or Interface
+      # PrivateDnsEnabled: Boolean
+      # SubnetIds: 
+      #   - String
+      # SecurityGroupIds: 
+      #   - String
+      VpcId: !Ref VPC
+
+  #########################################################################################################
+  #  ビルド済みパッケージの保管場所
+  #########################################################################################################
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      # AccelerateConfiguration: 
+      #   AccelerateConfiguration
+      # AccessControl: String
+      # AnalyticsConfigurations: 
+      #   - AnalyticsConfiguration
+      # BucketEncryption: 
+      #   BucketEncryption
+      BucketName: !Sub "jpop-buildpackages-${EnvName}"
+      # CorsConfiguration: 
+      #   CorsConfiguration
+      # InventoryConfigurations: 
+      #   - InventoryConfiguration
+      # LifecycleConfiguration: 
+      #   LifecycleConfiguration
+      # LoggingConfiguration: 
+      #   LoggingConfiguration
+      # MetricsConfigurations: 
+      #   - MetricsConfiguration
+      # NotificationConfiguration: 
+      #   NotificationConfiguration
+      # ObjectLockConfiguration: 
+      #   ObjectLockConfiguration
+      # ObjectLockEnabled: Boolean
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      # ReplicationConfiguration: 
+      #   ReplicationConfiguration
+      # Tags: 
+      #   - Tag
+      # VersioningConfiguration: 
+      #   VersioningConfiguration
+      # WebsiteConfiguration: 
+      #   WebsiteConfiguration
+
+
+
+Outputs:
+  VPC:
+    Value: !Ref VPC
+    Export:
+      Name: !Sub "jpop-VPC-${EnvName}"
+
+  VpcCidr:
+    Value: !FindInMap [Const,Cidr,Vpc]
+    Export:
+      Name: !Sub "jpop-VpcCidr-${EnvName}" 
+
+  PublicSubnet0:
+    Value: !Ref PublicSubnet0
+    Export:
+      Name: !Sub "jpop-PublicSubnet0-${EnvName}"
+  PublicSubnet1:
+    Value: !Ref PublicSubnet1
+    Export:
+      Name: !Sub "jpop-PublicSubnet1-${EnvName}"
+
+  PrivateSubnet0:
+    Value: !Ref PrivateSubnet0
+    Export:
+      Name: !Sub "jpop-PrivateSubnet0-${EnvName}"
+  PrivateSubnet1:
+    Value: !Ref PrivateSubnet1
+    Export:
+      Name: !Sub "jpop-PrivateSubnet1-${EnvName}"
+
+  BuildPackagesBucketName:
+    Value: !Sub "jpop-buildpackages-${EnvName}"
+    Export:
+      Name: !Sub "jpop-BuildPackagesBucketName-${EnvName}"

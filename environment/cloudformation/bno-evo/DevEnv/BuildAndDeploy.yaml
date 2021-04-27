@@ -1,0 +1,583 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Stack for Build & Deploy"
+
+Parameters:
+
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    Default: "devenv"
+
+  KeyPairName:
+    Description: Enter a Public/private key pair.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  RootVolumeSize:
+    Description: Specify a size in GB for the root EBS volume
+    Type: Number
+    Default: '32'
+
+  BNOCidrIp:
+    Description: Cidr of Bandai Namco Online
+    Type: String
+    Default: "221.112.67.210/32"
+
+  InstanceType:
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+    Default: t2.micro
+    Description: Amazon EC2 instance type
+    Type: String
+
+  AMI:
+    Default:  ami-0daa7fcbd7aaff144
+    Description: The Linux distribution for the AMI to be used for instances. But "ap-northeast-1" region only!
+    Type: String
+
+  SourcePath:
+    Default: ~/serversources
+    Type: String
+
+Resources:
+
+  #########################################################################################################
+  #    Git Repository
+  #########################################################################################################
+  # CodeCommit:
+  #   Type: AWS::CodeCommit::Repository
+  #   Properties: 
+  #     RepositoryDescription: Repository for evo serverside.
+  #     RepositoryName: evoserver
+  #     # Triggers:
+  #     #   - 
+  #     #     # Branches:
+  #     #     #   - 文字列
+  #     #     CustomData: Project ID 12345
+  #     #     DestinationArn: String
+  #     #     # Events:
+  #     #     # - 文字列
+  #     #     Name: TrigerA
+
+  #########################################################################################################
+  #    Build Machine
+  #########################################################################################################
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: String
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          Description: "BNO"
+          CidrIp: !Ref BNOCidrIp
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.177/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.45/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.210/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+      Tags:
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore'
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+        - 'arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy'
+        - 'arn:aws:iam::aws:policy/AWSCodeDeployFullAccess'
+        - 'arn:aws:iam::aws:policy/AWSLambda_FullAccess'
+        - 'arn:aws:iam::aws:policy/AWSCloudFormationReadOnlyAccess'
+
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref Role
+      Path: /
+
+
+  Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      # Affinity: String
+      # AvailabilityZone: String
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp2
+            DeleteOnTermination: true
+      # CreditSpecification: CreditSpecification
+      # DisableApiTermination: Boolean
+      # EbsOptimized: Boolean
+      # ElasticGpuSpecifications: [ ElasticGpuSpecification, ... ]
+      # ElasticInferenceAccelerators: 
+      #   - ElasticInferenceAccelerator
+      # HostId: String
+      IamInstanceProfile: !Ref InstanceProfile
+      ImageId: !Ref AMI
+      # InstanceInitiatedShutdownBehavior: String
+      InstanceType: !Ref InstanceType
+      # Ipv6AddressCount: Integer
+      # Ipv6Addresses:
+      #   - IPv6 Address Type
+      # KernelId: String
+      KeyName: !Ref KeyPairName
+      # LaunchTemplate: LaunchTemplateSpecification
+      # LicenseSpecifications: 
+      #   - LicenseSpecification
+      # Monitoring: Boolean
+      # NetworkInterfaces: 
+      #   - EC2 Network Interface
+      # PlacementGroupName: String
+      # PrivateIpAddress: String
+      # RamdiskId: String
+      SecurityGroupIds: 
+        - Fn::GetAtt:
+          - SecurityGroup
+          - GroupId
+      # SecurityGroups: 
+      #   - 文字列
+      # SourceDestCheck: Boolean
+      # SsmAssociations: 
+      #   - SSMAssociation
+      SubnetId: {"Fn::ImportValue" : !Sub "jpop-PublicSubnet1-${EnvName}"}
+      Tags: 
+        - Key: Name
+          Value: !Sub "jpop-BuildAndDeploy-${EnvName}"
+      # Tenancy: String
+      UserData: !Base64 
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash
+            - |+
+
+
+            - |
+              # test echo
+            - 'echo '
+            - !Ref 'AWS::StackName'
+            - |+
+
+
+            - |
+              # cfn-init
+            - '/opt/aws/bin/cfn-init -c order -v'
+            - ' -s '
+            - !Ref 'AWS::StackName'
+            - ' --region '
+            - !Ref 'AWS::Region'
+            - ' -r Instance '
+            - |+
+
+
+            - |
+              # cfn-signal
+            - '/opt/aws/bin/cfn-signal -e $? --stack '
+            - !Ref 'AWS::StackName'
+            - ' --resource Instance --region '
+            - !Ref 'AWS::Region'
+            - |+
+
+
+            - |
+              # eof
+      
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          order:
+            - misc
+            - git
+            - firstonetime-sh
+            - build-sh
+            - deploy-sh
+            - migration-sh
+            - nodejs
+            - rmate
+            - codedeployagent
+            - fluentd
+            - mysql-client
+            - redis-client
+            - jq
+
+        misc:
+          commands:
+            0_export-PS1:
+              command: echo 'export PS1="[\u@BuildAndDeploy \w]$"' >> /home/ec2-user/.bashrc
+
+        git:
+          packages:
+            yum:
+              git:
+                [] # - "2.17.2-2.amzn2"
+          commands:
+            0_download_pem:
+              command: "aws ssm get-parameter --name '/jpop/buildserver/ssh-pem' --region 'ap-northeast-1' --query Parameter.Value --output text > /home/ec2-user/.ssh/git.pem"
+            1_chmod_pem:
+              command: "chmod 600 /home/ec2-user/.ssh/git.pem"
+            2_download_config:
+              command: "aws ssm get-parameter --name '/jpop/buildserver/ssh-config' --region 'ap-northeast-1' --query Parameter.Value --output text >> /home/ec2-user/.ssh/config"
+            3_chmod_config:
+              command: "chmod 600 /home/ec2-user/.ssh/config"
+            4_chown_config:
+              command: "chown -R ec2-user:ec2-user /home/ec2-user/.ssh"
+
+        firstonetime-sh:
+          files:
+              /home/ec2-user/firstonetime.sh:
+                mode: "000777"
+                owner: ec2-user
+                group: ec2-user
+                content:
+                  'Fn::Join':
+                    - ''
+                    - - |+
+                        #!/bin/sh
+                        set -eu
+
+                      - >-
+                        export SRC_ROOT_PATH=
+                      - !Sub "${SourcePath}"
+                      - |+
+                        
+                        
+                      - >-
+                        export DB_WRITE_ENDPOINT=
+                      - {"Fn::ImportValue" : !Sub "jpop-DbWriteEndPoint-${EnvName}"}
+                      - |+
+
+
+                        SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/DevEnv/scripts/firstonetime.sh
+
+                        if test -d $SRC_ROOT_PATH; then
+                          echo "--------------------------------------"
+                          echo "OK! (serversources already exists ...)"
+                          echo "--------------------------------------"
+                        else
+                          echo "--------------------------------------"
+                          echo "<<<< git clone at first one time. >>>>"
+                          echo "--------------------------------------"
+                          git clone ssh://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/yosui -b master $SRC_ROOT_PATH
+                        fi
+
+                        cd $SRC_ROOT_PATH
+                        git pull origin --rebase
+
+                        $SCRIPT
+
+        build-sh:
+          files:
+            /home/ec2-user/build.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |
+                      #!/bin/sh
+
+                      set -eu
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+                    - >-
+                      export ENV_NAME=
+                    - !Sub "${EnvName}"
+                    - |+
+
+                    - >-
+                      export REGION=
+                    - !Ref 'AWS::Region'
+                    - |+
+
+
+                    - >-
+                      export BUILDPACKAGES_BUCKETNAME=
+                    - {"Fn::ImportValue" : !Sub "jpop-BuildPackagesBucketName-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export DELIVERYDATA_CFDOMAINNAME=
+                    - {"Fn::ImportValue" : !Sub "jpop-DeliveryDataCfDomainName-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export DELIVERYDATA_BUCKETNAME=
+                    - {"Fn::ImportValue" : !Sub "jpop-DeliveryDataBucketName-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export DELIVERYDATA_BUCKETREGION=
+                    - {"Fn::ImportValue" : !Sub "jpop-DeliveryDataBucketRegion-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT=
+                    - {"Fn::ImportValue" : !Sub "jpop-DbWriteEndPoint-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export KVS_ENDPOINT=
+                    - {"Fn::ImportValue" : !Sub "jpop-kvsEndPoint-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export SEQUENCINGSERVER_IP=
+                    - {"Fn::ImportValue" : !Sub "jpop-evosequencing-ip-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export SEQUENCINGSERVER_PORT=
+                    - {"Fn::ImportValue" : !Sub "jpop-evosequencing-port-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export TOOLSERVER_IP=
+                    - {"Fn::ImportValue" : !Sub "jpop-evotool-ip-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export TOOLSERVER_PORT=
+                    - {"Fn::ImportValue" : !Sub "jpop-evotool-port-${EnvName}"}
+                    - |+
+
+                      
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/DevEnv/scripts/build.sh
+
+                      $SCRIPT
+
+        deploy-sh:
+          files:
+            /home/ec2-user/deploy.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |
+                      #!/bin/sh
+
+                      set -eu
+
+                      export PACK_NAME=$1
+                      export SERVICE=$2
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+
+                    - >-
+                      export APPLICATION_NAME=
+                    - !Sub "jpop-${EnvName}"
+                    - |+
+
+
+                    - >-
+                      export BUILDPACKAGES_BUCKETNAME=
+                    - {"Fn::ImportValue" : !Sub "jpop-BuildPackagesBucketName-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export REGION=
+                    - !Ref 'AWS::Region'
+                    - |+
+
+
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/DevEnv/scripts/deploy.sh
+
+                      $SCRIPT
+                      
+        migration-sh:
+          files:
+            /home/ec2-user/migration.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |+
+                      #!/bin/sh
+
+                      set -eu
+
+                      SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+                      export PACK_NAME=$1
+                      export DB_NAME=$2
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+
+                    - >-
+                      export BUILDPACKAGES_BUCKETNAME=
+                    - {"Fn::ImportValue" : !Sub "jpop-BuildPackagesBucketName-${EnvName}"}
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT=
+                    - {"Fn::ImportValue" : !Sub "jpop-DbWriteEndPoint-${EnvName}"}
+                    - |+
+
+
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/DevEnv/scripts/migration.sh
+
+                      $SCRIPT
+                      
+        nodejs:
+          commands:
+            0_download_repo:
+              command: "curl -sL https://rpm.nodesource.com/setup_8.x -o/home/ec2-user/nodejs_8.x"
+            1_chmod_repo:
+              command: "chmod +x /home/ec2-user/nodejs_8.x"
+            2_install_repo:
+              command: "sh /home/ec2-user/nodejs_8.x"
+            3_install:
+              command: "yum -y install nodejs"
+
+        rmate:
+          commands:
+            0_download:
+              command: "curl https://raw.githubusercontent.com/textmate/rmate/master/bin/rmate -o/usr/bin/rmate"
+            1_chmod:
+              command: "chmod a+x /usr/bin/rmate"
+
+
+        codedeployagent:
+          packages:
+            yum:
+              ruby:
+                [] # - "2.0.0.648-36.amzn2.0.1"
+          commands:
+            0_download:
+              command: "curl https://aws-codedeploy-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/latest/install -oinstall"
+              # env: string
+              cwd: "/home/ec2-user/"
+              # test: 
+              # ignoreErrors: false
+            1_chmod:
+              command: "sudo chmod +x ./install"
+              cwd: "/home/ec2-user/"
+            2_install:
+              command: "sudo ./install auto"
+              cwd: "/home/ec2-user/"
+            3_checkstatus:
+              command: "sudo service codedeploy-agent status"
+        
+        fluentd:
+          commands:
+            0_download:
+              command: "curl -L https://toolbelt.treasuredata.com/sh/install-amazon2-td-agent3.sh -oinstall-amazon2-td-agent3.sh"
+              # env: string
+              cwd: "/home/ec2-user/"
+              # test: 
+              # ignoreErrors: false
+            1_chmod:
+              command: "sudo chmod +x ./install-amazon2-td-agent3.sh"
+              cwd: "/home/ec2-user/"
+            2_install:
+              command: "sudo sh ./install-amazon2-td-agent3.sh"
+              cwd: "/home/ec2-user/"
+            3_start:
+              command: "sudo systemctl start td-agent.service"
+            4_check:
+              command: "sudo systemctl status td-agent.service"
+
+        mysql-client:
+          commands:
+            0_localinstall:
+              command: "sudo yum localinstall https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm -y"
+            1_disable80:
+              command: "sudo yum-config-manager --disable mysql80-community"
+            2_enable57:
+              command: "sudo yum-config-manager --enable mysql57-community"
+            3_install:
+              command: "sudo yum install mysql-community-client -y"
+
+        redis-client:
+          commands:
+            0_install:
+              command: "sudo amazon-linux-extras install redis4.0"
+
+        jq:
+          packages:
+            yum:
+              jq:
+                []
+
+              
+      # Volumes: 
+      #   - EC2 MountPoint
+      # AdditionalInfo: String

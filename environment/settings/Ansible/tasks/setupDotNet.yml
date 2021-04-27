@@ -1,0 +1,46 @@
+
+- name: <DotNet> repo install
+  become: yes
+  apt:
+    deb: https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+
+- name: <DotNet> install
+  become: yes
+  apt:
+    name: "{{ item }}"
+    force: yes
+    update_cache: yes # apt updateを実行する
+  with_items: "{{ dotnet_packages }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+# - name: <DotNet> repo認証用key登録
+#   become: yes
+#   apt_key:
+#     url: https://packages.microsoft.com/keys/microsoft.asc
+#     state: present
+
+# - name: <DotNet> repo登録
+#   become: yes
+#   apt_repository:
+#     repo: 'deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main'
+
+# - name: <DotNet> install
+#   become: yes
+#   apt:
+#     name: "{{ item }}"
+#     force: yes
+#     update_cache: yes # apt updateを実行する
+#   with_items: "{{ dotnet_packages }}"
+  
+    

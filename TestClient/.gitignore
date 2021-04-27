@@ -1,0 +1,10 @@
+.vs
+.vscode
+Library
+Temp
+*.sln
+*.csproj
+*.user
+**/obj
+**/Debug
+**/Release

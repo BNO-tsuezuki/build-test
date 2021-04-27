@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Announcement(Chat)</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Announcement(Chat)</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card ">
+                                <div class="card-body">
+                                    <table>
+                                        <tr>
+                                            <td v-for="item in domain">
+                                                <button type="button" class="btn btn-block btn-outline-primary" v-bind:class="{ active: isSelectedDomain(item)}" v-on:click="domainSelect(item)">{{item.domain.domainName + '(' + item.publisher.publisherName + ':' + item.region.regionCode + ')'  }}</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row  float-sm-left" style="margin-left:20px;">
+                                        <div class="col-sm-12 col-md-5">
+
+                                            <div>
+                                                <div>
+                                                    <div class="input-group" style="width:480px;">
+                                                        <label class="col-sm-2 col-form-label">from:</label>
+                                                        <date-time-picker v-bind:value="start.datetime" @input="start.datetime = $event"></date-time-picker>
+                                                    </div>
+                                                    <div class="input-group" style="width:480px;">
+                                                        <label class="col-sm-2 col-form-label">to:</label>
+                                                        <date-time-picker v-bind:value="start.datetime" @input="end.datetime = $event"></date-time-picker>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-5" style="margin-top:20px;">
+                                                    <input type="button" value="Search" v-on:click="search()">
+                                                </div>
+                                                <hr style="width:100%;" />
+                                                <div class="col-sm-12 col-md-5">
+                                                    <input v-show="isEditable(selectedDomain.target)" type="button" value="New Post" v-on:click="newPost()">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+
+                                    </div>
+                                </div>
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body">
+
+                                        <!--<div class="row  float-sm-right">
+                                            <select class="custom-select custom-select-sm form-control form-control-sm" v-model="lang" style="width: 90px;">
+                                                <option v-for="item in language" v-bind:value="item.languageCode">{{item.languageName}}</option>
+                                            </select>
+                                        </div>-->
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Id</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Status</th>
+                                                    <th colspan="4" style="text-align: center;">Country</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Memo</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Start</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">End</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Times</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Interval</th>
+                                                    <th rowspan="2" style="vertical-align: middle;text-align: center;">Edit</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>EN</th>
+                                                    <th>FR</th>
+                                                    <th>GE</th>
+                                                    <th>JP</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="data in List.data">
+                                                    <td>{{data.id}}</td>
+                                                    <td style="vertical-align: middle;text-align: center;"><span v-if="data.release" style="color:green;">release</span><span v-else style="color:red;">private</span></td>
+                                                    <td style="vertical-align: middle;text-align: center;"><span v-if="data.enabledEnglish" class="material-icons" style="color:green;">done</span></td>
+                                                    <td style="vertical-align: middle;text-align: center;"><span v-if="data.enabledFrench" class="material-icons" style="color:green;">done</span></td>
+                                                    <td style="vertical-align: middle;text-align: center;"><span v-if="data.enabledGerman" class="material-icons" style="color:green;">done</span></td>
+                                                    <td style="vertical-align: middle;text-align: center;"><span v-if="data.enabledJapanese" class="material-icons" style="color:green;">done</span></td>
+                                                    <td v-tooltip.top="data.memo">{{getMemo(data) | truncate}}</td>
+                                                    <td style="vertical-align: middle;text-align: center;">{{getDateTime(data.beginDate)}}</td>
+                                                    <td style="vertical-align: middle;text-align: center;">{{getDateTime(data.endDate)}}</td>
+                                                    <td style="vertical-align: middle;text-align: center;">{{data.times}}</td>
+                                                    <td style="vertical-align: middle;text-align: center;">{{data.repeatedIntervalMinutes}}</td>
+                                                    <td>
+                                                        <input v-if="isEditable(data.target)" type="button" value="Edit" v-on:click="editPage(data)" />
+                                                        <input v-else type="button" value="View" v-on:click="editPage(data)" />
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="row">
+                                            <paginate v-if="List.pageCount>0" :page-count="List.pageCount"
+                                                      :page-range="3"
+                                                      :margin-pages="2"
+                                                      :click-handler="getList"
+                                                      :prev-text="'＜'"
+                                                      :next-text="'＞'"
+                                                      :container-class="'pagination'"
+                                                      :page-class="'page-item'">
+                                            </paginate>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+                <div class="p-3">
+                    <h5>Title</h5>
+                    <p>Sidebar content</p>
+                </div>
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- Main Footer -->
+            <footer-menu></footer-menu>
+        </div>
+    </div>
+
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js"></script>
+    <script src="https://unpkg.com/v-tooltip"></script>
+    <link href="/styles/tooltip.css" rel="stylesheet" />
+    <script src="/scripts/app/page/game/announcement.js"></script>
+    <link href="/styles/pagination.css" rel="stylesheet" />
+
+</body>
+</html>

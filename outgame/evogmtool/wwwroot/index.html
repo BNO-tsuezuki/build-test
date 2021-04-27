@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Top Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Top Page</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">Visitors</h3>
+                                        <select v-model="selectedArea" v-on:change="getChartData">
+                                            <option v-for="item in areaName" :value="item">{{item}}</option>
+                                        </select>
+                                        <!--<a href="javascript:void(0);">View Report</a>-->
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <p class="d-flex flex-column">
+                                            <span class="text-bold text-lg">{{nowCount}}</span>
+                                            <span>Visitors Over Time</span>
+                                        </p>
+                                        <p class="ml-auto d-flex flex-column text-right">
+                                            <!--<span class="text-success">
+                                                <i class="fas fa-arrow-up"></i> 12.5%
+                                            </span>-->
+                                            <div class="input-group" style="width:70%;">
+                                                <date-range-picker v-if="locale" :time-picker="true" v-model="dateRange" :locale-data="locale" style="width:100%;" @update="rangeUpdate">
+                                                </date-range-picker>
+                                            </div>
+                                        </p>
+                                    </div>
+                                    <!-- /.d-flex -->
+
+                                    <div class="position-relative mb-4">
+                                        <canvas id="visitors-chart" height="400"></canvas>
+                                    </div>
+
+                                    <div class="d-flex flex-row justify-content-end">
+                                        <span class="material-icons" style="cursor:pointer;" v-on:click="getChartData">
+                                            replay
+                                        </span>
+
+                                        <!--<countdown :left-time="10000" :auto-start="true" ref="cnt" @finish="getChartData">
+        <div slot="process"
+             slot-scope="reload">{{ `reload: ${reload.timeObj.ceil.s}` }}</div>
+    </countdown>-->
+                                        <!--<span class="mr-2">
+        <i class="fas fa-square text-primary"></i> This Week
+    </span>-->
+                                        <!--<span>
+        <i class="fas fa-square text-gray"></i> Last Week
+    </span>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col-md-12 -->
+
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <!--<div class="float-right d-none d-sm-inline">
+                Anything you want
+            </div>-->
+            <!-- Default to the left -->
+            <strong>Copyright &copy;  <a href="https://www.bandainamco-ol.co.jp/">BANDAI NAMCO Online inc.</a>.</strong> All rights reserved.
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="scripts/app/lib/footer-write.js"></script>
+    <script src="https://unpkg.com/vue-awesome-countdown@latest"></script>
+    <script src="scripts/app/page/index.js"></script>
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <script src="/scripts/app/lib/vue2-daterange-picker.umd.js"></script>
+    <link href="/styles/dateRangePicker.css" rel="stylesheet" />
+
+</body>
+</html>

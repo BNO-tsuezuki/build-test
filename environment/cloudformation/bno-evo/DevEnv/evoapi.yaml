@@ -1,0 +1,464 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Stack for evoapi"
+Metadata:
+  LICENSE: Apache License, Version 2.0 
+  'AWS::CloudFormation::Interface':
+    
+    ParameterGroups:
+      - Label:
+          default: Amazon EC2 Configuration
+        Parameters:
+          - KeyPairName
+          - AMI
+          - InstanceType
+          - RootVolumeSize
+
+      - Label:
+          default: Scaling Configuration
+        Parameters:
+          - NumMinHosts
+          - NumMaxHosts
+          - AverageCPUUtilization
+    
+    ParameterLabels:
+      KeyPairName:
+        default: Key Pair Name
+      AMI:
+        default: AMI
+      InstanceType:
+        default: Instance Type
+      RootVolumeSize:
+        default: Root Volume Size
+      NumMinHosts:
+        default: Num Min Hosts
+      NumMaxHosts:
+        default: Num Max Hosts
+      CPUUtilizationAverage:
+        default: Average CPU Utilization
+
+Parameters:
+
+  KeyPairName:
+    Description: Enter a Public/private key pair. If you do not have one in this region,　please create it before continuing
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  AMI:
+    Default:  ami-0daa7fcbd7aaff144
+    Description: The Linux distribution for the AMI to be used for instances. But "ap-northeast-1" region only!
+    Type: String
+
+  InstanceType:
+    Default: m4.large
+    Description: Amazon EC2 instance type
+    Type: String
+
+  RootVolumeSize:
+    Description: Specify a size in GB for the root EBS volume
+    Type: Number
+    Default: '32'
+
+  NumMinHosts:
+    Description: Number of Minimum Hosts by scaling
+    Type: Number
+    Default: 1
+
+  NumMaxHosts:
+    Description: Number of Maximum Hosts by scaling
+    Type: Number
+    Default: 2
+
+  AverageCPUUtilization:
+    Description: (%) Average CPU utilization of the Auto Scaling 
+    Type: Number
+    Default: 60
+
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  PortNo:
+    Type: Number
+    Default: 52345
+
+
+
+Resources:
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: String
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: {"Fn::ImportValue" : !Sub "jpop-VpcCidr-${EnvName}"}
+          FromPort: !Ref PortNo
+          ToPort: !Ref PortNo
+          IpProtocol: "tcp"
+        -
+          CidrIp: {"Fn::ImportValue" : !Sub "jpop-VpcCidr-${EnvName}"}
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          CidrIp: 221.112.67.210/32 #BNO
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.177/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.45/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          Description: "BNO Cato VPN"
+          CidrIp: 103.203.222.210/32
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-evoapi-${EnvName}"
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+      
+
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+        - 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess'
+
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref Role
+      Path: /
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      # AutoScalingGroupName: String
+      # AvailabilityZones:
+      #   - 文字列
+      # Cooldown: String
+      DesiredCapacity: !Ref NumMinHosts
+      # HealthCheckGracePeriod: Integer
+      # HealthCheckType: String
+      # InstanceId: String
+      LaunchConfigurationName: !Ref LaunchConfiguration
+      # LaunchTemplate: LaunchTemplateSpecification
+      # LifecycleHookSpecificationList: 
+      #   - LifecycleHookSpecification
+      # LoadBalancerNames:
+      #   - 文字列
+      MaxSize: !Ref NumMaxHosts
+      # MetricsCollection:
+      #   - MetricsCollection
+      MinSize: !Ref NumMinHosts
+      # MixedInstancesPolicy: 
+      #   MixedInstancesPolicy
+      # NotificationConfigurations:
+      #   - NotificationConfiguration
+      # PlacementGroup: String
+      # ServiceLinkedRoleARN: String
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-evoapi-${EnvName}"
+          PropagateAtLaunch: true
+      TargetGroupARNs:
+        - !Ref TargetGroup
+      # TerminationPolicies:
+      #   - 文字列
+      VPCZoneIdentifier:
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet0-${EnvName}"}
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet1-${EnvName}"}
+    CreationPolicy:
+      ResourceSignal:
+        Count: !Ref NumMinHosts
+        Timeout: PT30M
+
+  LaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      AssociatePublicIpAddress: true
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp2
+            DeleteOnTermination: true
+      # ClassicLinkVPCId: String
+      # ClassicLinkVPCSecurityGroups:
+      #   - 文字列
+      # EbsOptimized: Boolean
+      IamInstanceProfile: !Ref InstanceProfile
+      ImageId: !Ref AMI
+      # InstanceId: String
+      # InstanceMonitoring: Boolean
+      InstanceType: !Ref InstanceType
+      # KernelId: String
+      KeyName: !Ref KeyPairName
+      # LaunchConfigurationName: String
+      # PlacementTenancy: String
+      # RamDiskId: String
+      SecurityGroups:
+        - !Ref SecurityGroup
+      # SpotPrice: String
+      UserData: !Base64 
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash
+            - |+
+
+            - |
+              # test echo
+            - 'echo '
+            - !Ref 'AWS::StackName'
+            - |+
+
+
+            - |
+              # cfn-init
+            - '/opt/aws/bin/cfn-init -c order -v'
+            - ' -s '
+            - !Ref 'AWS::StackName'
+            - ' --region '
+            - !Ref 'AWS::Region'
+            - ' -r LaunchConfiguration '
+            - |+
+
+
+            - |
+              # cfn-signal
+            - '/opt/aws/bin/cfn-signal -e $? --stack '
+            - !Ref 'AWS::StackName'
+            - ' --resource AutoScalingGroup --region '
+            - !Ref 'AWS::Region'
+            - |+
+
+
+            - |
+              # eof
+
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          order:
+            - misc
+            - codedeployagent
+            - fluentd
+            - rmate
+        
+        misc:
+          commands:
+            0_export-PS1:
+              command: echo 'export PS1="[\u@evoapi \w]$"' >> /home/ec2-user/.bashrc
+
+        codedeployagent:
+          packages:
+            yum:
+              ruby:
+                [] # - "2.0.0.648-36.amzn2.0.1"
+          commands:
+            0_download:
+              command: "curl https://aws-codedeploy-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/latest/install -oinstall"
+              # env: string
+              cwd: "/home/ec2-user/"
+              # test: 
+              # ignoreErrors: false
+            1_chmod:
+              command: "sudo chmod +x ./install"
+              cwd: "/home/ec2-user/"
+            2_install:
+              command: "sudo ./install auto"
+              cwd: "/home/ec2-user/"
+            3_checkstatus:
+              command: "sudo service codedeploy-agent status"
+        
+        fluentd:
+          files:
+            /home/ec2-user/td-aggent.added.conf:
+              mode: "000666"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |
+
+                      <source>
+                        type tail
+                        format json
+                        path /var/log/evo/evoapi-general.log
+                        pos_file /var/tmp/evoapi-general.log.pos
+                        tag evo.evoapi.general
+                      </source>
+                        
+                      <match evo.*.*>
+                        type kinesis_firehose
+                      
+                    - >-
+                        delivery_stream_name  
+                    - {"Fn::ImportValue" : !Sub "jpop-LogDeliveryStreamName-${EnvName}"}
+                    - |+
+                      
+                      
+                        #profile ...
+                        #credentials_path ...
+                        #aws_key_id ...
+                        #aws_sec_key ...
+                        #endpoint ...
+                    
+                    - >-
+                        region  
+                    - !Ref 'AWS::Region'
+                    - |+
+
+
+                        #data_key data (default: nil)
+                      
+                        # Put a data_key value if data_key is set
+                        # {... "data":"xxx" ...}
+                        # Put a record as JSON if data_key is not set
+                      
+                        #append_new_line true
+                      
+                        #include_time_key false
+                        #include_tag_key false
+
+                        flush_interval 1s
+                    - |+
+                      </match>
+                      
+
+          commands:
+            0_download:
+              command: "curl -L https://toolbelt.treasuredata.com/sh/install-amazon2-td-agent3.sh -oinstall-amazon2-td-agent3.sh"
+              # env: string
+              cwd: "/home/ec2-user/"
+              # test: 
+              # ignoreErrors: false
+            1_chmod:
+              command: "sudo chmod +x ./install-amazon2-td-agent3.sh"
+              cwd: "/home/ec2-user/"
+            2_install:
+              command: "sudo sh ./install-amazon2-td-agent3.sh"
+              cwd: "/home/ec2-user/"
+            3_install-plugin-kinesis:
+              command: "sudo td-agent-gem install fluent-plugin-kinesis"
+            4_td-agent-conf-backup:
+              command: "sudo mv /etc/td-agent/td-agent.conf /etc/td-agent/td-agent.conf.bk"
+            5_new-td-agent-conf:
+              command: "sudo cat /etc/td-agent/td-agent.conf.bk /home/ec2-user/td-aggent.added.conf > /etc/td-agent/td-agent.conf"
+            6_mkdir_log_dir:
+              command: "sudo mkdir -m 1777 -p /var/log/evo"
+            7_start:
+              command: "sudo systemctl start td-agent.service"
+            8_check:
+              command: "sudo systemctl status td-agent.service"
+        
+        rmate:
+          commands:
+            0_download:
+              command: "curl https://raw.githubusercontent.com/textmate/rmate/master/bin/rmate -o/usr/bin/rmate"
+            1_chmod:
+              command: "chmod a+x /usr/bin/rmate"
+
+
+  ScalingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      # AdjustmentType: String ChangeInCapacity ExactCapacity PercentChangeInCapacity 
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      # Cooldown: String
+      # EstimatedInstanceWarmup: Integer
+      # MetricAggregationType: String
+      # MinAdjustmentMagnitude: Integer
+      PolicyType: TargetTrackingScaling
+                  # SimpleScaling
+                  # StepScaling 
+      # ScalingAdjustment: Integer
+      # StepAdjustments:
+      #   - StepAdjustments
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+                                # 事前定義されたメトリクスを使用する場合、CloudWatchAlarmの作成も自動で行われる
+                                # ASGAverageCPUUtilization—Auto Scaling グループの平均 CPU 使用率。
+                                # ASGAverageNetworkIn—Auto Scaling グループがすべてのネットワークインターフェイスで受信したバイトの平均数。
+                                # ASGAverageNetworkOut—Auto Scaling グループがすべてのネットワークインターフェイスで送信したバイトの平均数。
+                                # ALBRequestCountPerTarget — Application Load Balancer ターゲットグループ内のターゲットごとに完了したリクエストの数。
+        TargetValue: !Ref AverageCPUUtilization
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties: 
+      # HealthCheckEnabled: Boolean # default true
+      HealthCheckIntervalSeconds: 30 # 5~300 default 30
+      HealthCheckPath: /HealthCheck
+      HealthCheckPort: !Ref PortNo
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 10 # 2~120
+      HealthyThresholdCount: 2 #2~5
+      Matcher: 
+        HttpCode: 200
+      Name: !Sub "jpop-evoapi-TargetGroup-${EnvName}"
+      Port: !Ref PortNo
+      Protocol: HTTP
+      # Tags: 
+      #   - Tag
+      # TargetGroupAttributes: 
+          # - key: deregistration_delay.timeout_seconds
+          #   value: 300 # 0~3600 default 300
+          # - key: slow_start.duration_seconds
+          #   value:
+          # - key: stickiness.enabled
+          #   value:
+          # - key: stickiness.type
+          #   value:
+          # - key: stickiness.lb_cookie.duration_seconds
+          #   value:
+
+      # TargetType: String #  instance | ip | lambda
+      # Targets: 
+      #   - TargetDescription
+      UnhealthyThresholdCount: 2 # 2~10
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+Outputs:
+  AutoScalingGroup:
+    Value: !Ref AutoScalingGroup
+    Export:
+      Name: !Sub "jpop-evoapi-AutoScalingGroup-${EnvName}"
+
+  TargetGroup:
+    Value: !Ref TargetGroup
+    Export:
+      Name: !Sub "jpop-evoapi-TargetGroup-${EnvName}"

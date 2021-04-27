@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content">
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">News List</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">News List</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input type="button" value="New Post" v-bind:disabled="isMyDomain()==false" v-on:click="newPost()">
+                                    <div class="row  float-sm-right">
+                                        <div class="col-sm-12 col-md-5">
+                                            <select class="custom-select custom-select-sm form-control form-control-sm" style="width: 90px;" v-model="lang" v-on:change="resetCountPerPage()">
+                                                <option v-for="la in getLang()" v-bind:value="la.languageCode">{{la.languageName}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row  float-sm-right">
+                                        <div class="col-sm-12 col-md-5">
+                                            <select class="custom-select custom-select-sm form-control form-control-sm" style="width: 90px;" v-model="countPerPage" v-on:change="resetCountPerPage()">
+                                                <option value="2">2 entries</option>
+                                                <option value="10">10 entries</option>
+                                                <option value="25">25 entries</option>
+                                                <option value="50">50 entries</option>
+                                                <option value="100">100 entries</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>newsId</th>
+                                                <th>category</th>
+                                                <th>title</th>
+                                                <th>isDisplayed</th>
+                                                <th>lastUpdate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="news in List.newsList" v-on:click="editPage(news)" style="cursor : pointer;">
+                                                <td>{{news.newsId}}</td>
+                                                <td>{{getNewsData(news).category}}</td>
+                                                <td>{{getNewsData(news).newsTexts[0].title}}</td>
+                                                <td>{{getNewsData(news).isDisplayed}}</td>
+                                                <td>{{getNewsData(news).createdAt}}</td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="dataTables_info">{{'Showing ' + ((pageNumber - 1) * countPerPage + 1) + ' to ' + getShowingTo() + ' of ' + List.totalCount + 'entries'}}</div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+                                                <ul class="pagination">
+                                                    <li class="paginate_button page-item previous" v-bind:class="{ disabled: isPrevious()}">
+                                                        <a class="page-link" href="#" v-on:click="clickPrevious()">Previous</a>
+                                                    </li>
+                                                    <li v-for="li in paginationArray" class="paginate_button page-item" v-bind:class="{ active: isSelfNumber(li) }">
+                                                        <a class="page-link" href="#" v-on:click="jumpURL(li)">{{li}}</a>
+                                                    </li>
+                                                    <li class="paginate_button page-item next" v-bind:class="{ disabled: isNext()}">
+                                                        <a class="page-link" href="#" v-on:click="clickNext()">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/page/cms/newsList.js"></script>
+
+
+</body>
+</html>

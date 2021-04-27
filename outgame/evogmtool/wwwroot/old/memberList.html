@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Base Title</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+</head>
+<body class="h-100">
+    <div id="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Main Sidebar -->
+                <main-manu></main-manu>
+                <!-- End Main Sidebar -->
+                <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                    <!-- Main Navbar -->
+                    <info-form></info-form>
+                    <!-- / .main-navbar -->
+                    <div class="main-content-container container-fluid px-4">
+                        <!-- Page Header -->
+                        <div class="page-header row no-gutters py-4">
+                            <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                <span class="text-uppercase page-subtitle">GMTool</span>
+                                <h3 class="page-title">Member List</h3>
+                            </div>
+                        </div>
+                        <!-- End Page Header -->
+
+                        <div>
+                            <button type="button" class="mb-2 btn btn-primary mr-2" @click="addMember">AddMember</button>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card card-small mb-4">
+                                    <div class="card-header p-0 pb-3 text-center">
+
+                                    </div>
+                                    <div class="card-body p-0 pb-3 text-center">
+                                        <table class="table mb-0">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th scope="col" class="border-0">UserId</th>
+                                                    <th scope="col" class="border-0">Account</th>
+                                                    <th scope="col" class="border-0">Name</th>
+                                                    <th scope="col" class="border-0">Role</th>
+                                                    <th scope="col" class="border-0">ResetPassword</th>
+                                                    <th scope="col" class="border-0">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="item in dispData" :key="item.itemId">
+                                                    <td>{{item.userId}}</td>
+                                                    <td>{{item.account}}</td>
+                                                    <td>
+                                                        {{item.name}} &nbsp;
+                                                        <a href="#" v-on:click="editName(item)"><i class="material-icons">build</i></a>
+                                                    </td>
+                                                    <td>
+                                                        {{item.role}} &nbsp;
+                                                        <a href="#" v-on:click="editRole(item)"><i class="material-icons">build</i></a>
+                                                    </td>
+
+                                                    <td><a href="#" v-on:click="passwordReset(item)"><i class="material-icons">replay</i></a></td>
+                                                    <td><a href="#" v-on:click="deleteMember(item)"><i class="material-icons">delete</i></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12">
+                                        <!-- Post Overview -->
+                                        <!-- / Post Overview -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- modal -->
+        <modal v-if="showReset == true" @close="showReset = false" :key="1">
+            <h3 slot="header">Reset Password</h3>
+            <div slot="body">
+                <p>account : {{resetInfo.member.account}}</p>
+                <p>password : {{resetInfo.password}}</p>
+            </div>
+            <div class="link_area" slot="footer">
+                <p class="modal-default-button" @click="showReset = false">
+                    Close
+                </p>
+            </div>
+        </modal>
+        <modal v-if="showDelete == true" @close="showDelete = false" :key="1">
+            <h3 slot="header">Member Delete</h3>
+            <div slot="body">
+                <p>{{deleteInfo.member.account}} is deleted</p>
+            </div>
+            <div class="link_area" slot="footer">
+                <p class="modal-default-button" @click="showDelete = false">
+                    close
+                </p>
+            </div>
+        </modal>
+        <modal v-if="showError == true" @close="showError = false" :key="1">
+            <h3 slot="header">Error</h3>
+            <div slot="body">
+                <p>{{errorMessage}}</p>
+            </div>
+            <div class="link_area" slot="footer">
+                <p class="modal-default-button" @click="showError = false">
+                    close
+                </p>
+            </div>
+        </modal>
+        <modal v-if="showEditName == true" @close="showEditName = false" :key="1">
+            <h3 slot="header">Edit Name</h3>
+            <div slot="body">
+                <p>
+                    <div class="input-group input-group-seamless">
+                        <input type="text" class="form-control" id="form1-username" placeholder="Username" v-model="editTarget.name">
+                    </div>
+                </p>
+            </div>
+            <div class="link_area" slot="footer">
+                <p class="modal-close-button" @click="showEditName = false">
+                    close
+                </p>
+                <p class="modal-save-button" @click="saveEditName">
+                    save
+                </p>
+            </div>
+        </modal>
+        <modal v-if="showEditRole == true" @close="showEditRole = false" :key="1">
+            <h3 slot="header">Edit Role</h3>
+            <div slot="body">
+                <p>
+                    <select class="custom-select custom-select-sm" style="max-width: 130px;" v-model="editTarget.role">
+                        <option selected value="">Select role</option>
+                        <option>administrator</option>
+                        <option>operator</option>
+                        <option>publisher</option>
+                        <option>watcher</option>
+                    </select>
+                </p>
+            </div>
+            <div class="link_area" slot="footer">
+                <p class="modal-close-button" @click="showEditRole = false">
+                    close
+                </p>
+                <p class="modal-save-button" @click="saveEditRole">
+                    save
+                </p>
+            </div>
+        </modal>
+
+    </div>
+    <!-- liblary -->
+    <script src="scripts/app/lib/footer-write.js"></script>
+    <!-- pageJS -->
+    <script src="scripts/app/page/memberList.js"></script>
+</body>
+</html>

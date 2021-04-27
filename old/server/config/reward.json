@@ -1,0 +1,12 @@
+{
+  "exp_win_team"    : 1000,
+  "exp_lose_team"   : 0,
+  "exp_rate_damage" : 0.1,
+  "exp_rate_kill"   : 20,
+
+  "gp_win_team"     : 5000,
+  "gp_lose_team"    : 0,
+  "gp_rate_damage"  : 0.4,
+  "gp_rate_kill"    : 600
+}
+

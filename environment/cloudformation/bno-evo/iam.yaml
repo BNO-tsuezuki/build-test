@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: "Stack for iam"
+
+
+Resources:
+
+  ServerDevelopersGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: ServerDevelopers
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/IAMUserSSHKeys'
+        - 'arn:aws:iam::aws:policy/IAMReadOnlyAccess'
+        - 'arn:aws:iam::aws:policy/AWSCodeCommitFullAccess'
+      # Path: String
+      # Policies:
+      #   - Policies
+
+
+########################
+#         Users        #
+########################
+
+  BnoYoshimura:
+    Type: AWS::IAM::User
+    Properties: 
+      Groups:
+        - !Ref ServerDevelopersGroup
+      LoginProfile:
+        Password: firstonetimepass
+        PasswordResetRequired: true
+      # ManagedPolicyArns:
+      #   - 文字列
+      # Path: String
+      # PermissionsBoundary: String
+      # Policies:
+      #   - Policies
+      UserName: BNO_Yoshimura
+

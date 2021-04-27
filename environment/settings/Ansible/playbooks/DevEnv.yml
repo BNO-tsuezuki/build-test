@@ -1,0 +1,50 @@
+- hosts: all
+  tasks:
+    - name: 対象マシン導通確認
+      ping:
+
+- hosts: devenv
+  vars_files:
+    - ../vars/common.yml
+    - ../vars/DevEnv.yml
+  tasks:
+    - import_tasks: ../tasks/pre.yml
+    - import_tasks: ../tasks/setupBuildEssential.yml
+    - import_tasks: ../tasks/setupDotNet.yml
+    - import_tasks: ../tasks/setupMariaDB.yml
+    - import_tasks: ../tasks/setupRedis.yml
+    - import_tasks: ../tasks/setupRmate.yml
+    - name: copy service file
+      become: true
+      copy:
+        src: ../misc/DevEnv/service/
+        dest: /etc/systemd/system/
+        directory_mode: yes
+      register: copyServicefile
+    - name: systemctl daemon reload
+      become: true
+      shell: systemctl daemon-reload
+      when: copyServicefile.changed
+    - name: service enable (api)
+      become: true
+      systemd:
+        name: evoapi
+        enabled: yes
+    - name: service enable (matching)
+      become: true
+      systemd:
+        name: evomatching
+        enabled: yes
+    - name: service enable (sequencing)
+      become: true
+      systemd:
+        name: evosequencing
+        enabled: yes
+    - name: service enable (tool)
+      become: true
+      systemd:
+        name: evotool
+        enabled: yes
+        
+
+

@@ -1,0 +1,71 @@
+[class*=sidebar-dark-] {
+    background-color: #343a40;
+}
+.elevation-4 {
+    box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22)!important;
+}
+:not(.layout-fixed) .main-sidebar {
+    height: inherit;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+}
+.nav-sidebar {
+    position: relative;
+}
+.nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.flex-column {
+    -ms-flex-direction: column!important;
+    flex-direction: column!important;
+}
+.nav-sidebar>.nav-item {
+    margin-bottom: 0;
+}
+.nav-sidebar .nav-item>.nav-link {
+    position: relative;
+}
+.nav-sidebar .menu-open>.nav-treeview {
+    display: block;
+}
+.nav-sidebar .nav-treeview {
+    display: none;
+    list-style: none;
+    padding: 0;
+}
+.nav-sidebar .nav-link p {
+    display: inline-block;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    margin: 0;
+}
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free";
+}
+.fab, .far {
+    font-weight: 400;
+}
+.fa, .fab, .fad, .fal, .far, .fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link,.nav-sidebar>.nav-item:hover>.nav-link,.nav-sidebar>.nav-item>.nav-link:focus {
+    background-color: rgba(255,255,255,.1);
+    color: #fff;
+}

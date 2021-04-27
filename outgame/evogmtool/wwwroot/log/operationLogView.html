@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">OperationLog</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">OperationLog</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Date and time range:</label>
+
+                                        <div class="input-group">
+                                            <date-range-picker v-if="locale" :time-picker="true" v-model="dateRange" :locale-data="locale" style="width:100%;" @update="rageUpdate">
+                                            </date-range-picker>
+                                        </div>
+
+                                        <!-- /.input group -->
+
+                                        <div v-for="item in searchItems" v-if="item.enable==true">
+                                            <label>{{item.name}}:</label>
+                                            <span class="material-icons" style="margin: auto; vertical-align: middle; cursor:pointer;font-size: 15px;" v-on:click="removeItem(item)">
+                                                cancel
+                                            </span>
+                                            <div class="input-group">
+                                                <input v-if="item.type=='string'" type="text" class="form-control" v-bind:placeholder="'Enter ' + item.name" v-model="item.value">
+                                                <input v-if="item.type=='integer'" type="number" class="form-control" v-bind:placeholder="'Enter ' + item.name" v-model="item.value">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div style=" margin-bottom:15px;">
+                                        <select v-model="addSearchItem">
+                                            <option v-for="item in searchItems" v-if="item.enable==false" v-bind:value="item">{{item.name}}</option>
+                                        </select>
+                                        <span class="material-icons" style="margin: auto; vertical-align: middle; cursor:pointer;font-size: 28px;" v-on:click="addItem()">
+                                            add_circle_outline
+                                        </span>
+                                    </div>
+
+                                    <div class="card-footer">
+                                        <button type="button" class="btn btn-primary" v-on:click="getLogs">Search</button>
+                                    </div>
+
+                                </div>
+
+                            </div><!-- /.card -->
+
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead class="scrTbl">
+                                            <tr>
+                                                <th style="width: 100px;">id</th>
+                                                <th style="width: 200px;">createdAt</th>
+                                                <th style="width: 100px;">userId</th>
+                                                <th style="width: 100px;">statusCode</th>
+                                                <th style="width: 100px;">method</th>
+                                                <th style="width: 300px;">url</th>
+                                                <th style="width: 100px;">ipAddress</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="scrTbl scrTblBody">
+                                            <tr v-for="log in List" v-on:click="selectRow(log)" v-bind:class="{selectRow:isSelect(log)}">
+                                                <td style="width: 100px;padding-top:0;padding-bottom:0px;">{{log.id}}</td>
+                                                <td style="width: 200px;padding-top:0;padding-bottom:0px;">{{getDateTime(log.createdAt)}}</td>
+                                                <td style="width: 100px;padding-top:0;padding-bottom:0px;">{{log.userId}}</td>
+                                                <td style="width: 100px;padding-top:0;padding-bottom:0px;">{{log.statusCode}}</td>
+                                                <td style="width: 100px;padding-top:0;padding-bottom:0px;">{{log.method}}</td>
+                                                <td style="width: 300px;padding-top:0;padding-bottom:0px;">{{log.url | truncateURL}}</td>
+                                                <td style="width: 100px;padding-top:0;padding-bottom:0px;">{{log.ipAddress}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+
+                                    <div>
+                                        <b class="d-block">General</b>
+                                        <p style="margin:  0px 0px 0px 1rem ;">Log Id:&nbsp; {{selectedLog.id}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">Account:&nbsp; {{selectedLog.account}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">User Id:&nbsp; {{selectedLog.userId}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">User Name:&nbsp; {{selectedLog.userName}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">Date:&nbsp; {{getDateTime(selectedLog.createdAt)}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem;">Status:&nbsp; {{selectedLog.statusCode}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem;">Method:&nbsp; {{selectedLog.method}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">IP:&nbsp; {{selectedLog.ipAddress}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">Request URL:&nbsp; {{selectedLog.url}}</p>
+                                        <p style="margin:  0px 0px 0px 1rem ;">Query String:&nbsp; {{selectedLog.queryString}}</p>
+                                    </div>
+                                    <div>
+                                        <b class="d-block">Request</b>
+                                        <p style="margin:  0px 0px 0px 1rem ;white-space: pre-wrap;">Request Body:&nbsp; {{getRequestJSONString()}}</p>
+                                    </div>
+                                    <div>
+                                        <b class="d-block">Response</b>
+                                        <p style="margin:  0px 0px 0px 1rem ;white-space: pre-wrap">Response Body:&nbsp; {{getResponseJSONString()}}</p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/lib/vue2-daterange-picker.umd.js"></script>
+    <link href="/styles/dateRangePicker.css" rel="stylesheet" />
+
+    <script src="/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="/scripts/app/page/log/OperationLog.js"></script>
+
+    <style>
+        /* DivTable.com */
+        .divTable {
+            display: table;
+            width: 100%;
+        }
+
+        .divTableRow {
+            display: table-row;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+
+        .divTableCell, .divTableHead {
+            border: 1px solid #999999;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+        }
+
+        .scrTbl {
+            display: block;
+        }
+
+        .scrTblBody {
+            overflow-x: hidden;
+            overflow-y: scroll;
+            height: 300px;
+        }
+
+        .selectRow {
+            background-color: darkgray;
+        }
+    </style>
+
+</body>
+</html>

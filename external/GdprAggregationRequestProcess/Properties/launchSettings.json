@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "Mock Lambda Test Tool": {
+      "commandName": "Executable",
+      "commandLineArgs": "--port 5050",
+      "workingDirectory": ".\\bin\\$(Configuration)\\netcoreapp2.1",
+      "executablePath": "%USERPROFILE%\\.dotnet\\tools\\dotnet-lambda-test-tool-2.1.exe",
+      "environmentVariables": {
+        "evotool_base_uri": "",
+        "gamelog_rdsproxy_endpoint": "",
+        "gamelog_dbname": "",
+        "gamelog_dbuser": "",
+        "gamelog_dbpassword": "",
+        "game_server_information": "",
+        "secret_region": "",
+        "secret_name": "",
+        "s3_region": "",
+        "s3_bucket_name": ""
+      }
+    }
+  }
+}

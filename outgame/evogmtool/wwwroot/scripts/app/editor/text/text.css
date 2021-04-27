@@ -1,0 +1,62 @@
+/**
+ * Plugin styles
+ */
+.ce-header {
+  padding: 1.0rem 0;
+  margin: 0;
+  margin-bottom: -0.9em;
+  line-height: 1.5em;
+  outline: none;
+}
+
+.ce-header p,
+.ce-header div{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/**
+ * Styles for Plugin icon in Toolbar
+ */
+.ce-header__icon {}
+
+.ce-header[contentEditable=true][data-placeholder]::before{
+  position: absolute;
+  content: attr(data-placeholder);
+  color: #707684;
+  font-weight: normal;
+  display: none;
+}
+
+.ce-header[contentEditable=true][data-placeholder]:empty::before {
+  display: block;
+}
+
+.ce-header[contentEditable=true][data-placeholder]:empty:focus::before {
+  display: none;
+}
+
+#editor h1 {
+    font-size: 2rem;
+    padding: 0.5rem;
+}
+#editor h2 {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+}
+#editor h3 {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+}
+#editor h4 {
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+#editor h5 {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+}
+#editor h6 {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+}

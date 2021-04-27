@@ -1,0 +1,7 @@
+
+
+mariadb_bind_host: 0.0.0.0
+
+redis_bind_host: 0.0.0.0
+redis_log_level: notice
+

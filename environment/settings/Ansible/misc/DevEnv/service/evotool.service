@@ -1,0 +1,16 @@
+
+[Unit]
+Description=evotool server
+
+[Service]
+ExecStart=/usr/bin/dotnet /home/ubuntu/evo_packs/evotool/evotool.dll
+Restart=always
+RestartSec=10
+User=ubuntu
+Environment=ASPNETCORE_ENVIRONMENT=DevEnv
+Environment=DB_USAGE=APP
+WorkingDirectory=/home/ubuntu/evo_packs/evotool
+SyslogIdentifier=evotool
+
+[Install]
+WantedBy=multi-user.target

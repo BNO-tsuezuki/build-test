@@ -1,0 +1,14 @@
+node_modules
+public
+.tmp
+.swp
+.sass-cache
+.idea
+.DS_Store
+client/bower_components
+dist
+/server/config/local.env.js
+db
+dump.rdb
+evoserver.tar.gz
+dump/

@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for ELB"
+
+Parameters:
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  PortNo:
+    Type: Number
+    Default: 52345
+  PortNoHttps:
+    Type: Number
+    Default: 52346
+
+  CertificateArn:
+    Description: Enter a Certificates Arn.
+    Type: String
+
+
+Resources:
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: String
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: "0.0.0.0/0"
+          FromPort: !Ref PortNo
+          ToPort: !Ref PortNo
+          IpProtocol: "tcp"
+        -
+          CidrIp: "0.0.0.0/0"
+          FromPort: !Ref PortNoHttps
+          ToPort: !Ref PortNoHttps
+          IpProtocol: "tcp"
+
+      Tags:
+        - Key: Name
+          Value: !Sub "jpop-ELB-${EnvName}"
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+  ELB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties: 
+      IpAddressType: ipv4 # dualstack | ipv4
+      # LoadBalancerAttributes: 
+        # - key: access_logs.s3.enabled
+        #   value: true
+        # - key: access_logs.s3.bucket
+        #   value: XXXXX
+        # - key: deletion_protection.enabled
+        #   value: false
+        # - key: idle_timeout.timeout_seconds
+        #   value: 60 # 1~4000 default 60
+      Name: !Sub "jpop-LoadBalancer-${EnvName}"
+      Scheme: internet-facing # internal | internet-facing
+      SecurityGroups: 
+        - !Ref SecurityGroup
+      # SubnetMappings: 
+      #   - SubnetMapping
+      Subnets: 
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet0-${EnvName}"}
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet1-${EnvName}"}
+      # Tags: 
+      #   - Tag
+      Type: application # application | network
+
+  ELBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties: 
+      # Certificates: 
+      #   - Certificate
+      DefaultActions:
+        - Type: forward # authenticate-cognito | authenticate-oidc | fixed-response | forward | redirect
+          TargetGroupArn: {"Fn::ImportValue" : !Sub "jpop-evoapi-TargetGroup-${EnvName}"}
+      LoadBalancerArn: !Ref ELB
+      Port: !Ref PortNo
+      Protocol: HTTP # HTTP | HTTPS | TCP | TCP_UDP | TLS | UDP
+      # SslPolicy: String
+  
+  ELBListenerHttps:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties: 
+      Certificates: 
+        - CertificateArn: !Ref CertificateArn
+      DefaultActions:
+        - Type: forward # authenticate-cognito | authenticate-oidc | fixed-response | forward | redirect
+          TargetGroupArn: {"Fn::ImportValue" : !Sub "jpop-evoapi-TargetGroup-${EnvName}"}
+      LoadBalancerArn: !Ref ELB
+      Port: !Ref PortNoHttps
+      Protocol: HTTPS # HTTP | HTTPS | TCP | TCP_UDP | TLS | UDP
+      # SslPolicy: ELBSecurityPolicy-2016-08

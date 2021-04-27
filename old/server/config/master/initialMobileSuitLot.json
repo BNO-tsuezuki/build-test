@@ -1,0 +1,10 @@
+{
+	"initialMobileSuitLot": [
+		{
+			"Name": "1",
+			"nodeId": "GM",
+			"displayName": "GM",
+			"probability": 100
+		}
+	]
+}

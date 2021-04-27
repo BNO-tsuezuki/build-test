@@ -1,0 +1,51 @@
+
+
+- name: <rmate> ruby install
+  become: yes
+  apt:
+    name: ruby2.3
+    update_cache: yes # apt updateを実行する
+
+
+- name: <rmate> dir作成
+  file:
+    path: "{{ansible_home}}/bin"
+    state: directory
+    mode: 0755
+
+- name: <rmate> ダウンロード
+  get_url:
+    url: https://raw.githubusercontent.com/textmate/rmate/master/bin/rmate
+    dest: "{{ansible_home}}/bin/rmate.new" # べき等性のためファイル名で指定(Dirを指定すると常にダウンロードされる)
+    force: yes
+  changed_when: false
+
+- name: <rmate> ダウンロード ファイル情報取得
+  stat:
+    path: "{{ansible_home}}/bin/rmate.new"
+    checksum_algorithm: sha256
+  register: newFile
+
+- name: <rmate> 前回ダウンロード ファイル情報取得
+  stat:
+    path: "{{ansible_home}}/bin/rmate"
+    checksum_algorithm: sha256
+  register: oldFile
+
+- name: <rmate> 差分確認
+  shell: echo unmatch
+  when: (oldFile.stat.exists == false) or ( oldFile.stat.checksum != newFile.stat.checksum )
+  register: matchResult
+
+- name: <rmate> 差し替え
+  shell: cp {{ansible_home}}/bin/rmate.new {{ansible_home}}/bin/rmate
+  when: matchResult.changed
+
+- name: <rmate> chmod
+  file:
+    path: "{{ansible_home}}/bin/rmate"
+    mode: "a+x"
+
+- name: <rmate> 後始末
+  shell: rm {{ansible_home}}/bin/rmate.new
+  changed_when: false

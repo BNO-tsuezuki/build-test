@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>login</title>
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+  <body class="h-100">
+
+    <div class="container-fluid" id="content">
+      <div class="row">
+
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+
+          <div class="main-content-container container-fluid px-4">
+
+            <!-- Page Header -->
+            <div class="page-header row no-gutters py-4">
+              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <h3 class="page-title">EVO GMツール</h3>
+              </div>
+            </div>
+            <!-- End Page Header -->
+
+            <div class="row">
+              <div class="col-lg-9 col-md-12">
+                <!-- Add New Post Form -->
+                
+                <strong class="text-muted d-block mb-2">ログイン</strong>
+                <div class="input-group mb-3">
+                  <div class="input-group input-group-seamless">
+                    <span class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">person</i>
+                      </span>
+                    </span>
+                    <input type="text" class="form-control" id="form1-username" placeholder="Username" v-model="id"> 
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group input-group-seamless">
+                    <input type="password" class="form-control" id="form2-password" placeholder="Password" v-model="password">
+                    <span class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock</i>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+
+                <button type="button" class="mb-2 btn btn-primary mr-2" v-on:click="login">login</button>
+                <span style="color: red;" v-show="fail == true" v-cloak>Could not log in</span>
+                
+
+                <!-- / Add New Post Form -->
+                
+              </div>
+
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- liblary -->
+    <script src="scripts/app/lib/footer-write.js"></script>
+    <!-- pageJS -->
+    <script src="scripts/app/page/login.js"></script>
+  </body>
+</html>

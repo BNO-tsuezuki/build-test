@@ -1,0 +1,10 @@
+- name: <Git> repo登録
+  become: yes
+  apt_repository:
+    repo: 'ppa:git-core/ppa'
+
+- name: <Git> install
+  become: yes
+  apt:
+    name: git-all
+    update_cache: yes # apt updateを実行する

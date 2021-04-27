@@ -1,0 +1,73 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">頑屋
+                <small>Mobile Suits Shop</small>
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- MobileSuits -->
+    <div class="row" ng-repeat="ms in mss">
+        <div class="col-md-7" ng-show=$even>
+            <a href="#" ng-click="purchase(ms)">
+                <img class="img-thumbnail img-responsive" ng-src="assets/images/shop/{{ms.Name}}.jpg" alt="{{ms.displayName}}">
+            </a>
+        </div>
+        <div class="col-md-5" ng-show=$even>
+            <h3>{{ms.displayName}}</h3>
+            <h4>{{ms.type}}</h4>
+            <p>{{ms.description}}</p>
+            <a class="btn btn-primary" href="#" ng-click="purchase(ms)">{{ms.displayName}}をいますぐ購入する<span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+        <div class="col-md-5" ng-show=$odd>
+            <h3>{{ms.displayName}}</h3>
+            <h4>{{ms.type}}</h4>
+            <p>{{ms.description}}</p>
+            <a class="btn btn-primary" href="#" ng-click="purchase(ms)">{{ms.displayName}}をいますぐ購入する<span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+        <div class="col-md-7" ng-show=$odd>
+            <a href="#" ng-click="purchase(ms)">
+                <img class="img-thumbnail img-responsive" ng-src="assets/images/shop/{{ms.Name}}.jpg" alt="{{ms.displayName}}">
+            </a>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+                <li>
+                    <a href="#">&laquo;</a>
+                </li>
+                <li class="active">
+                    <a href="#">1</a>
+                </li>
+                <li>
+                    <a href="#">2</a>
+                </li>
+                <li>
+                    <a href="#">3</a>
+                </li>
+                <li>
+                    <a href="#">4</a>
+                </li>
+                <li>
+                    <a href="#">5</a>
+                </li>
+                <li>
+                    <a href="#">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->

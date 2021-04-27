@@ -1,0 +1,19 @@
+
+# 前もって Pipがインストールされている必要がある(setupPip.yml)
+- name: <AwsCli> インストール
+  shell: pip install awscli --upgrade --user
+  register: result
+  changed_when: '"Successfully installed awscli-" in result.stdout'
+
+
+- name: <AwsCli> configure設定チェック
+  shell: "{{ansible_home}}/.local/bin/aws  ec2 describe-regions --output table"
+  failed_when: false
+  changed_when: false
+  register: describeRegionsResult
+
+
+# - name: <AwsCli> configure
+#   shell: ~/.local/bin/aws configure
+#   shell: "{{ansible_home}}/.local/bin/aws configure "
+#   when: describeRegionsResult.stderr_lines.count > 0

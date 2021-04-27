@@ -1,0 +1,7 @@
+{
+  "DeliveryData": {
+    "S3BucketName": "",
+    "S3BucketRegion": "",
+    "CfDomainName": ""
+  }
+}

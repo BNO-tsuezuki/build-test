@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Announcement(Chat)</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active"><a href="/game/announcement.html">Announcement(Chat)</a></li>
+                                <li class="breadcrumb-item active">{{mode}}</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Schedule</h3>
+                                <div class="card-body">
+                                    <div>
+                                        <div class="input-group" style="width:540px;">
+                                            <div style="float: left;width:80px;">
+                                                <label class="col-sm-2 col-form-label" style="max-width: 80px;">start:</label>
+                                            </div>
+                                            <date-time-picker v-if="pickerShow" v-bind:value="postData.beginDate" @input="postData.beginDate = $event"></date-time-picker>
+                                        </div>
+                                        <div class="input-group" style="width:540px;">
+                                            <div style="float: left;width:80px;">
+                                                <label class="col-sm-2 col-form-label" style="max-width: 80px;">end:</label>
+                                            </div>
+                                            <date-time-picker v-if="pickerShow" v-bind:value="postData.endDate" @input="postData.endDate = $event"></date-time-picker>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row" style="width:480px;">
+                                        <label class="col-sm-2 col-form-label">Times:</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" placeholder="Times" min="1" v-model="postData.times">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row" style="width:480px;">
+                                        <label class="col-sm-2 col-form-label">Interval:</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" placeholder="Interval" min="0" v-model="postData.repeatedIntervalMinutes">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="card card-primary" style="background-color:antiquewhite">
+                                <div class="card-body">
+                                    <div style="float:left;width:100px;height: 120px;    margin-top: 23px;">
+                                        <span class="material-icons" style="font-size: 70px;">warning</span>
+                                    </div>
+                                    <div style="float:left;width:800px;">
+                                        <span>・メッセージは最大で「255文字」となります。</span><br />
+                                        <span style="margin-left:1rem;">Maximum number of characters is '255'."</span><br /><br />
+                                        <span>・コンシューマ版は見切れる可能性があるため、配信前のチェックをしてください。</span><br />
+                                        <span style="margin-left:1rem;">Please be sure to check before delivery to see if the display may be cut off in the middle in the consumer version."</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Message</h3>
+                                <div class="card-body">
+                                    <div>
+                                        <div style="float: left;width:100px;">
+                                            <input type="checkbox" id="eng_checkbox" v-model="postData.enabledEnglish" />
+                                            <label for="eng_checkbox">English</label>
+                                        </div>
+                                        <textarea rows="4" style="width:350px;" v-model="postData.msgEnglish"></textarea>
+                                    </div>
+                                    <div>
+                                        <div style="float: left;width:100px;">
+                                            <input type="checkbox" id="fr_checkbox" v-model="postData.enabledFrench" />
+                                            <label for="fr_checkbox">French</label>
+                                        </div>
+                                        <textarea rows="4" style="width:350px;" v-model="postData.msgFrench"></textarea>
+                                    </div>
+                                    <div>
+                                        <div style="float: left;width:100px;">
+                                            <input type="checkbox" id="ger_checkbox" v-model="postData.enabledGerman" />
+                                            <label for="ger_checkbox">German</label>
+                                        </div>
+                                        <textarea rows="4" style="width:350px;" v-model="postData.msgGerman"></textarea>
+                                    </div>
+                                    <div>
+                                        <div style="float: left;width:100px;">
+                                            <input type="checkbox" id="jp_checkbox" v-model="postData.enabledJapanese" />
+                                            <label for="jp_checkbox">Japanese</label>
+                                        </div>
+                                        <textarea rows="4" style="width:350px;" v-model="postData.msgJapanese"></textarea>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <h3 class="card-title" style="margin-left: 1rem;">Memo</h3>
+                                <div class="card-body">
+                                    <textarea rows="2" style="width:100%;" v-model="postData.memo"></textarea>
+                                </div>
+                            </div>
+
+                            <div v-show="mode!='View'">
+                                <div style="float:left;">
+                                    <input v-show="mode=='Edit'" type="button" value="Delete" v-on:click="deleteConfirm()" />
+                                </div>
+                                <div style="float:right;">
+                                    <input type="checkbox" id="release_checkbox" v-model="postData.release" />
+                                    <label for="release_checkbox">Release</label>
+                                    <input type="button" value="Save" v-on:click="saveConfirm()" />
+                                </div>
+                            </div>
+
+                        </div><!-- /.card -->
+                    </div>
+
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue-ctk-date-time-picker@2.4.0/dist/vue-ctk-date-time-picker.umd.min.js"></script>
+    <script src="/scripts/app/page/game/announcementPost.js"></script>
+
+
+</body>
+</html>

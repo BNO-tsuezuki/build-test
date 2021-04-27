@@ -1,0 +1,15 @@
+
+[Unit]
+Description=evogmtool server
+
+[Service]
+ExecStart=/usr/bin/dotnet /home/ec2-user/packages/evogmtool/evogmtool.dll
+Restart=always
+RestartSec=10
+User=ec2-user
+Environment=ASPNETCORE_ENVIRONMENT=DevEnv
+WorkingDirectory=/home/ec2-user/packages/evogmtool
+SyslogIdentifier=evogmtool
+
+[Install]
+WantedBy=multi-user.target

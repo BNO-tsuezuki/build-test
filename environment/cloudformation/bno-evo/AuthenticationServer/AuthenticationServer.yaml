@@ -1,0 +1,857 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for AuthenticationServer"
+
+
+Parameters:
+
+  KeyPairName:
+    Description: Enter a Public/private key pair. If you do not have one in this region,　please create it before continuing
+    Type: 'AWS::EC2::KeyPair::KeyName'
+
+  InstanceType:
+    Default: m4.large
+    Description: Amazon EC2 instance type
+    Type: String
+
+  RdbPortNo:
+    Type: Number
+    Default: 3306
+  KvsPortNo:
+    Type: Number
+    Default: 6379
+  ServicePortNo:
+    Type: Number
+    Default: 60746
+
+  BNOCidrIp:
+    Description: Cidr of Bandai Namco Online
+    Type: String
+    Default: "221.112.67.210/32"
+
+  InstanceType:
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+    Default: t2.micro
+    Description: Amazon EC2 instance type
+    Type: String
+
+  RootVolumeSize:
+    Description: Specify a size in GB for the root EBS volume
+    Type: Number
+    Default: '32'
+
+  AMI:
+    Default:  ami-0daa7fcbd7aaff144
+    Description: The Linux distribution for the AMI to be used for instances. But "ap-northeast-1" region only!
+    Type: String
+
+  SourcePath:
+    Default: ~/serversources
+    Type: String
+
+
+Mappings: 
+  Const:
+    Cidr:
+      Vpc: "10.0.0.0/16"
+
+
+
+Resources:
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties: 
+      CidrBlock: !FindInMap [Const,Cidr,Vpc]
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      # InstanceTenancy: String
+      Tags:
+        - Key: Name
+          Value: "jpop-AuthenticationServer"
+
+  IGW:
+    Type: AWS::EC2::InternetGateway
+    Properties: 
+      Tags:
+        - Key: Name
+          Value: "jpop-AuthenticationServer"
+
+  VPCGA:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      InternetGatewayId: !Ref IGW
+      VpcId: !Ref VPC
+      # VpnGatewayId: String
+
+
+####################
+#    RouteTable    #
+####################
+
+# Public
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn: VPCGA
+    Properties: 
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: "jpop-AuthenticationServer"
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGA
+    Properties: 
+      DestinationCidrBlock: 0.0.0.0/0
+      # DestinationIpv6CidrBlock: String
+      # EgressOnlyInternetGatewayId: String
+      GatewayId: !Ref IGW
+      # InstanceId: String
+      # NatGatewayId: String
+      # NetworkInterfaceId: String
+      RouteTableId: !Ref PublicRouteTable
+      # VpcPeeringConnectionId: String
+
+################
+#    Subnet    #
+################
+
+# Public
+
+  PublicSubnet0:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      CidrBlock: 10.0.0.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: "jpop-public-0-AuthenticationServer"
+      VpcId: !Ref VPC
+  PublicSubnetRouteTableAssociation0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet0
+
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    DependsOn: VPCGA
+    Properties:
+      # AssignIpv6AddressOnCreation: Boolean
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
+      CidrBlock: 10.0.4.0/22
+      # Ipv6CidrBlock: String
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+        - Key: Name
+          Value: "jpop-public-1-AuthenticationServer"
+      VpcId: !Ref VPC
+  PublicSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1
+
+
+ ################################
+  #    VPCEndpoint
+  ################################
+  EndPoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties: 
+      RouteTableIds:
+        - !Ref PublicRouteTable
+      ServiceName: !Join 
+        - ''
+        - - com.amazonaws.
+          - !Ref 'AWS::Region'
+          - .s3
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action:
+              - 's3:*'
+            Resource:
+              - !Join
+                - ''
+                - - arn:aws:s3:::amazonlinux.
+                  - !Ref 'AWS::Region'
+                  - .amazonaws.com
+              - !Join
+                - ''
+                - - arn:aws:s3:::amazonlinux.
+                  - !Ref 'AWS::Region'
+                  - .amazonaws.com/*
+
+      VpcEndpointType: Gateway # or Interface
+      # PrivateDnsEnabled: Boolean
+      # SubnetIds: 
+      #   - String
+      # SecurityGroupIds: 
+      #   - String
+      VpcId: !Ref VPC
+
+
+
+#############
+#    RDB    #
+#############
+  DBSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties: 
+      DBSubnetGroupDescription: "for AuthenticationServer"
+      DBSubnetGroupName: "authenticationserver-dbsubnetgroup"
+      SubnetIds:
+        - !Ref PublicSubnet0
+        - !Ref PublicSubnet1
+      # Tags:
+      #   - Resource Tag 
+
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: !Sub "${EnvName}-DB"
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: !FindInMap [Const,Cidr,Vpc]
+          FromPort: !Ref RdbPortNo
+          IpProtocol: "tcp"
+          ToPort: !Ref RdbPortNo
+        -
+          CidrIp: !Ref BNOCidrIp
+          FromPort: !Ref RdbPortNo
+          IpProtocol: "tcp"
+          ToPort: !Ref RdbPortNo
+
+      Tags:
+        - Key: Name
+          Value: "AuthenticationServer-DB"
+      VpcId: !Ref VPC
+
+  DBClusterParameterGroup:
+    Type: "AWS::RDS::DBClusterParameterGroup"
+    Properties: 
+      Description: "for AuthenticationServer."
+      Family: "aurora-mysql5.7"
+      Parameters:
+        time_zone: "UTC"
+        character_set_client: "utf8mb4"
+        character_set_connection: "utf8mb4"
+        character_set_database: "utf8mb4"
+        character_set_results: "utf8mb4"
+        character_set_server: "utf8mb4"
+      # Tags:
+      #   - Resource Tag 
+
+  DBCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      # AvailabilityZones: !GetAZs  ''
+      #   - 文字列
+      # BacktrackWindow: Integer
+      # BackupRetentionPeriod: 10
+      DatabaseName: "evoauthdb"
+      DBClusterIdentifier: "AuthenticationServer-all"
+      DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      DeletionProtection: false
+      EnableCloudwatchLogsExports:
+        - general
+        - error
+        - slowquery
+        - audit
+      EnableIAMDatabaseAuthentication: true
+      Engine: "aurora-mysql"
+      # EngineMode: String
+      # EngineVersion: String
+      # KmsKeyId: String
+      MasterUsername: evouser
+      MasterUserPassword: evopassword
+      Port: !Ref RdbPortNo
+      # PreferredBackupWindow: "20:00-20:30"
+      # PreferredMaintenanceWindow: "sun:21:00-sun:21:30"
+      # ReplicationSourceIdentifier: String
+      # ScalingConfiguration: 
+      #   ScalingConfiguration
+      # SnapshotIdentifier: String
+      # StorageEncrypted: Boolean
+      # Tags:
+      #   - Resource Tag
+      VpcSecurityGroupIds:
+        - !Ref DBSecurityGroup
+
+  DBParameterGroup:
+    Type: AWS::RDS::DBParameterGroup
+    Properties: 
+      Description: "for AuthenticationServer."
+      Family: "aurora-mysql5.7"
+      # Parameters:
+      #   DBParameters
+      # Tags:
+      #   - Resource Tag 
+
+  DBOptionGroup:
+    Type: "AWS::RDS::OptionGroup"
+    Properties: 
+      EngineName: "aurora-mysql"
+      MajorEngineVersion: "5.7"
+      OptionGroupDescription: "for AuthenticationServer."
+      # OptionConfigurations:
+      #   - OptionConfiguration
+      Tags:
+        - Key: Name
+          Value: "AuthenticationServer"
+
+  DBInstance:
+    Type: AWS::RDS::DBInstance
+    DependsOn: VPCGA
+    Properties:
+      # AllocatedStorage: String
+      # AllowMajorVersionUpgrade: Boolean
+      AutoMinorVersionUpgrade: false
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
+      # BackupRetentionPeriod: String
+      # CharacterSetName: String
+      # CopyTagsToSnapshot: Boolean
+      DBClusterIdentifier: !Ref DBCluster
+      DBInstanceClass: "db.r3.large"
+      DBInstanceIdentifier: "write-instance-AuthenticationServer"
+      # DBName: String
+      DBParameterGroupName: !Ref DBParameterGroup
+      # DBSecurityGroups:
+      #   - 文字列
+      # DBSnapshotIdentifier: String
+      # DBSubnetGroupName: String
+      # DeleteAutomatedBackups: Boolean
+      # DeletionProtection: Boolean
+      # Domain: String
+      # DomainIAMRoleName: String
+      # EnableCloudwatchLogsExports:
+      #   - 文字列
+      # EnableIAMDatabaseAuthentication: Boolean
+      # EnablePerformanceInsights: Boolean
+      Engine: "aurora-mysql"
+      # EngineVersion: String
+      # Iops: Integer
+      # KmsKeyId: String
+      # LicenseModel: String
+      # MasterUsername: String
+      # MasterUserPassword: String
+      # MonitoringInterval: Integer
+      # MonitoringRoleArn: String
+      # MultiAZ: Boolean
+      OptionGroupName: !Ref DBOptionGroup
+      # PerformanceInsightsKMSKeyId: String
+      # PerformanceInsightsRetentionPeriod: Integer
+      # Port: String
+      # PreferredBackupWindow: String
+      # PreferredMaintenanceWindow: String
+      # ProcessorFeatures:
+      #   - ProcessorFeature
+      # PromotionTier: Integer
+      PubliclyAccessible: true
+      # SourceDBInstanceIdentifier: String
+      # SourceRegion: String
+      # StorageEncrypted: Boolean
+      # StorageType: String
+      # Tags:
+      #   - Resource Tag
+      # Timezone: String
+      # VPCSecurityGroups:
+      #   - 文字列
+
+
+
+#############
+#    KVS    #
+#############
+
+  ElastiCacheSubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: "AuthenticationServer-kvssubnetgroup"
+      Description: "-"
+      SubnetIds:
+        - !Ref PublicSubnet0
+        - !Ref PublicSubnet1
+  ElastiCacheSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: !Sub "${EnvName}-KVS"
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: !FindInMap [Const,Cidr,Vpc]
+          # CidrIpv6: String
+          # Description: String
+          FromPort: !Ref KvsPortNo
+          IpProtocol: "tcp"
+          # SourceSecurityGroupId: String
+          # SourceSecurityGroupName: String
+          # SourceSecurityGroupOwnerId: String
+          ToPort: !Ref KvsPortNo
+
+      Tags:
+        - Key: Name
+          Value: "AuthenticationServer-KVS"
+      VpcId: !Ref VPC
+  
+  ElastiCacheParameterGroup:
+    Type: AWS::ElastiCache::ParameterGroup
+    Properties: 
+      CacheParameterGroupFamily: "redis5.0"
+      Description: "-"
+      Properties:
+         cluster-enabled: "no"
+         slowlog-log-slower-than: 3000
+
+  CacheCluster:
+    Type: AWS::ElastiCache::CacheCluster
+    Properties: 
+      # AZMode: String
+      # AutoMinorVersionUpgrade: Boolean
+      CacheNodeType: cache.r3.large
+      CacheParameterGroupName: !Ref ElastiCacheParameterGroup
+      # CacheSecurityGroupNames: 
+      #   - String
+      CacheSubnetGroupName: !Ref ElastiCacheSubnetGroup
+      ClusterName: "AuthenticationServer-redis"
+      Engine: "redis"
+      EngineVersion: "5.0.4"
+      # NotificationTopicArn: String
+      NumCacheNodes: 1
+      Port: !Ref KvsPortNo
+      # PreferredAvailabilityZone: String
+      # PreferredAvailabilityZones: 
+      #   - String
+      # PreferredMaintenanceWindow: String
+      # SnapshotArns: 
+      #   - String
+      # SnapshotName: String
+      # SnapshotRetentionLimit: Integer
+      # SnapshotWindow: String
+      # Tags: 
+      #   - Tag
+      VpcSecurityGroupIds: 
+         - !Ref ElastiCacheSecurityGroup
+
+
+
+
+######################
+#    EC2 Instance    #
+######################
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: String
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: !Ref BNOCidrIp
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: "tcp"
+        -
+          CidrIp: "0.0.0.0/0"
+          FromPort: !Ref ServicePortNo
+          ToPort: !Ref ServicePortNo
+          IpProtocol: "tcp"
+      Tags:
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
+      VpcId: !Ref VPC
+
+  Role:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Path: /
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Effect: Allow
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore'
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref Role
+      Path: /
+
+
+  Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      # Affinity: String
+      # AvailabilityZone: String
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp2
+            DeleteOnTermination: true
+      # CreditSpecification: CreditSpecification
+      # DisableApiTermination: Boolean
+      # EbsOptimized: Boolean
+      # ElasticGpuSpecifications: [ ElasticGpuSpecification, ... ]
+      # ElasticInferenceAccelerators: 
+      #   - ElasticInferenceAccelerator
+      # HostId: String
+      IamInstanceProfile: !Ref InstanceProfile
+      ImageId: !Ref AMI
+      # InstanceInitiatedShutdownBehavior: String
+      InstanceType: !Ref InstanceType
+      # Ipv6AddressCount: Integer
+      # Ipv6Addresses:
+      #   - IPv6 Address Type
+      # KernelId: String
+      KeyName: !Ref KeyPairName
+      # LaunchTemplate: LaunchTemplateSpecification
+      # LicenseSpecifications: 
+      #   - LicenseSpecification
+      # Monitoring: Boolean
+      # NetworkInterfaces: 
+      #   - EC2 Network Interface
+      # PlacementGroupName: String
+      # PrivateIpAddress: String
+      # RamdiskId: String
+      SecurityGroupIds: 
+        - Fn::GetAtt:
+          - SecurityGroup
+          - GroupId
+      # SecurityGroups: 
+      #   - 文字列
+      # SourceDestCheck: Boolean
+      # SsmAssociations: 
+      #   - SSMAssociation
+      SubnetId: !Ref PublicSubnet0
+      Tags: 
+        - Key: Name
+          Value: !Sub "jpop-AuthenticationServer"
+      # Tenancy: String
+      UserData: !Base64 
+        'Fn::Join':
+          - ''
+          - - |
+              #!/bin/bash
+            - |+
+
+
+            - |
+              # test echo
+            - 'echo '
+            - !Ref 'AWS::StackName'
+            - |+
+
+
+            - |
+              # cfn-init
+            - '/opt/aws/bin/cfn-init -c order -v'
+            - ' -s '
+            - !Ref 'AWS::StackName'
+            - ' --region '
+            - !Ref 'AWS::Region'
+            - ' -r Instance '
+            - |+
+
+
+            - |
+              # cfn-signal
+            - '/opt/aws/bin/cfn-signal -e $? --stack '
+            - !Ref 'AWS::StackName'
+            - ' --resource Instance --region '
+            - !Ref 'AWS::Region'
+            - |+
+
+
+            - |
+              # eof
+      
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          order:
+            - misc
+            - git
+            - firstonetime-sh
+            - build-sh
+            - deploy-sh
+            - migration-sh
+            - nodejs
+            - rmate
+            - mysql-client
+            - redis-client
+
+        misc:
+          commands:
+            0_export-PS1:
+              command: echo 'export PS1="[\u@AuthenticationServer \w]$"' >> /home/ec2-user/.bashrc
+
+        git:
+          packages:
+            yum:
+              git:
+                [] # - "2.17.2-2.amzn2"
+          commands:
+            0_download_pem:
+              command: "aws ssm get-parameter --name '/jpop/buildserver/ssh-pem' --region 'ap-northeast-1' --query Parameter.Value --output text > /home/ec2-user/.ssh/git.pem"
+            1_chmod_pem:
+              command: "chmod 600 /home/ec2-user/.ssh/git.pem"
+            2_download_config:
+              command: "aws ssm get-parameter --name '/jpop/buildserver/ssh-config' --region 'ap-northeast-1' --query Parameter.Value --output text >> /home/ec2-user/.ssh/config"
+            3_chmod_config:
+              command: "chmod 600 /home/ec2-user/.ssh/config"
+            4_chown_config:
+              command: "chown -R ec2-user:ec2-user /home/ec2-user/.ssh"
+
+        firstonetime-sh:
+          files:
+              /home/ec2-user/firstonetime.sh:
+                mode: "000777"
+                owner: ec2-user
+                group: ec2-user
+                content:
+                  'Fn::Join':
+                    - ''
+                    - - |+
+                        #!/bin/sh
+                        set -eu
+
+                      - >-
+                        export SRC_ROOT_PATH=
+                      - !Sub "${SourcePath}"
+                      - |+
+
+
+                      - >-
+                        export DB_WRITE_ENDPOINT=
+                      - !GetAtt DBInstance.Endpoint.Address
+                      - |+
+
+
+                      - >-
+                        export DB_WRITE_ENDPOINT_PORT=
+                      - !GetAtt DBInstance.Endpoint.Port
+                      - |+
+
+
+
+                        SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/AuthenticationServer/firstonetime.sh
+
+                        if test -d $SRC_ROOT_PATH; then
+                          echo "--------------------------------------"
+                          echo "OK! (serversources already exists ...)"
+                          echo "--------------------------------------"
+                        else
+                          echo "--------------------------------------"
+                          echo "<<<< git clone at first one time. >>>>"
+                          echo "--------------------------------------"
+                          git clone ssh://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/yosui -b master $SRC_ROOT_PATH
+                        fi
+
+                        cd $SRC_ROOT_PATH
+                        git pull origin --rebase
+
+                        $SCRIPT
+
+        build-sh:
+          files:
+            /home/ec2-user/build.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |
+                      #!/bin/sh
+
+                      set -eu
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT=
+                    - !GetAtt DBInstance.Endpoint.Address
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT_PORT=
+                    - !GetAtt DBInstance.Endpoint.Port
+                    - |+
+
+
+                    - >-
+                      export KVS_ENDPOINT=
+                    - !GetAtt CacheCluster.RedisEndpoint.Address
+                    - |+
+
+
+                    - >-
+                      export KVS_ENDPOINT_PORT=
+                    - !GetAtt CacheCluster.RedisEndpoint.Port
+                    - |+
+
+
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/AuthenticationServer/build.sh
+
+                      $SCRIPT
+
+        deploy-sh:
+          files:
+            /home/ec2-user/deploy.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |
+                      #!/bin/sh
+
+                      set -eu
+
+                      export PACK_NAME=$1
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/AuthenticationServer/deploy.sh
+
+                      $SCRIPT
+                      
+        migration-sh:
+          files:
+            /home/ec2-user/migration.sh:
+              mode: "000777"
+              owner: ec2-user
+              group: ec2-user
+              content:
+                'Fn::Join':
+                  - ''
+                  - - |+
+                      #!/bin/sh
+
+                      set -eu
+
+                      export PACK_NAME=$1
+
+                    - >-
+                      export SRC_ROOT_PATH=
+                    - !Sub "${SourcePath}"
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT=
+                    - !GetAtt DBInstance.Endpoint.Address
+                    - |+
+
+
+                    - >-
+                      export DB_WRITE_ENDPOINT_PORT=
+                    - !GetAtt DBInstance.Endpoint.Port
+                    - |+
+
+
+
+                      SCRIPT=$SRC_ROOT_PATH/environment/cloudformation/bno-evo/AuthenticationServer/migration.sh
+
+                      $SCRIPT
+                      
+        nodejs:
+          commands:
+            0_download_repo:
+              command: "curl -sL https://rpm.nodesource.com/setup_8.x -o/home/ec2-user/nodejs_8.x"
+            1_chmod_repo:
+              command: "chmod +x /home/ec2-user/nodejs_8.x"
+            2_install_repo:
+              command: "sh /home/ec2-user/nodejs_8.x"
+            3_install:
+              command: "yum -y install nodejs"
+
+        rmate:
+          packages:
+            yum:
+              ruby:
+                [] # - "2.0.0.648-36.amzn2.0.1"
+          commands:
+            0_download:
+              command: "curl https://raw.githubusercontent.com/textmate/rmate/master/bin/rmate -o/usr/bin/rmate"
+            1_chmod:
+              command: "chmod a+x /usr/bin/rmate"
+
+
+        mysql-client:
+          commands:
+            0_localinstall:
+              command: "sudo yum localinstall https://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm -y"
+            1_disable80:
+              command: "sudo yum-config-manager --disable mysql80-community"
+            2_enable57:
+              command: "sudo yum-config-manager --enable mysql57-community"
+            3_install:
+              command: "sudo yum install mysql-community-client -y"
+
+        redis-client:
+          commands:
+            0_install:
+              command: "sudo amazon-linux-extras install redis4.0"
+
+              
+      # Volumes: 
+      #   - EC2 MountPoint
+      # AdditionalInfo: String
+
+# Outputs:
+

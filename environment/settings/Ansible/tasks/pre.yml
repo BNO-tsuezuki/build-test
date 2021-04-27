@@ -1,0 +1,7 @@
+
+- name: ansible_userの homeディレクトリパスを取得
+  shell: 'getent passwd "{{ansible_ssh_user}}" | cut -d: -f6'
+  changed_when: false
+  register: ansible_home_result
+- name: ansible_userの homeディレクトリパスを ansible_home変数に設定
+  set_fact: ansible_home='{{ansible_home_result.stdout}}'

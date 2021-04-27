@@ -1,0 +1,33 @@
+{
+  "name": "evotool",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {},
+  "dependencies": {
+    "@types/react": "16.4.7",
+    "@types/react-dnd": "2.0.36",
+    "@types/react-dnd-html5-backend": "2.1.9",
+    "@types/react-dom": "16.0.6",
+    "@types/react-overlays": "0.8.4",
+    "@types/react-redux": "5.0.16",
+    "@types/react-router-dom": "4.2.6",
+    "@types/redux-saga": "0.10.5",
+    "aspnet-webpack": "2.0.3",
+    "ts-loader": "6.0.4",
+    "react": "16.4.1",
+    "react-dnd": "5.0.0",
+    "react-dnd-html5-backend": "5.0.1",
+    "react-dom": "16.4.1",
+    "react-overlays": "0.8.3",
+    "react-redux": "5.0.7",
+    "react-router-dom": "4.2.2",
+    "redux": "4.0.0",
+    "redux-saga": "0.16.0",
+    "typescript": "2.8.1",
+    "typescript-fsa": "2.5.0",
+    "typescript-fsa-reducers": "0.4.5",
+    "webpack": "4.5.0",
+    "webpack-cli": "2.0.14",
+    "webpack-hot-middleware": "2.21.2"
+  }
+}

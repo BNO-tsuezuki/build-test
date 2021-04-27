@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Version</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Version</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+                                    <div class="col-md-4 col-md-8">
+                                        <div class="card card-small mb-4">
+                                            <div class="card-header border-bottom">
+                                                <h6 class="m-0">Login</h6>
+                                            </div>
+                                            <div style="margin-left: 10px;">
+                                                <strong v-if="orgLoginVersion == LoginVersion" class="text-muted d-block mb-2">Package Version ({{orgLoginVersion}})</strong>
+                                                <strong v-else class="text-muted d-block mb-2">Package Version ({{orgLoginVersion + ' -> ' + LoginVersion}})</strong>
+                                                <div class="form-group col-md-4" style="display:inline-flex">
+                                                    <input type="number" v-model="dispItem.loginVersion.packageVersion.major" v-bind:class="{'is-invalid':!validate2(dispItem.loginVersion.packageVersion.major) , 'is-valid':validate2(dispItem.loginVersion.packageVersion.major) }" placeholder="major" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.loginVersion.packageVersion.minor" v-bind:class="{'is-invalid':!validate2(dispItem.loginVersion.packageVersion.minor) , 'is-valid':validate2(dispItem.loginVersion.packageVersion.minor) }" placeholder="minor" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.loginVersion.packageVersion.patch" v-bind:class="{'is-invalid':!validate2(dispItem.loginVersion.packageVersion.patch) , 'is-valid':validate2(dispItem.loginVersion.packageVersion.patch) }" placeholder="patch" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.loginVersion.packageVersion.build" v-bind:class="{'is-invalid':!validate6(dispItem.loginVersion.packageVersion.build) , 'is-valid':validate6(dispItem.loginVersion.packageVersion.build) }" placeholder="build" class="form-control" style="width: 180px;" min="0" max="999999">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card card-small mb-4">
+                                            <div class="card-header border-bottom">
+                                                <h6 class="m-0">Matchmake</h6>
+                                            </div>
+                                            <div style="margin-left: 10px;">
+                                                <strong v-if="orgMatchmakeVersion == MatchmakeVersion" class="text-muted d-block mb-2">Package Version ({{orgMatchmakeVersion}})</strong>
+                                                <strong v-else class="text-muted d-block mb-2">Package Version ({{orgMatchmakeVersion + ' -> ' + MatchmakeVersion}})</strong>
+                                                <div class="form-group col-md-4" style="display:inline-flex">
+                                                    <input type="number" v-model="dispItem.matchmakeVersion.packageVersion.major" v-bind:class="{'is-invalid':!validate2(dispItem.matchmakeVersion.packageVersion.major) , 'is-valid':validate2(dispItem.matchmakeVersion.packageVersion.major) }" placeholder="major" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.matchmakeVersion.packageVersion.minor" v-bind:class="{'is-invalid':!validate2(dispItem.matchmakeVersion.packageVersion.minor) , 'is-valid':validate2(dispItem.matchmakeVersion.packageVersion.minor) }" placeholder="minor" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.matchmakeVersion.packageVersion.patch" v-bind:class="{'is-invalid':!validate2(dispItem.matchmakeVersion.packageVersion.patch) , 'is-valid':validate2(dispItem.matchmakeVersion.packageVersion.patch) }" placeholder="patch" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.matchmakeVersion.packageVersion.build" v-bind:class="{'is-invalid':!validate6(dispItem.matchmakeVersion.packageVersion.build) , 'is-valid':validate6(dispItem.matchmakeVersion.packageVersion.build) }" placeholder="build" class="form-control" style="width: 180px;" min="0" max="999999">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-md-8">
+                                        <div class="card card-small mb-4">
+                                            <div class="card-header border-bottom">
+                                                <h6 class="m-0">Replay</h6>
+                                            </div>
+                                            <div style="margin-left: 10px;">
+                                                <strong v-if="orgReplayPackageVersion == ReplayPackageVersion" class="text-muted d-block mb-2">Package Version ({{orgReplayPackageVersion}})</strong>
+                                                <strong v-else class="text-muted d-block mb-2">Package Version ({{orgReplayPackageVersion + ' -> ' + ReplayPackageVersion}})</strong>
+                                                <div class="form-group col-md-4" style="display:inline-flex">
+                                                    <input type="number" v-model="dispItem.replayVersion.packageVersion.major" v-bind:class="{'is-invalid':!validate2(dispItem.replayVersion.packageVersion.major) , 'is-valid':validate2(dispItem.replayVersion.packageVersion.major) }" placeholder="major" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.replayVersion.packageVersion.minor" v-bind:class="{'is-invalid':!validate2(dispItem.replayVersion.packageVersion.minor) , 'is-valid':validate2(dispItem.replayVersion.packageVersion.minor) }" placeholder="minor" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.replayVersion.packageVersion.patch" v-bind:class="{'is-invalid':!validate2(dispItem.replayVersion.packageVersion.patch) , 'is-valid':validate2(dispItem.replayVersion.packageVersion.patch) }" placeholder="patch" class="form-control" style="width: 180px;" min="0" max="99">
+                                                    <input type="number" v-model="dispItem.replayVersion.packageVersion.build" v-bind:class="{'is-invalid':!validate6(dispItem.replayVersion.packageVersion.build) , 'is-valid':validate6(dispItem.replayVersion.packageVersion.build) }" placeholder="build" class="form-control" style="width: 180px;" min="0" max="999999">
+                                                </div>
+
+                                                <strong v-if="orgReplayMasterDataVersion == ReplayMasterDataVersion" class="text-muted d-block mb-2">MasterData Version ({{orgReplayMasterDataVersion}})</strong>
+                                                <strong v-else class="text-muted d-block mb-2">Package Version ({{orgReplayMasterDataVersion + ' -> ' + ReplayMasterDataVersion}})</strong>
+                                                <div class="form-group col-md-4" style="display:inline-flex">
+                                                    <input type="number" v-model="dispItem.replayVersion.masterDataVersion.major" v-bind:class="{'is-invalid':!validate3(dispItem.replayVersion.masterDataVersion.major) , 'is-valid':validate3(dispItem.replayVersion.masterDataVersion.major) }" placeholder="major" class="form-control" style="width: 180px;" min="0" max="999">
+                                                    <input type="number" v-model="dispItem.replayVersion.masterDataVersion.minor" v-bind:class="{'is-invalid':!validate3(dispItem.replayVersion.masterDataVersion.minor) , 'is-valid':validate3(dispItem.replayVersion.masterDataVersion.minor) }" placeholder="minor" class="form-control" style="width: 180px;" min="0" max="999">
+                                                    <input type="number" v-model="dispItem.replayVersion.masterDataVersion.patch" v-bind:class="{'is-invalid':!validate3(dispItem.replayVersion.masterDataVersion.patch) , 'is-valid':validate3(dispItem.replayVersion.masterDataVersion.patch) }" placeholder="patch" class="form-control" style="width: 180px;" min="0" max="999">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <button type="button" class="mb-2 btn btn-primary mr-2" @click="putData" v-bind:disabled="validateAll()">SAVE</button>
+                                    </div>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/page/game/Version.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\evomatching\Matching\BattleEntry.cs" Link="evomatching\BattleEntry.cs" />
+    <Compile Include="..\evomatching\Logic\Matchmaker2.cs" Link="evomatching\Matchmaker2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\evolib\evolib.csproj" />
+  </ItemGroup>
+
+</Project>

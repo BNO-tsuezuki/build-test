@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for KVS"
+
+Parameters:
+  
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  PortNo:
+    Type: Number
+    Default: 6379
+
+
+Resources:
+
+  SubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: !Sub "${EnvName}-kvssubnetgroup"
+      Description: "-"
+      SubnetIds:
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet0-${EnvName}"}
+        - {"Fn::ImportValue" : !Sub "jpop-PublicSubnet1-${EnvName}"}
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      # GroupName: !Sub "${EnvName}-KVS"
+      GroupDescription: "-"
+      # SecurityGroupEgress:
+      #   - Security Group Rule
+      SecurityGroupIngress:
+        -
+          CidrIp: {"Fn::ImportValue" : !Sub "jpop-VpcCidr-${EnvName}"}
+          # CidrIpv6: String
+          # Description: String
+          FromPort: !Ref PortNo
+          IpProtocol: "tcp"
+          # SourceSecurityGroupId: String
+          # SourceSecurityGroupName: String
+          # SourceSecurityGroupOwnerId: String
+          ToPort: !Ref PortNo
+      Tags:
+        - Key: Name
+          Value: !Sub "${EnvName}-KVS"
+      VpcId: {"Fn::ImportValue" : !Sub "jpop-VPC-${EnvName}"}
+
+  ParameterGroup:
+    Type: AWS::ElastiCache::ParameterGroup
+    Properties: 
+      CacheParameterGroupFamily: "redis5.0"
+      Description: "-"
+      Properties:
+         cluster-enabled: "yes"
+         slowlog-log-slower-than: 3000
+
+  ReplicationGroup:
+    Type: AWS::ElastiCache::ReplicationGroup
+    Properties: 
+      # AtRestEncryptionEnabled: Boolean
+      # AuthToken: String
+      AutomaticFailoverEnabled: true
+      # AutoMinorVersionUpgrade: Boolean
+      CacheNodeType: "cache.m5.large"
+      CacheParameterGroupName: !Ref ParameterGroup
+      # CacheSecurityGroupNames: 
+      #   - String
+      CacheSubnetGroupName: !Ref SubnetGroup
+      Engine: "redis"
+      EngineVersion: "5.0.4"
+      # NodeGroupConfiguration:
+      #   - NodeGroupConfiguration
+      # NotificationTopicArn: String
+      # NumCacheClusters: Integer
+      NumNodeGroups: 1
+      Port: !Ref PortNo
+      # PreferredCacheClusterAZs:
+      #   - 文字列
+      PreferredMaintenanceWindow: "sun:21:00-sun:22:00"
+      # PrimaryClusterId: String
+      ReplicasPerNodeGroup: 0
+      ReplicationGroupDescription: String
+      ReplicationGroupId: !Sub "${EnvName}-redis"
+      SecurityGroupIds:
+        - !Ref SecurityGroup
+      # SnapshotArns:
+      #   - 文字列
+      # SnapshotName: String
+      SnapshotRetentionLimit: 10
+      # SnapshottingClusterId: String
+      SnapshotWindow: "sun:20:00-sun:21:00"
+      # Tags:
+      #   - Resource Tag
+      # TransitEncryptionEnabled: Boolean
+
+Outputs:
+  KvsEndPoint:
+    Value: !GetAtt ReplicationGroup.ConfigurationEndPoint.Address
+    Export:
+      Name: !Sub "jpop-kvsEndPoint-${EnvName}"

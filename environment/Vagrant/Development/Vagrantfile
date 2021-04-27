@@ -1,0 +1,40 @@
+
+Vagrant.configure("2") do |config|
+
+#
+# common
+#
+config.vm.box = "ubuntu/xenial64"
+config.vm.box_version = "20180602.0.0"
+  
+  #
+  # manager
+  #
+  config.vm.define "manager" do |node|
+    node.vm.hostname = "manager"
+    node.vm.network "private_network", ip: "192.168.179.10"
+    node.vm.synced_folder "./../../..", "/home/vagrant/evo"
+    node.vm.provision "shell", :path => "../sh/setupAnsible.sh", :privileged => false
+    node.vm.provision "shell", :path => "../sh/setupSshdConfig.sh", :privileged => true
+  end
+
+  #
+  # rdb
+  #
+  config.vm.define "rdb" do |node|
+   node.vm.hostname = "rdb"
+   node.vm.network "private_network", ip: "192.168.181.10"
+   node.vm.provision "shell", :path => "../sh/setupSshdConfig.sh", :privileged => true
+  end
+
+  #
+  # kvs
+  #
+  config.vm.define "kvs" do |node|
+    node.vm.hostname = "kvs"
+    node.vm.network "private_network", ip: "192.168.182.10"
+    node.vm.provision "shell", :path => "../sh/setupSshdConfig.sh", :privileged => true
+  end
+
+
+end

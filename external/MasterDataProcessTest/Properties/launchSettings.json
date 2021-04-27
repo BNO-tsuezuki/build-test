@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "MasterDataProcessTest": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "",
+        "BQ_PROJECT_ID": "",
+        "BQ_DATASET_ID": "",
+        "TEST_AWS_PROFILE": "",
+        "TEST_AWS_REGION": "",
+        "S3_BUCKET_NAME": "",
+        "S3_OBJECT_KEY_MASTER_DATA": "",
+        "S3_OBJECT_KEY_TRANSLATION_DATA": ""
+      }
+    }
+  }
+}

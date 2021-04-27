@@ -1,0 +1,33 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-default btn-lg" ng-click="back()">
+        <span class="glyphicon glyphicon-chevron-left"></span>戻る
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <h1>{{ms.master.DisplayName}}</h1>
+    <img ng-src="assets/images/shop/{{ms.master.Name}}.jpg" width="300">
+    <h2>武器カスタマイズ</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <uib-alert type="{{alertType}}" close="closeAlert()" ng-if="showAlert" dismiss-on-timeout="2000">{{message}}</uib-alert>
+      </div>
+      <div class="col-sm-12">
+        <ul>
+        <li>Primary Slot: <select ng-model="primary" ng-options="eq.Name as eq.DisplayName for eq in availablesPrimary"></select></li>
+        <li>Secondary Slot: <select ng-model="secondary" ng-options="eq.Name as eq.DisplayName for eq in availablesSecondary"></select></li>
+        <li>Tertiary Slot: <select ng-model="tertiary" ng-options="eq.Name as eq.DisplayName for eq in availablesTertiary"></select></li>
+        </ul>
+        <ul>
+        <li>Color: <select ng-model="color" ng-options="color.Name for color in availablesColor"></select></li>
+        <li>Buff: <select ng-model="buffs" ng-options="buff.Name for buff in availablesBuff"></select></li>
+        </ul>
+        <button type="button" class="btn btn-primary" ng-click="update()">更新</button>
+      </div>
+    </div>
+  </div>
+</div>

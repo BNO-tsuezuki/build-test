@@ -1,0 +1,10 @@
+.vs
+.vscode
+*.user
+**/node_modules
+**/obj
+**/Debug
+**/Release
+**/wwwroot/js
+RdbConnections.json
+KvsConnections.json

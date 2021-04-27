@@ -1,0 +1,134 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>PerformanceStats</h1>
+    </div>
+
+    <!-- 検索 -->
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-1">
+        <p>開始日</p>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <input type="text"
+                   class="form-control"
+                   ng-model="date"
+                   datepicker-popup
+                   is-open="datePickerOpen">
+            <div class="input-group-addon" ng-click="toggleDatePicker($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+          </div> <!-- DatePicker -->
+        </div>
+        <div class="col-md-1">
+        <p>終了日</p>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <input type="text"
+                   class="form-control"
+                   ng-model="date"
+                   datepicker-popup
+                   is-open="datePickerOpen">
+            <div class="input-group-addon" ng-click="toggleDatePicker($event)">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </div>
+          </div> <!-- DatePicker -->
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-primary">検索</button>
+        </div
+      </div> <!-- row -->
+    </div> <!-- 検索 -->
+
+    <!-- グラフ -->
+    <div class="col-md-12">
+      <!--<div d3-bars></div>-->
+    </div> <!-- グラフ -->
+
+    <!-- リスト表示 -->
+    <div class="col-md-12">
+      <form>
+       <div class="form-group">
+         <div class="input-group">
+           <div class="input-group-addon"><i class="fa fa-search"></i></div>
+           <input type="text"
+                  class="form-control"
+                  placeholder="フィルタ文字列を入力..."
+                  ng-model="searchFish">
+          </div> <!-- input-group -->
+        </div> <!-- form-group -->
+      </form>
+
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+        <th class="clickable" ng-click="sortTable('date')">
+          日時
+          <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('gamemode')">
+          ルール
+          <span ng-show="sortType == 'gamemode' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'gamemode' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('level')">
+          マップ
+          <span ng-show="sortType == 'level' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'level' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('gametime')">
+          戦闘時間
+          <span ng-show="sortType == 'gametime' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'gametime' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('playername')">
+          プレイヤー名
+          <span ng-show="sortType == 'playername' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'playername' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('fps')">
+          FPS
+          <span ng-show="sortType == 'fps' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'fps' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th class="clickable" ng-click="sortTable('fps_max')">
+          Summary
+          <span ng-show="sortType == 'fps_max' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'fps_max' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat-start="stat in performancestats | orderBy:sortType:sortReverse | filter:searchFish"
+            ng-click="isCollapsed = !isCollapsed" ng-init="isCollapsed=true"
+            class="clickable">
+          <td>{{stat.created | date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+          <td>{{stat.gamemode}}</td>
+          <td>{{stat.level}}</td>
+          <td>{{stat.gametime | sec2minsec }}</td>
+          <td>{{stat.playername}}</td>
+          <td>{{stat.fps.toFixed(2)}}</td>
+          <td>
+            FPS[{{stat.fps.toFixed(0)}}/{{stat.fps_max.toFixed(0)}}/{{stat.fps_min.toFixed(0)}}]
+            Game[{{stat.game.toFixed(1)}}/{{stat.game_max.toFixed(1)}}/{{stat.game_min.toFixed(1)}}]
+            Render[{{stat.render.toFixed(1)}}/{{stat.render_max.toFixed(1)}}/{{stat.render_min.toFixed(1)}}]
+            GPU[{{stat.gpu.toFixed(1)}}/{{stat.gpu_max.toFixed(1)}}/{{stat.gpu_min.toFixed(1)}}]
+          </td>
+        </tr>
+        <tr ng-repeat-end  collapse="isCollapsed">
+          <td colspan="7">
+            <div id="details_{{$index}}" ng-include="'app/performancestat_details/performancestat_details.html'"></div>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+    </div> <!-- リスト表示 -->
+
+  </div> <!-- row -->
+
+</div> <!-- container -->

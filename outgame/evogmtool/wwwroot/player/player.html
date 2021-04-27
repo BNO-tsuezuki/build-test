@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Player Info</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Player Info</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-0 px-3 pt-3">
+
+                                            <div class="divTable">
+                                                <div class="divTableBody">
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">PlayerName</div>
+                                                        <div class="divTableCell" style="">
+
+                                                            <div v-if="nameEdit">
+                                                                <input type="text" v-model="editTarget.player.playerName" ref="focusName" />
+                                                                <a href="#" v-on:click="cancelEditName();"><i class="material-icons" style="font-size: 18px;">disabled_by_default</i></a>
+                                                                <a href="#" v-on:click="saveEditName()"><i class="material-icons" style="font-size: 18px;">check_circle</i></a>
+
+                                                            </div>
+                                                            <div v-else>
+                                                                {{searchData.player.playerName}}
+                                                                <a href="#" v-on:click="nameEdit=true"><i class="material-icons" style="font-size: 18px;">build</i></a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">PlayerId</div>
+                                                        <div class="divTableCell" style="">{{searchData.player.playerId}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">PlatformId</div>
+                                                        <div class="divTableCell" style="">{{searchData.player.platformId}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Account</div>
+                                                        <div class="divTableCell" style="">{{searchData.player.account}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">CountryCode</div>
+                                                        <div class="divTableCell" style="">{{searchData.player.countryCode}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">CreatedDate</div>
+                                                        <div class="divTableCell" style="">{{getDateTime(searchData.player.createdDate)}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Discipline</div>
+                                                        <div class="divTableCell" style="">{{getDateTime(searchData.player.discipline)}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">LastLoginDate</div>
+                                                        <div class="divTableCell" style="">{{getDateTime(searchData.player.lastLoginDate)}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">LogoutDate</div>
+                                                        <div class="divTableCell" style="">{{getDateTime(searchData.player.logoutDate)}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Cheat Command Available</div>
+                                                        <div class="divTableCell" style="">
+                                                            <div v-if="privilegelevelEdit">
+                                                                <select v-model="editTarget.account.isCheatCommandAvailable">
+                                                                    <option value="true">true</option>
+                                                                    <option value="false">false</option>
+                                                                </select>
+                                                                <a href="#" v-on:click="cancelEditPrivilegelevel();"><i class="material-icons" style="font-size: 18px;">disabled_by_default</i></a>
+                                                                <a href="#" v-on:click="saveEditPrivilegelevel()"><i class="material-icons" style="font-size: 18px;">check_circle</i></a>
+                                                            </div>
+                                                            <div v-else>
+                                                                {{searchData.account.isCheatCommandAvailable}}
+                                                                <a href="#" v-on:click="privilegelevelEdit=true"><i class="material-icons" style="font-size: 18px;">build</i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Point</div>
+                                                        <div class="divTableCell" style="">Point</div>
+                                                    </div>
+
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Level</div>
+                                                        <div class="divTableCell" style="">{{searchData.exp.level}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;"><span style="margin-left:1rem;">totalExp</span></div>
+                                                        <div class="divTableCell" style="">
+                                                            <div v-if="expEdit">
+                                                                <input type="text" v-model="editTarget.exp.totalExp" ref="focusName" />
+                                                                <a href="#" v-on:click="cancelEditExp();"><i class="material-icons" style="font-size: 18px;">disabled_by_default</i></a>
+                                                                <a href="#" v-on:click="saveEditExp()"><i class="material-icons" style="font-size: 18px;">check_circle</i></a>
+                                                            </div>
+                                                            <div v-else>
+                                                                {{searchData.exp.totalExp}}
+                                                                <a href="#" v-on:click="expEdit=true"><i class="material-icons" style="font-size: 18px;">build</i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;"><span style="margin-left:1rem;">rewardLevel</span></div>
+                                                        <div class="divTableCell" style="">{{searchData.exp.rewardLevel}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;"><span style="margin-left:1rem;">levelExp</span></div>
+                                                        <div class="divTableCell" style="">{{searchData.exp.levelExp}}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;"><span style="margin-left:1rem;">nextExp</span></div>
+                                                        <div class="divTableCell" style="">{{searchData.exp.nextExp}}</div>
+                                                    </div>
+
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Tutorial Progress</div>
+                                                        <div class="divTableCell" style="">{{(lang=='ja'?searchData.tutorial.displayNameJapanese:searchData.tutorial.displayNameEnglish) + '( Tutorial Progress: ' +searchData.tutorial.tutorialProgress + ' )' }}</div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;"><span style="margin-left:1rem;">isFirstTutorialEnd</span></div>
+                                                        <div class="divTableCell" style="">
+                                                            <div v-if="tutorialEdit">
+                                                                <select v-model="editTarget.tutorial.isFirstTutorialEnd">
+                                                                    <option value="true">true</option>
+                                                                    <option value="false">false</option>
+                                                                </select>
+                                                                <a href="#" v-on:click="cancelEditTutorial();"><i class="material-icons" style="font-size: 18px;">disabled_by_default</i></a>
+                                                                <a href="#" v-on:click="saveEditTutorial()"><i class="material-icons" style="font-size: 18px;">check_circle</i></a>
+                                                            </div>
+                                                            <div v-else>
+                                                                {{searchData.tutorial.isFirstTutorialEnd}}
+                                                                <a href="#" v-on:click="tutorialEdit=true"><i class="material-icons" style="font-size: 18px;">build</i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">BattlePass</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/battlePass.html')">BattlePass</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">BattleRecord</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/battleRecord.html')">BattleRecord</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Item</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/item.html')">Item</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Unit</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/item.html')+'&dispType=MobileSuit'">Unit</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">User Option</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/userOption.html')">User Option</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Achievement</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/Achievement.html')">Achievement</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Challenge</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/Chalenge.html')">Challenge</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Rate</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="myUrl('/player/Rate.html')">Rate</a></div>
+                                                    </div>
+                                                    <div class="divTableRow">
+                                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">GameLog</div>
+                                                        <div class="divTableCell" style=""><a v-bind:href="logPageUrl()">Saerch</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="divTable" style="margin-bottom: 15px;"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card card-primary card-outline">
+                                <!--<h3 class="card-title" style="margin-left: 1rem;">Memo</h3>-->
+                                <div class="card-body">
+                                    <div class="divTableRow">
+                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">PlayerDelete</div>
+                                        <div class="divTableCell" style="">
+                                            <button type="button" class="btn btn-block bg-gradient-danger btn-xs" v-on:click="deleteConfirm" style="width: auto;">Delete</button>
+                                        </div>
+                                    </div>
+                                    <div class="divTableRow">
+                                        <div class="divTableCell" style="width:20%;background-color: #007bff;color: white;">Tutorial Reset</div>
+                                        <div class="divTableCell" style="">
+                                            <button type="button" class="btn btn-block bg-gradient-danger btn-xs" v-on:click="tutorialResetConfirm" style="width: auto;">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-tabs-component@1.5.0/dist/index.min.js"></script>
+    <link href="/styles/tab.css" rel="stylesheet" />
+    <script src="/scripts/app/page/player/player.js"></script>
+
+    <style>
+        /* DivTable.com */
+        .divTable {
+            display: table;
+            width: 100%;
+        }
+
+        .divTableRow {
+            display: table-row;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+        }
+
+        .divTableCell, .divTableHead {
+            border: 1px solid #999999;
+            display: table-cell;
+            padding: 3px 10px;
+        }
+
+        .divTableHeading {
+            background-color: #EEE;
+            display: table-header-group;
+            font-weight: bold;
+        }
+
+        .divTableFoot {
+            background-color: #EEE;
+            display: table-footer-group;
+            font-weight: bold;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+        }
+    </style>
+</body>
+</html>

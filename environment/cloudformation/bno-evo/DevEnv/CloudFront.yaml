@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Stack for ELB"
+
+Parameters:
+  EnvName:
+    Description: "Name of Environment"
+    Type: String
+    ######################################
+    #        Set Environment Name        #
+    ######################################
+    Default: "devenv"
+
+  OriginDomainName:
+    Description: Enter a Origin Domain Name.
+    Type: String
+
+  OriginPortNo:
+    Type: Number
+    Default: 52346
+
+
+
+Resources:
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties: 
+      DistributionConfig: 
+        # Aliases: 
+        #   - String
+        # CacheBehaviors: 
+        #   - CacheBehavior
+        Comment: !Sub "for ${EnvName} (to Elb)."
+        # CustomErrorResponses: 
+        #   - CustomErrorResponse
+        DefaultCacheBehavior: 
+          AllowedMethods: 
+            - GET
+            - HEAD
+            - DELETE
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+          CachedMethods: 
+            - GET
+            - HEAD
+          # Compress: Boolean
+          # DefaultTTL: Double
+          # FieldLevelEncryptionId: String
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+          # LambdaFunctionAssociations: 
+          #   - LambdaFunctionAssociation
+          # MaxTTL: Double
+          # MinTTL: Double
+          # SmoothStreaming: Boolean
+          TargetOriginId: !Sub "ELB-jpop-${EnvName}"
+          # TrustedSigners: 
+          #   - String
+          ViewerProtocolPolicy: https-only # allow-all | redirect-to-https | https-only
+        # DefaultRootObject: String
+        Enabled: true
+        HttpVersion: http2
+        # IPV6Enabled: Boolean
+        # Logging: 
+        #   Logging
+        Origins: 
+          -
+            CustomOriginConfig:
+              # HTTPPort: Integer
+              HTTPSPort: !Ref OriginPortNo
+              # OriginKeepaliveTimeout: Integer
+              OriginProtocolPolicy: https-only # http-only | https-only | match-viewer
+              OriginReadTimeout: 60
+              OriginSSLProtocols: 
+                - TLSv1 # TLSv1.2 TLSv1.1 TLSv1 SSLv3
+            DomainName: !Ref OriginDomainName
+            Id: !Sub "ELB-jpop-${EnvName}"
+            # OriginCustomHeaders: 
+            #   - OriginCustomHeader
+            # OriginPath: String
+            # S3OriginConfig:
+            #   S3OriginConfig
+        # PriceClass: String
+        # Restrictions: 
+        #   Restrictions
+        # ViewerCertificate: 
+        #   ViewerCertificate
+        # WebACLId: String
+      # Tags: 
+      #   - Tag

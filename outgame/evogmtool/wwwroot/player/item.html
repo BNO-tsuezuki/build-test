@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>AdminLTE 3 | Starter</title>
+    <script src="/scripts/app/lib/header-write.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper" id="content" v-cloak>
+        <!-- Navbar -->
+        <info-form></info-form>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <main-manu></main-manu>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">Item Inventry</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Item Inventry</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table style="border:1px solid #dee2e6;width: 300px;">
+                                        <thead style="background:#d3d3d347;">
+                                            <tr>
+                                                <th style="text-align:center">Player Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:center">{{searchData.player.playerName}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div data-toggle="buttons" class="btn-group btn-group-toggle mb-3">
+                                        <label class="btn btn-primary" @click="dispType=''" v-bind:class="{ active: dispType== '' }">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" :checked="dispTypeCheckBox.All"> All
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='VoicePack'" v-bind:class="{ active: dispType== 'VoicePack' }">
+                                            <input type="radio" name="options" id="option2" autocomplete="off" :checked="dispTypeCheckBox.VoicePack"> VoicePack
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Ornament'" v-bind:class="{ active: dispType== 'Ornament' }">
+                                            <input type="radio" name="options" id="option3" autocomplete="off" :checked="dispTypeCheckBox.Ornament"> Ornament
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='BodySkin'" v-bind:class="{ active: dispType== 'BodySkin' }">
+                                            <input type="radio" name="options" id="option4" autocomplete="off" :checked="dispTypeCheckBox.BodySkin"> BodySkin
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='WeaponSkin'" v-bind:class="{ active: dispType== 'WeaponSkin' }">
+                                            <input type="radio" name="options" id="option2" autocomplete="off" :checked="dispTypeCheckBox.WeaponSkin"> WeaponSkin
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='MvpCelebration'" v-bind:class="{ active: dispType== 'MvpCelebration' }">
+                                            <input type="radio" name="options" id="option3" autocomplete="off" :checked="dispTypeCheckBox.MvpCelebration"> MvpCelebration
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Stamp'" v-bind:class="{ active: dispType== 'Stamp' }">
+                                            <input type="radio" name="options" id="option4" autocomplete="off" :checked="dispTypeCheckBox.Stamp"> Stamp
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='Emotion'" v-bind:class="{ active: dispType== 'Emotion' }">
+                                            <input type="radio" name="options" id="option2" autocomplete="off" :checked="dispTypeCheckBox.Emotion"> Emotion
+                                        </label>
+                                        <label class="btn btn-primary" @click="dispType='MobileSuit'" v-bind:class="{ active: dispType== 'MobileSuit' }">
+                                            <input type="radio" name="options" id="option3" autocomplete="off" :checked="dispTypeCheckBox.MobileSuit"> MobileSuit
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="mb-2 btn btn-primary mr-2" @click="getAll">GetAll</button>
+                                        <button type="button" class="mb-2 btn btn-danger mr-2" @click="reset">Reset</button>
+                                        Will be processed with the selected type
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-primary card-outline">
+                                <div class="card-body">
+
+
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="card card-small mb-4">
+
+                                                <div class="card-body p-0 pb-3 text-center">
+                                                    <table class="table mb-0">
+                                                        <thead class="bg-light">
+                                                            <tr>
+                                                                <th scope="col" class="border-0">ItemID</th>
+                                                                <th scope="col" class="border-0">ItemType</th>
+                                                                <th scope="col" class="border-0">DisplayName</th>
+                                                                <th scope="col" class="border-0">isDefault</th>
+                                                                <th scope="col" class="border-0">Owned</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr v-for="item in dispData" :key="item.itemId" v-cloak>
+                                                                <td>{{item.itemId}}</td>
+                                                                <td>{{item.itemType}}</td>
+                                                                <td>{{lang=='ja'?item.displayNameJapanese:item.displayNameEnglish}}</td>
+                                                                <td>{{item.isDefault}}</td>
+                                                                <td style="width:124px;">
+                                                                    <div class="custom-control custom-toggle custom-toggle-sm mb-1" v-if="item.isDefault == false">
+                                                                        <input type="checkbox" v-bind:id="item.itemId" v-bind:name="item.itemId" v-model="item.owned" class="custom-control-input" v-on:click="ownedClick(item);">
+                                                                        <label v-bind:for="item.itemId" class="custom-control-label"></label>
+                                                                        <img v-show="item.isLoading" src="/images/loading/loading.gif" />
+                                                                    </div>
+                                                                    <div class="custom-control custom-toggle custom-toggle-sm mb-1" v-if="item.isDefault == true">
+                                                                        <!--<input type="checkbox" v-bind:id="item.itemId" v-bind:name="item.itemId" checked="checked" disabled="disabled" class="custom-control-input">
+                                                <label v-bind:for="item.itemId" class="custom-control-label"></label>-->
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!--<img v-show="isStartUpLoading" src="images/loading/Preloader_9.gif" />-->
+                                                </div>
+                                                <div class="col-lg-3 col-md-12">
+                                                    <!-- Post Overview -->
+                                                    <!-- / Post Overview -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer-menu></footer-menu>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <script src="/scripts/app/lib/footer-write.js"></script>
+    <script src="/scripts/app/page/player/item.js"></script>
+
+
+</body>
+</html>

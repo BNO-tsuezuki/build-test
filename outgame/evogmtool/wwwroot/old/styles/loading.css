@@ -1,0 +1,142 @@
+#loading {
+    margin: 3vw;
+}
+
+    #loading ul {
+        overflow: hidden;
+        padding: 0;
+        list-style: none;
+    }
+
+    #loading .loadingArea ul li {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        line-height: 30px;
+        background: #ddd;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.3s, color 0.3s;
+    }
+
+        #loading .loadingArea ul li:hover {
+            color: #fff;
+            background: #42b983
+        }
+
+.loading-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+}
+
+.loading-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.loading-container {
+    /*width: 80%;
+    max-width: 840px;*/
+    margin: 0 auto;
+    /*padding: 60px 2vw 80px;*/
+    border: 2px solid #aaa;
+    text-align: center;
+    background: #fff;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+    .loading-container {
+        /*width: 80%;
+    max-width: 840px;*/
+        margin: 30% auto;
+        /*padding: 60px 2vw 80px;*/
+        border: 2px solid #aaa;
+        text-align: center;
+        background: #fff;
+        box-sizing: border-box;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        transition: all .3s ease;
+    }
+}
+}
+
+.loading-header h3 {
+    margin-top: 0;
+    color: #42b983;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.loading-body {
+    /*margin: 20px 0;*/
+}
+
+.link_area {
+    overflow: hidden;
+    max-width: 410px;
+    margin: auto;
+    text-align: center;
+}
+
+    .link_area .loading-default-button {
+        cursor: pointer;
+        display: inline-block;
+        background: #e6e6e6;
+        width: 180px;
+        line-height: 40px;
+        text-decoration: none;
+        color: #000;
+        margin: 0 10px;
+        font-size14px;
+    }
+    .link_area .loading-save-button {
+        cursor: pointer;
+        display: inline-block;
+        background: #007bff;
+        width: 180px;
+        line-height: 40px;
+        text-decoration: none;
+        color: #000;
+        margin: 0 10px;
+        font-size14px;
+    }
+    .link_area .loading-close-button {
+        cursor: pointer;
+        display: inline-block;
+        background: #e6e6e6;
+        width: 180px;
+        line-height: 40px;
+        text-decoration: none;
+        color: #000;
+        margin: 0 10px;
+        font-size14px;
+    }
+
+.loading-enter {
+    opacity: 0;
+}
+
+.loading-leave-active {
+    opacity: 0;
+}
+
+    .loading-enter .loading-container, .loading-leave-active .loading-container {
+        transform: translateY(30px);
+    }
+
+[v-cloak] {
+    display: none;
+}

@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Base Title</title>
+    <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- design files -->
+    <script src="scripts/app/lib/header-write.js"></script>
+  </head>
+  <body class="h-100">
+      <div id="content">
+          <!--<div class="color-switcher animated">
+              <h5>Accent Color</h5>
+              <ul class="accent-colors">
+                  <li class="accent-primary active" data-color="primary">
+                      <i class="material-icons">check</i>
+                  </li>
+                  <li class="accent-secondary" data-color="secondary">
+                      <i class="material-icons">check</i>
+                  </li>
+                  <li class="accent-success" data-color="success">
+                      <i class="material-icons">check</i>
+                  </li>
+                  <li class="accent-info" data-color="info">
+                      <i class="material-icons">check</i>
+                  </li>
+                  <li class="accent-warning" data-color="warning">
+                      <i class="material-icons">check</i>
+                  </li>
+                  <li class="accent-danger" data-color="danger">
+                      <i class="material-icons">check</i>
+                  </li>
+              </ul>
+              <div class="close">
+                  <i class="material-icons">close</i>
+              </div>
+          </div>
+          <div class="color-switcher-toggle animated pulse infinite">
+              <i class="material-icons">settings</i>
+          </div>-->
+          <div class="container-fluid">
+              <div class="row">
+                  <!-- Main Sidebar -->
+                  <main-manu></main-manu>
+                  <!-- End Main Sidebar -->
+                  <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                      <!-- Main Navbar -->
+                      <info-form></info-form>
+                      <!-- / .main-navbar -->
+                      <div class="main-content-container container-fluid px-4">
+                          <!-- Page Header -->
+                          <div class="page-header row no-gutters py-4">
+                              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                  <span class="text-uppercase page-subtitle">player</span>
+                                  <h3 class="page-title">User Option</h3>
+                              </div>
+                          </div>
+                          <!-- End Page Header -->
+
+                          <div data-toggle="buttons" class="btn-group btn-group-toggle mb-3">
+                              <label class="btn btn-white" @click="dispType='category1'" v-bind:class="{ active: dispType== 'category1' }">
+                                  <input type="radio" name="options" id="option1" autocomplete="off" checked="checked"> category1
+                              </label>
+                              <label class="btn btn-white" @click="dispType='category2'" v-bind:class="{ active: dispType== 'category2' }">
+                                  <input type="radio" name="options" id="option2" autocomplete="off"> category2
+                              </label>
+                              <label class="btn btn-white" @click="dispType='category3'" v-bind:class="{ active: dispType== 'category3' }">
+                                  <input type="radio" name="options" id="option3" autocomplete="off"> category3
+                              </label>
+                          </div>
+                          <!--<div>
+                              <button type="button" class="mb-2 btn btn-primary mr-2" @click="getAll">GetAll</button>
+                              <button type="button" class="mb-2 btn btn-danger mr-2" @click="reset">Reset</button>
+                              Will be processed with the selected type
+                          </div>-->
+
+                          <div class="row">
+                              <div class="col">
+                                  <div class="card card-small mb-4">
+                                      <div class="card-header border-bottom">
+                                          <h6 v-show="isSearch == true" style="display:none;" class="m-0">{{dispNameAndNo}}</h6>
+                                          <h6 v-show="isSearch == false" style="color:red;display:none;">Please enter the search form at the top of the window</h6>
+                                          <h6 v-show="isSearch == true" class="m-0">{{dispType}}</h6>
+                                      </div>
+                                      <div class="card-body p-0 pb-3 text-center">
+                                          <table class="table mb-0">
+                                              <thead class="bg-light">
+                                                  <tr>
+                                                      <th scope="col" class="border-0">Index</th>
+                                                      <th scope="col" class="border-0">Value</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+
+                                                  <tr v-for="(item, index) in dispData" v-cloak>
+                                                      <td>{{index + 1}}</td>
+                                                      <td><input type="number" name="number" v-bind:value="item" style="text-align: right;"></td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      <div class="col-lg-3 col-md-12">
+                                          <!-- Post Overview -->
+                                          <!-- / Post Overview -->
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+          </div>
+          <!-- modal -->
+
+      </div>
+    <!-- liblary -->
+    <script src="scripts/app/lib/footer-write.js"></script>
+    <!-- pageJS -->
+    <script src="scripts/app/page/userOption.js"></script>
+  </body>
+</html>

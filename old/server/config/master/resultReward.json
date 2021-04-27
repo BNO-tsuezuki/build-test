@@ -1,0 +1,13 @@
+{
+	"resultReward": [
+		{
+			"Name": "Normal",
+			"baseGP": 4000,
+			"winGPBonus": 4000,
+			"haveMedalGPBonus": 2000,
+			"baseExp": 4000,
+			"winExpBonus": 4000,
+			"haveMedalExpBonus": 2000
+		}
+	]
+}

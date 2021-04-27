@@ -1,0 +1,28 @@
+
+
+mariadb_packages:
+  - mariadb-server  # 本体
+  - python3-mysqldb  # mysql_userが使用する
+  
+
+mariadb_root_pass: rootpass
+mariadb_user_name: evouser
+mariadb_user_pass: evopass
+mariadb_user_host: "%"
+mariadb_evogame_name: evogamedb
+mariadb_evoaccount_name: evoaccountdb
+mariadb_default_charset: utf8
+
+
+redis_version: 4.0.9
+redis_package: redis-{{redis_version}}
+redis_port: 6379
+redis_pass: evopass
+
+
+dotnet_version: 2.1
+dotnet_packages:
+  - dotnet-sdk-{{dotnet_version}}
+  - unzip # remote debug で必要
+
+
