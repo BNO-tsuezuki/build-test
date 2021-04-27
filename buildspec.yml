@@ -12,8 +12,10 @@ phases:
   pre_build:
     commands:
       - echo $CODEBUILD_SOURCE_VERSION
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo $CODEBUILD_SRC_DIR
-      - mkdir -p /$CODEBUILD_SOURCE_VERSION
+      - export pack_name=`date "+%Y%m%d_%H%M%S"`-`echo $CODEBUILD_RESOLVED_SOURCE_VERSION`
+      - mkdir -p /$pack_name
       - mkdir -p $dst/evoapi
       - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
       - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evoapi/
@@ -32,7 +34,7 @@ phases:
     commands:
       - cd $CODEBUILD_SRC_DIR/outgame/evoapi
       - dotnet publish -c Debug -o $dst/evoapi/evoapi
-      - tar czvf $CODEBUILD_SOURCE_VERSION/evoapi.tar.gz -C $dst/evoapi .
+      - tar czvf /$pack_name/evoapi.tar.gz -C $dst/evoapi .
 artifacts:
   files:
-    - $CODEBUILD_SOURCE_VERSION/evoapi.tar.gz
+    - /$pack_name/evoapi.tar.gz
