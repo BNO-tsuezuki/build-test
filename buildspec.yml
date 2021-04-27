@@ -2,8 +2,8 @@ version: 0.2
 
 env:
   variables:
-    dst: $CODEBUILD_SRC_DIR/tmp
-    obj: $CODEBUILD_SRC_DIR/objects
+    dst: /tmp
+    obj: /objects
 phases:
   install:
     commands:
