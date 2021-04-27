@@ -1,0 +1,29 @@
+version: 0.2
+
+env:
+  variables:
+    dst: "./tmp"
+    obj: "./objects"
+phases:
+  pre_build:
+    commands:
+      - apt update
+      - apt install -y python-pip
+      - pip install awscli
+      - mkdir $dst
+      - mkdir $obj
+      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst
+      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst
+      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst
+      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst
+      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst
+      - aws s3 cp s3://$bucket_name/ToolServer.json $dst
+      - aws s3 cp s3://$bucket_name/systeminfo.json $dst
+  build:
+    commands:
+      - cd ./outgame/evoapi
+      - dotnet publish -c Debug -o $dst/evoapi/evoapi
+      - tar cvzf $obj/evoapi.tar.gz -C $dst/evoapi .
+artifacts:
+  files:
+    - $obj
