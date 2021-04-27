@@ -3,7 +3,6 @@ version: 0.2
 env:
   variables:
     dst: /tmp
-    obj: /objects
 phases:
   install:
     commands:
@@ -12,7 +11,7 @@ phases:
       - pip install awscli
   pre_build:
     commands:
-      - mkdir -p $obj
+      - mkdir -p /$CODEBUILD_SOURCE_VERSION
       - mkdir -p $dst/evoapi
       - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
       - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evoapi/
@@ -31,7 +30,7 @@ phases:
     commands:
       - cd $CODEBUILD_SRC_DIR/outgame/evoapi
       - dotnet publish -c Debug -o $dst/evoapi/evoapi
-      - tar czvf $obj/evoapi.tar.gz -C $dst/evoapi .
+      - tar czvf $CODEBUILD_SOURCE_VERSION/evoapi.tar.gz -C $dst/evoapi .
 artifacts:
   files:
-    - $obj/evoapi.tar.gz
+    - $CODEBUILD_SOURCE_VERSION/evoapi.tar.gz
