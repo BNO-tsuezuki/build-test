@@ -92,6 +92,7 @@ phases:
       - dotnet publish -c Debug -o $dst/evosequencing/evosequencing
       - tar czvf /$pack_name/evosequencing.tar.gz -C $dst/evosequencing .
       - cd $CODEBUILD_SRC_DIR/outgame/evotool
+      - npm ci --no-bin-links
       - dotnet publish -c Debug -o $dst/evotool/evotool
       - tar czvf /$pack_name/evotool.tar.gz -C $dst/evotool .
       - cd $CODEBUILD_SRC_DIR/outgame/evogmtool
