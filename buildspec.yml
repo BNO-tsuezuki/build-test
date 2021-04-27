@@ -11,6 +11,8 @@ phases:
       - pip install awscli
   pre_build:
     commands:
+      - echo $CODEBUILD_SOURCE_VERSION
+      - echo $CODEBUILD_SRC_DIR
       - mkdir -p /$CODEBUILD_SOURCE_VERSION
       - mkdir -p $dst/evoapi
       - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
