@@ -14,9 +14,6 @@ phases:
       - apt install -y nodejs
   pre_build:
     commands:
-      - echo $CODEBUILD_SOURCE_VERSION
-      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - echo $CODEBUILD_SRC_DIR
       - export pack_name=`date "+%Y%m%d_%H%M%S"`-`echo $CODEBUILD_RESOLVED_SOURCE_VERSION`
       - mkdir -p /$pack_name
       - mkdir -p $latest
@@ -104,7 +101,7 @@ phases:
       - cp /$pack_name/evomatching.tar.gz $latest
       - cp /$pack_name/evosequencing.tar.gz $latest
       - cp /$pack_name/evotool.tar.gz $latest
-      - cp /$pack_name/evogmtooli.tar.gz $latest
+      - cp /$pack_name/evogmtool.tar.gz $latest
 artifacts:
   files:
     - /$pack_name/evoapi.tar.gz
