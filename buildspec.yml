@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     dst: /tmp
+    latest: /latest
 phases:
   install:
     commands:
@@ -18,6 +19,7 @@ phases:
       - echo $CODEBUILD_SRC_DIR
       - export pack_name=`date "+%Y%m%d_%H%M%S"`-`echo $CODEBUILD_RESOLVED_SOURCE_VERSION`
       - mkdir -p /$pack_name
+      - mkdir -p $latest
       - mkdir -p $dst/evoapi
       - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
       - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evoapi/
@@ -98,6 +100,11 @@ phases:
       - cd $CODEBUILD_SRC_DIR/outgame/evogmtool
       - dotnet publish -c Debug -o $dst/evogmtool/evogmtool
       - tar czvf /$pack_name/evogmtool.tar.gz -C $dst/evogmtool .
+      - cp /$pack_name/evoapi.tar.gz $latest
+      - cp /$pack_name/evomatching.tar.gz $latest
+      - cp /$pack_name/evosequencing.tar.gz $latest
+      - cp /$pack_name/evotool.tar.gz $latest
+      - cp /$pack_name/evogmtooli.tar.gz $latest
 artifacts:
   files:
     - /$pack_name/evoapi.tar.gz
@@ -105,3 +112,8 @@ artifacts:
     - /$pack_name/evosequencing.tar.gz
     - /$pack_name/evotool.tar.gz
     - /$pack_name/evogmtool.tar.gz
+    - $latest/evoapi.tar.gz
+    - $latest/evomatching.tar.gz
+    - $latest/evosequencing.tar.gz
+    - $latest/evotool.tar.gz
+    - $latest/evogmtool.tar.gz
