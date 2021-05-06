@@ -79,6 +79,11 @@ phases:
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/service/evogmtool.service $dst/evogmtool/
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evogmtool/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evogmtool/
+      - export SRC_ROOT_PATH= $CODEBUILD_SRC_DIR/outgame
+      - aws s3 cp s3://$bucket_name/RdbConnections.json $CODEBUILD_SRC_DIR/
+      - aws s3 cp s3://$bucket_name/migrationSql.sh $CODEBUILD_SRC_DIR/
+      - chmod +x $CODEBUILD_SRC_DIR/migrationSql.sh
+      - $CODEBUILD_SRC_DIR/migrationSql.sh
   build:
     commands:
       - cd $CODEBUILD_SRC_DIR/outgame/evoapi
