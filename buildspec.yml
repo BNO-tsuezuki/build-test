@@ -18,12 +18,12 @@ phases:
       - mkdir -p /$pack_name
       - mkdir -p $latest
       - mkdir -p $dst/evoapi
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evoapi/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evoapi/
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evoapi/
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evoapi/
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evoapi/
-      - aws s3 cp s3://$bucket_name/systeminfo.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/DeliveryData.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/MatchingServer.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/SequencingServer.json $dst/evoapi/
+      - aws s3 cp s3://$config_bucket_name/systeminfo.json $dst/evoapi/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evoapi/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evoapi/
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evoapi.appspec.yml $dst/evoapi/appspec.yml
@@ -31,11 +31,11 @@ phases:
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evoapi/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evoapi/
       - mkdir -p $dst/evomatching
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evomatching/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evomatching/
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evomatching/
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evomatching/
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evomatching/
+      - aws s3 cp s3://$config_bucket_name/DeliveryData.json $dst/evomatching/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $dst/evomatching/
+      - aws s3 cp s3://$config_bucket_name/MatchingServer.json $dst/evomatching/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $dst/evomatching/
+      - aws s3 cp s3://$config_bucket_name/SequencingServer.json $dst/evomatching/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evomatching/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evomatching/
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evomatching.appspec.yml $dst/evomatching/appspec.yml
@@ -43,11 +43,11 @@ phases:
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evomatching/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evomatching/
       - mkdir -p $dst/evosequencing
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evosequencing/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evosequencing/
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evosequencing/
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evosequencing/
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evosequencing/
+      - aws s3 cp s3://$config_bucket_name/DeliveryData.json $dst/evosequencing/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $dst/evosequencing/
+      - aws s3 cp s3://$config_bucket_name/MatchingServer.json $dst/evosequencing/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $dst/evosequencing/
+      - aws s3 cp s3://$config_bucket_name/SequencingServer.json $dst/evosequencing/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evosequencing/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evosequencing/
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evosequencing.appspec.yml $dst/evosequencing/appspec.yml
@@ -55,11 +55,11 @@ phases:
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evosequencing/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evosequencing/
       - mkdir -p $dst/evotool
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evotool/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evotool/
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evotool/
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evotool/
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evotool/
+      - aws s3 cp s3://$config_bucket_name/DeliveryData.json $dst/evotool/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $dst/evotool/
+      - aws s3 cp s3://$config_bucket_name/MatchingServer.json $dst/evotool/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $dst/evotool/
+      - aws s3 cp s3://$config_bucket_name/SequencingServer.json $dst/evotool/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evotool/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evotool/
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evotool.appspec.yml $dst/evotool/appspec.yml
@@ -67,12 +67,12 @@ phases:
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evotool/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evotool/
       - mkdir -p $dst/evogmtool
-      - aws s3 cp s3://$bucket_name/DeliveryData.json $dst/evogmtool/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $dst/evogmtool/
-      - aws s3 cp s3://$bucket_name/MatchingServer.json $dst/evogmtool/
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $dst/evogmtool/
-      - aws s3 cp s3://$bucket_name/SequencingServer.json $dst/evogmtool/
-      - aws s3 cp s3://$bucket_name/ToolServer.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/DeliveryData.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/MatchingServer.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/SequencingServer.json $dst/evogmtool/
+      - aws s3 cp s3://$config_bucket_name/ToolServer.json $dst/evogmtool/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.DevEnv.json $dst/evogmtool/
       - cp $CODEBUILD_SRC_DIR/outgame/appsettings.json $dst/evogmtool/
       - cp $CODEBUILD_SRC_DIR/environment/codedeploy/appspec/evogmtool.appspec.yml $dst/evogmtool/appspec.yml
@@ -80,9 +80,9 @@ phases:
       - cp -r $CODEBUILD_SRC_DIR/environment/codedeploy/scripts $dst/evogmtool/
       - cp $CODEBUILD_SRC_DIR/outgame/AuthenticationServer.json $dst/evogmtool/
       - export SRC_ROOT_PATH=$CODEBUILD_SRC_DIR/outgame
-      - aws s3 cp s3://$bucket_name/RdbConnections.json $CODEBUILD_SRC_DIR/outgame/
-      - aws s3 cp s3://$bucket_name/KvsConnections.json $CODEBUILD_SRC_DIR/outgame/
-      - aws s3 cp s3://$bucket_name/migrationSql.sh $CODEBUILD_SRC_DIR/
+      - aws s3 cp s3://$config_bucket_name/RdbConnections.json $CODEBUILD_SRC_DIR/outgame/
+      - aws s3 cp s3://$config_bucket_name/KvsConnections.json $CODEBUILD_SRC_DIR/outgame/
+      - aws s3 cp s3://$config_bucket_name/migrationSql.sh $CODEBUILD_SRC_DIR/
       - chmod +x $CODEBUILD_SRC_DIR/migrationSql.sh
       - $CODEBUILD_SRC_DIR/migrationSql.sh
   build:
