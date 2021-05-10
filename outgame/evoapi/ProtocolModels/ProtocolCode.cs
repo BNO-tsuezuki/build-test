@@ -144,6 +144,6 @@
 
         givenhistory_getlist = 0x1900,
 
-
+        challenge_getlist = 0x2000,
     }
 }

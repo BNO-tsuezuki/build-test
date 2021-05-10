@@ -26,5 +26,8 @@ namespace evolib.Databases.personal
 
 		[Required]
 		public DateTime expirationDate { get; set; }
+
+		[Required]
+		public DateTime startDate { get; set; }
 	}
 }

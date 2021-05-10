@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using evolib.Databases.personal;
 
 namespace evolib.Migrations.personalshard001
 {
     [DbContext(typeof(PersonalDBShardManager.PersonalShard001))]
-    partial class PersonalShard001ModelSnapshot : ModelSnapshot
+    [Migration("20210427232038_Discipline.AddStartDate")]
+    partial class DisciplineAddStartDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
